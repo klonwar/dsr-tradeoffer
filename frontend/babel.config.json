@@ -1,0 +1,16 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": "defaults"
+      }
+    ],
+    [
+      "@babel/react",
+      {
+      }
+    ],
+    "@babel/preset-typescript"
+  ]
+}
