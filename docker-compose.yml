@@ -3,6 +3,8 @@ services:
     build:
       backend/
     command: npm run start
+    environment:
+      MYSQL_HOST: "mysql_db"
     ports:
       - 3001:3001
     depends_on:

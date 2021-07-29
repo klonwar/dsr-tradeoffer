@@ -6,5 +6,10 @@ const PORT = 3001;
 (async () => {
   const app = await NestFactory.create(AppModule);
   await app.listen(PORT);
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(
+    `Application is running on: ${(await app.getUrl()).replace(
+      `[::1]`,
+      `localhost`,
+    )}`,
+  );
 })();
