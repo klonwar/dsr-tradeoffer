@@ -23,7 +23,8 @@
     "typeorm": "npm run build & ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config ormconfig.js",
     "migration:generate": "npm run typeorm migration:generate -- -n",
     "migration:run": "npm run typeorm migration:run",
-    "migration:revert": "npm run typeorm migration:revert"
+    "migration:revert": "npm run typeorm migration:revert",
+    "migration:create": "npm run typeorm migration:create -- -n"
   },
   "dependencies": {
     "@nestjs/cli": "^8.1.0",
@@ -31,6 +32,7 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.1",
+    "bcrypt": "^5.0.1",
     "mysql2": "^2.2.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -40,6 +42,7 @@
   "devDependencies": {
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
     "@types/jest": "^26.0.24",
     "@types/node": "^16.0.0",
