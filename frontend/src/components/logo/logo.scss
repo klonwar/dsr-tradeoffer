@@ -1,0 +1,15 @@
+.Logo {
+  background: #ff9800;
+  padding: 0 $padding-small-padding;
+  height: $header-height;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+
+  &:before, &:after {
+    content: "⚠️";
+    padding: 0 5px;
+  }
+}
