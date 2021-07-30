@@ -4,7 +4,7 @@ import { FC } from 'react';
 const Logo: FC = () => {
   return (
     <a href={`#`} className={`Logo uk-link-reset`}>
-      TradeOffer
+      <span className={`uk-visible@s`}>TradeOffer</span>
     </a>
   );
 };

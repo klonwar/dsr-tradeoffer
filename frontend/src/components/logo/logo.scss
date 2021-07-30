@@ -12,4 +12,15 @@
     content: "⚠️";
     padding: 0 5px;
   }
+
+  @media (max-width: $breakpoint-small) {
+    &:before {
+      display: none;
+    }
+
+    &:after {
+      padding: 0;
+    }
+  }
+
 }
