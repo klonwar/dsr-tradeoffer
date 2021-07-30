@@ -6,9 +6,7 @@ const HeaderWrapper: React.FC = (props) => {
   return (
     <>
       <Header />
-      <div>
-        {children}
-      </div>
+      {children}
     </>
   );
 };

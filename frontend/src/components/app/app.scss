@@ -6,6 +6,11 @@ html, body, #root {
   color: #333;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
 * {
   font-family: "Fira Code", monospace !important;
 }
