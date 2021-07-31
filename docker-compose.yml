@@ -16,6 +16,8 @@ services:
     build:
       frontend/
     command: npm run start
+    environment:
+      SERVER_ORIGIN: "http://localhost:3001"
     ports:
       - 3002:3002
     depends_on:

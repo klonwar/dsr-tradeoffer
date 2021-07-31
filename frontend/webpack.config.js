@@ -1,4 +1,5 @@
 /* global process, __dirname */
+require(`dotenv`).config();
 
 const path = require(`path`);
 const HTMLWebpackPlugin = require(`html-webpack-plugin`);
@@ -52,7 +53,7 @@ const cssLoaders = (extra) => {
 
 const plugins = () => {
   return [
-    new webpack.EnvironmentPlugin([]),
+    new webpack.EnvironmentPlugin(["SERVER_ORIGIN"]),
     new HTMLWebpackPlugin({
       template: `./index.html`,
       minify: {
