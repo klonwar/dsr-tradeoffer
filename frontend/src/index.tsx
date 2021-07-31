@@ -8,18 +8,18 @@ import Icons from 'uikit/dist/js/uikit-icons';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '#src/js/redux/store';
-import { LOGIN_SLICE_NAME, LoginActions } from '#src/js/redux/reducers/slices/login-slice';
+import { USER_SLICE_NAME, UserActions } from '#src/js/redux/reducers/slices/login-slice';
 
 (() => {
   // @ts-ignore
   UIkit.use(Icons);
 
-  store.dispatch(LoginActions.stateFromStorage());
+  store.dispatch(UserActions.stateFromStorage());
 
   // Сохранение состояния в localStorage
   store.subscribe(() => {
     localStorage.setItem(
-      LOGIN_SLICE_NAME,
+      USER_SLICE_NAME,
       JSON.stringify(store.getState().loginReducer)
     );
   });

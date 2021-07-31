@@ -7,12 +7,12 @@ interface AppSelector<T> extends Selector<RootState, T> {}
 
 export const isLoginPendingSelector: AppSelector<boolean> = (state) => state.loginReducer.pending;
 
-export const loginResultSelector: AppSelector<LoginOperationResult> = (state) => state.loginReducer.result;
+export const userDataSelector: AppSelector<LoginOperationResult> = (state) => state.loginReducer.result;
 
 export const loginErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.loginReducer.error;
 
 export const isLoginSuccessfulSelector = createSelector<RootState, LoginOperationResult, SerializedAxiosError, boolean | undefined>(
-  loginResultSelector,
+  userDataSelector,
   loginErrorSelector,
   (loginResult, loginError) => {
     if (loginResult)
@@ -26,6 +26,6 @@ export const isLoginSuccessfulSelector = createSelector<RootState, LoginOperatio
 );
 
 export const isAuthorizedSelector = createSelector<RootState, LoginOperationResult, boolean>(
-  loginResultSelector,
+  userDataSelector,
   (res) => !!res,
 );
