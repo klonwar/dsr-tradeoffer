@@ -5,6 +5,8 @@ services:
     command: npm run start
     environment:
       MYSQL_HOST: "mysql_db"
+      JWT_SECRET_TOKEN: "your_secret_token_here"
+      CORS_ORIGIN_REGEX: "http([s])?:\/\/localhost:3002"
     ports:
       - 3001:3001
     depends_on:
