@@ -9,14 +9,22 @@ export interface LoginState {
   error: SerializedAxiosError;
 }
 
-const loginSlice = createSlice<LoginState, Record<string, never>, `login`>({
+const initialState: LoginState = {
+  pending: false,
+  result: null,
+  error: null,
+};
+
+const loginSlice = createSlice({
   name: `login`,
-  initialState: {
-    pending: false,
-    result: null,
-    error: null,
+  initialState: initialState,
+  reducers: {
+    logout: (state) => {
+      state.pending = false;
+      state.result = null;
+      state.error = null;
+    },
   },
-  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(

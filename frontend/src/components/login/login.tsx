@@ -7,7 +7,7 @@ import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { isAuthorizedSelector, isLoginPendingSelector, loginErrorSelector } from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import UIkit from 'uikit';
 
 export class UserFormData {
@@ -21,9 +21,17 @@ export class UserFormData {
 
 const Login: FC = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
+
+  const isAuthorized = useSelector(isAuthorizedSelector);
+
+  useEffect(() => {
+    if (isAuthorized) {
+      history.replace(`/`);
+    }
+  }, [history, isAuthorized]);
 
   const isPending = useSelector(isLoginPendingSelector);
-  const isAuthorized = useSelector(isAuthorizedSelector);
   const loginError = useSelector(loginErrorSelector);
 
   const { register, handleSubmit, formState: { errors } } = useForm<UserFormData>({
@@ -47,10 +55,6 @@ const Login: FC = () => {
       });
     }
   }, [loginError]);
-
-  if (isAuthorized) {
-    return <Redirect to={`/`} />;
-  }
 
   return (
     <div className={`uk-flex uk-flex-center uk-flex-middle uk-width-1-1 uk-height-1-1`}>
