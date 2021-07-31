@@ -17,7 +17,13 @@ $ npm install
 SERVER_ORIGIN=http://localhost:3001
 ```
 
-Или передать переменную среды, указав ее в файле `docker-compose.yml`, если все будет запускаться в докере
+Если вы хотите использовать [Redux Devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru), то нужно перевести приложение в режим разработки
+
+```dotenv
+NODE_ENV=development
+```
+
+При запуске в докере, переменные среды надо указать в `docker-compose.yml`
 
 ## Запуск
 

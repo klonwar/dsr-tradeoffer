@@ -1,10 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { IsNotEmpty, Length, MinLength } from 'class-validator';
+import { IsNotEmpty, MinLength } from 'class-validator';
 import InputHint from '#components/input-hint/input-hint';
+import { useAppDispatch } from '#src/js/redux/store';
+import { Operations } from '#src/js/redux/operations/operations';
+import { isAuthorizedSelector, isLoginPendingSelector, loginErrorSelector } from '#src/js/redux/selectors';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import UIkit from 'uikit';
 
-class FormData {
+export class UserFormData {
   @IsNotEmpty()
   username: string;
 
@@ -14,13 +20,37 @@ class FormData {
 }
 
 const Login: FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: classValidatorResolver(FormData),
+  const dispatch = useAppDispatch();
+
+  const isPending = useSelector(isLoginPendingSelector);
+  const isAuthorized = useSelector(isAuthorizedSelector);
+  const loginError = useSelector(loginErrorSelector);
+
+  const { register, handleSubmit, formState: { errors } } = useForm<UserFormData>({
+    resolver: classValidatorResolver(UserFormData),
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    dispatch(Operations.login(data));
   });
+
+  useEffect(() => {
+    if (loginError) {
+      const codeToMessage = new Map();
+      codeToMessage.set(`401`, `Данные неверны`);
+
+      UIkit.notification({
+        message: (loginError.code)
+          ? codeToMessage.get(loginError.code) ?? loginError.message
+          : loginError.message,
+        pos: `bottom-right`,
+      });
+    }
+  }, [loginError]);
+
+  if (isAuthorized) {
+    return <Redirect to={`/`} />;
+  }
 
   return (
     <div className={`uk-flex uk-flex-center uk-flex-middle uk-width-1-1 uk-height-1-1`}>
@@ -58,14 +88,16 @@ const Login: FC = () => {
                   ? `Введите пароль`
                   : (errors.password?.type === `minLength`)
                     ? `Количество символов должно быть >= 8`
-                    :  ``
+                    : ``
               }
               className={`uk-position-center-right-out`}
               isActive={!!errors.password}
             />
           </div>
         </div>
-        <button className={`uk-button uk-button-primary uk-width-1-1 uk-margin`} type={`submit`}>Войти</button>
+        <button disabled={isPending} className={`uk-button uk-button-primary uk-width-1-1 uk-margin`}
+                type={`submit`}>Войти
+        </button>
       </form>
     </div>
   );
