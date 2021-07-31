@@ -3,6 +3,8 @@ import { Operations } from '#src/js/redux/operations/operations';
 import { LoginOperationResult } from '#src/js/redux/operations/slices/login-operation';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 
+export const LOGIN_SLICE_NAME = `login`;
+
 export interface LoginState {
   pending: boolean,
   result: LoginOperationResult;
@@ -16,7 +18,7 @@ const initialState: LoginState = {
 };
 
 const loginSlice = createSlice({
-  name: `login`,
+  name: LOGIN_SLICE_NAME,
   initialState: initialState,
   reducers: {
     logout: (state) => {
@@ -24,6 +26,11 @@ const loginSlice = createSlice({
       state.result = null;
       state.error = null;
     },
+    stateFromStorage: () => {
+      const stateFromStorage = JSON.parse(localStorage.getItem(LOGIN_SLICE_NAME));
+      if (stateFromStorage)
+        return stateFromStorage;
+    }
   },
   extraReducers: (builder) => {
     builder
