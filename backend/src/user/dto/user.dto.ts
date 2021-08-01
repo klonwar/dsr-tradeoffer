@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, Length } from 'class-validator';
+import { IsDateString, IsEmail, IsNotEmpty, Length } from 'class-validator';
 import { UserRole } from '#src/user/entity/user.entity';
 
 export class UserDto {
@@ -12,14 +12,18 @@ export class UserDto {
   role: UserRole;
 
   @IsEmail()
-  email?: string;
+  email: string;
 
-  firstName?: string;
+  @IsNotEmpty()
+  firstName: string;
 
+  @IsNotEmpty()
   @Length(10)
-  phone?: string;
+  phone: string;
 
-  birthday?: Date;
+  @IsNotEmpty()
+  @IsDateString({ strict: false })
+  birthday: string;
 
   photo?: string;
 }

@@ -7,9 +7,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserDto } from '#src/user/dto/user.dto';
-import { validate } from 'class-validator';
+import { getMessageFromValidator } from '#src/user/util/get-message-from-validator';
 import { LoginUserDto } from '#src/user/dto/login-user.dto';
-import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -18,15 +17,16 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(username: string, password: string): Promise<UserDto> {
-    const validationErrors = await validate(
-      plainToClass(LoginUserDto, { username, password }),
+    const validationError: string = await getMessageFromValidator(
+      LoginUserDto,
+      {
+        username,
+        password,
+      },
     );
 
-    if (validationErrors.length > 0)
-      // Достанем сообщения об ошибке из class-validator-а
-      throw new BadRequestException(
-        Object.values(validationErrors[0].constraints).join(`;`),
-      );
+    if (validationError) throw new BadRequestException(validationError);
+
     const user = await this.authService.validateUser(username, password);
     if (!user) {
       throw new UnauthorizedException();
