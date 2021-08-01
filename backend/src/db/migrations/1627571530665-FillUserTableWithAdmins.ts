@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { User, UserRole } from '../../user/user.entity';
+import { User, UserRole } from '../../user/entity/user.entity';
 import * as bcrypt from 'bcrypt';
 
 export class FillUserTableWithAdmins1627571530665 implements MigrationInterface {
