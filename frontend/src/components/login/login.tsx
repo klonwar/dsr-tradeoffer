@@ -7,15 +7,15 @@ import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { isAuthorizedSelector, isLoginPendingSelector, loginErrorSelector } from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import UIkit from 'uikit';
 
 export class UserFormData {
-  @IsNotEmpty()
+  @IsNotEmpty({message: `Нужно указать логин`})
   username: string;
 
-  @MinLength(8)
-  @IsNotEmpty()
+  @MinLength(8, {message: `Нужно ввести >= $constraint1 символов`})
+  @IsNotEmpty({message: `Нужно указать пароль`})
   password: string;
 }
 
@@ -69,11 +69,7 @@ const Login: FC = () => {
               {...register(`username`)}
             />
             <InputHint
-              text={
-                (errors.username?.type === `isNotEmpty`)
-                  ? `Введите логин`
-                  : ``
-              }
+              text={errors.username?.message}
               className={`uk-position-center-right-out`}
               isActive={!!errors.username}
             />
@@ -87,13 +83,7 @@ const Login: FC = () => {
               {...register(`password`)}
             />
             <InputHint
-              text={
-                (errors.password?.type === `isNotEmpty`)
-                  ? `Введите пароль`
-                  : (errors.password?.type === `minLength`)
-                    ? `Количество символов должно быть >= 8`
-                    : ``
-              }
+              text={errors.password?.message}
               className={`uk-position-center-right-out`}
               isActive={!!errors.password}
             />
