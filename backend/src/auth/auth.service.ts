@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { UsersService } from '#src/user/users.service';
 import * as bcrypt from 'bcrypt';
@@ -37,7 +38,7 @@ export class AuthService {
     };
   }
 
-  async register(createUserDto: CreateUserDto): Promise<UserDto> {
+  async register(createUserDto: CreateUserDto): Promise<JwtDto> {
     const validationError: string = await getMessageFromValidator(
       CreateUserDto,
       createUserDto,
@@ -55,6 +56,15 @@ export class AuthService {
     if (await this.usersService.findOneByEmail(email))
       throw new ConflictException(`Пользователь с такой почтой уже существует`);
 
-    return this.usersService.createUser(createUserDto);
+    let newUser: UserDto;
+    try {
+      newUser = await this.usersService.createUser(createUserDto);
+    } catch (e) {
+      throw new InternalServerErrorException(e);
+    }
+
+    return {
+      access_token: this.jwtService.sign(newUser),
+    };
   }
 }
