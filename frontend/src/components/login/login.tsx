@@ -1,22 +1,33 @@
 import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { IsNotEmpty, MinLength } from 'class-validator';
+import { IsOptional } from 'class-validator';
 import InputHint from '#components/input-hint/input-hint';
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { isAuthorizedSelector, isUserRequestPendingSelector, userRequestErrorSelector } from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import UIkit from 'uikit';
+import { CreateUserDto } from '#src/js/dto/create-user.dto';
 
-export class UserFormData {
-  @IsNotEmpty({message: `Нужно указать логин`})
-  username: string;
+export class UserFormData extends CreateUserDto {
 
-  @MinLength(8, {message: `Нужно ввести >= $constraint1 символов`})
-  @IsNotEmpty({message: `Нужно указать пароль`})
-  password: string;
+  @IsOptional()
+  firstName;
+
+  @IsOptional()
+  email;
+
+  @IsOptional()
+  phone;
+
+  @IsOptional()
+  birthday;
+
+  @IsOptional()
+  photo;
+
 }
 
 const Login: FC = () => {
@@ -57,7 +68,7 @@ const Login: FC = () => {
   }, [loginError, isSubmitted]);
 
   return (
-    <div className={`uk-flex uk-flex-center uk-flex-middle uk-width-1-1 uk-height-1-1`}>
+    <div className={`uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-width-1-1 uk-height-1-1`}>
       <form onSubmit={onSubmit} className={`uk-card uk-card-default uk-card-body`}>
         <h1 className={`uk-card-title`}>Вход</h1>
         <div className={`uk-flex uk-flex-column uk-flex-middle`} uk-margin={``}>
@@ -89,10 +100,15 @@ const Login: FC = () => {
             />
           </div>
         </div>
-        <button disabled={isPending} className={`uk-button uk-button-primary uk-width-1-1 uk-margin`}
+        <button disabled={isPending}
+                className={`uk-button uk-button-primary uk-width-1-1 uk-margin uk-margin-remove-bottom`}
                 type={`submit`}>Войти
         </button>
       </form>
+      <div className={`uk-text-small uk-text-center uk-width-1-1`}>
+        <Link className={`uk-display-inline-block uk-link uk-padding-small`} to={`/registration`}>У меня нет
+          аккаунта</Link>
+      </div>
     </div>
   );
 };
