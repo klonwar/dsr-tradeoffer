@@ -1,3 +1,5 @@
+@include disable-chrome-autocomplete($default-text-color, $default-font);
+
 html, body, #root {
   @extend %custom-scrollbar;
   width: 100%;
