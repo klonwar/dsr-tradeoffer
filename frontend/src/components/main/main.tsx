@@ -11,7 +11,7 @@ const MainUnauthorized: FC = () => {
         </div>
         <div className={`MainWrapper-buttons`} uk-margin={``}>
           <Link to={`/login`} className={`uk-button  uk-button-primary`}>Войти</Link>
-          <Link to={`/register`} className={`uk-button uk-button-default`}>Зарегистрироваться</Link>
+          <Link to={`/registration`} className={`uk-button uk-button-default`}>Зарегистрироваться</Link>
         </div>
       </div>
     </div>

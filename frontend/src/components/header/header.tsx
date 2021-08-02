@@ -28,7 +28,13 @@ const Header: React.FC = () => {
                    uk-icon={`icon: sign-out`} />
         ) : (
           <NavLink activeClassName={activeClassName} exact to={`/login`} className={`uk-padding-small`}
-                   uk-icon={`icon: user`} />
+                   uk-icon={`icon: sign-in`}
+                  isActive={
+                    (match, location) =>
+                      location.pathname.includes(`login`) ||
+                      location.pathname.includes(`registration`)
+                  }
+          />
         )}
 
       </div>

@@ -59,7 +59,7 @@ const Login: FC = () => {
   return (
     <div className={`uk-flex uk-flex-center uk-flex-middle uk-width-1-1 uk-height-1-1`}>
       <form onSubmit={onSubmit} className={`uk-card uk-card-default uk-card-body`}>
-        <h1 className={`uk-card-title`}>Войти</h1>
+        <h1 className={`uk-card-title`}>Вход</h1>
         <div className={`uk-flex uk-flex-column uk-flex-middle`} uk-margin={``}>
           <div className={`uk-inline`}>
             <span className={`uk-form-icon`} uk-icon={`icon: user`} />
