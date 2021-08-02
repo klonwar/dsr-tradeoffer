@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { UsersService } from '#src/user/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -44,14 +48,12 @@ export class AuthService {
     const { username, email } = createUserDto;
 
     if (await this.usersService.findOneByUsername(username))
-      throw new BadRequestException(
+      throw new ConflictException(
         `Пользователь с таким логином уже существует`,
       );
 
     if (await this.usersService.findOneByEmail(email))
-      throw new BadRequestException(
-        `Пользователь с такой почтой уже существует`,
-      );
+      throw new ConflictException(`Пользователь с такой почтой уже существует`);
 
     return this.usersService.createUser(createUserDto);
   }
