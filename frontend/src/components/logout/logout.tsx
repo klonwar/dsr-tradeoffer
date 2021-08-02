@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { FC } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useAppDispatch } from '#src/js/redux/store';
-import { UserActions } from '#src/js/redux/reducers/slices/login-slice';
+import { UserActions } from '#src/js/redux/reducers/slices/user-slice';
 
 const Logout: FC = () => {
   const dispatch = useAppDispatch();

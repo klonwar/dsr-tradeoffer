@@ -5,15 +5,15 @@ import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
-export const isLoginPendingSelector: AppSelector<boolean> = (state) => state.loginReducer.pending;
+export const isUserRequestPendingSelector: AppSelector<boolean> = (state) => state.userReducer.pending;
 
-export const userDataSelector: AppSelector<LoginOperationResult> = (state) => state.loginReducer.result;
+export const userDataSelector: AppSelector<LoginOperationResult> = (state) => state.userReducer.result;
 
-export const loginErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.loginReducer.error;
+export const userRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userReducer.error;
 
 export const isLoginSuccessfulSelector = createSelector<RootState, LoginOperationResult, SerializedAxiosError, boolean | undefined>(
   userDataSelector,
-  loginErrorSelector,
+  userRequestErrorSelector,
   (loginResult, loginError) => {
     if (loginResult)
       return true;

@@ -1,9 +1,12 @@
+$default-text-color: #333;
+$default-font: "Fira Code", monospace;
+
 $primary: #ff9800;
 $primary-dark: #EF6C00;
 
 $global-link-color: $primary;
 $global-link-hover-color: $primary-dark;
 $global-primary-background: $primary;
-$button-primary-color: #333;
+$button-primary-color: $default-text-color;
 
 $header-height: 50px;

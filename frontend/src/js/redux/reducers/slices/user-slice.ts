@@ -17,6 +17,24 @@ const initialState: UserState = {
   error: null,
 };
 
+const onPending = (state) => {
+  state.pending = true;
+  state.result = null;
+  state.error = null;
+};
+
+const onError = (state, action) => {
+  state.pending = false;
+  state.result = null;
+  state.error = action.payload;
+};
+
+const onFulfilled = (state, action) => {
+  state.pending = false;
+  state.result = action.payload;
+  state.error = null;
+};
+
 const userSlice = createSlice({
   name: USER_SLICE_NAME,
   initialState: initialState,
@@ -27,37 +45,25 @@ const userSlice = createSlice({
       state.error = null;
     },
     stateFromStorage: () => {
-      const stateFromStorage = JSON.parse(localStorage.getItem(USER_SLICE_NAME));
+      let stateFromStorage;
+      try {
+        stateFromStorage = JSON.parse(localStorage.getItem(USER_SLICE_NAME));
+      } catch (e) {
+        stateFromStorage = null;
+      }
+
       if (stateFromStorage)
         return stateFromStorage;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(
-        Operations.login.pending,
-        (state) => {
-          state.pending = true;
-          state.result = null;
-          state.error = null;
-        },
-      )
-      .addCase(
-        Operations.login.fulfilled,
-        (state, action) => {
-          state.pending = false;
-          state.result = action.payload;
-          state.error = null;
-        },
-      )
-      .addCase(
-        Operations.login.rejected,
-        (state, action) => {
-          state.pending = false;
-          state.result = null;
-          state.error = action.payload;
-        },
-      );
+      .addCase(Operations.login.pending, onPending)
+      .addCase(Operations.registration.pending, onPending)
+      .addCase(Operations.login.rejected, onError)
+      .addCase(Operations.registration.rejected, onError)
+      .addCase(Operations.login.fulfilled, onFulfilled)
+      .addCase(Operations.registration.fulfilled, onFulfilled);
   },
 });
 

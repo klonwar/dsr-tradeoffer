@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { UsersService } from '#src/user/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -33,7 +38,7 @@ export class AuthService {
     };
   }
 
-  async register(createUserDto: CreateUserDto): Promise<UserDto> {
+  async register(createUserDto: CreateUserDto): Promise<JwtDto> {
     const validationError: string = await getMessageFromValidator(
       CreateUserDto,
       createUserDto,
@@ -44,15 +49,22 @@ export class AuthService {
     const { username, email } = createUserDto;
 
     if (await this.usersService.findOneByUsername(username))
-      throw new BadRequestException(
+      throw new ConflictException(
         `Пользователь с таким логином уже существует`,
       );
 
     if (await this.usersService.findOneByEmail(email))
-      throw new BadRequestException(
-        `Пользователь с такой почтой уже существует`,
-      );
+      throw new ConflictException(`Пользователь с такой почтой уже существует`);
 
-    return this.usersService.createUser(createUserDto);
+    let newUser: UserDto;
+    try {
+      newUser = await this.usersService.createUser(createUserDto);
+    } catch (e) {
+      throw new InternalServerErrorException(e);
+    }
+
+    return {
+      access_token: this.jwtService.sign(newUser),
+    };
   }
 }

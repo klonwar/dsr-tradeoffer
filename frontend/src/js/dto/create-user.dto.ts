@@ -1,12 +1,4 @@
-import {
-  IsDateString,
-  IsEmail,
-  IsMobilePhone,
-  IsNotEmpty,
-  IsOptional,
-  Matches,
-  MinLength,
-} from 'class-validator';
+import { IsDateString, IsEmail, IsMobilePhone, IsNotEmpty, IsOptional, Matches, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty({ message: `Нужно указать логин` })
@@ -31,9 +23,7 @@ export class CreateUserDto {
   @IsNotEmpty({ message: `Нужно указать дату рождения` })
   birthday: string;
 
-  @Matches(/^[^\n]+\.((png)|(jp[e]?g))$/, {
-    message: `Фотография должна быть .png или .jpg/.jpeg`,
-  })
+  @Matches(/^[^\n]+\.((png)|(jp[e]?g))$/, { message: `Фотография должна быть .png или .jpg/.jpeg` })
   @IsOptional()
   photo?: string;
 }

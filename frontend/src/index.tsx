@@ -8,7 +8,7 @@ import Icons from 'uikit/dist/js/uikit-icons';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '#src/js/redux/store';
-import { USER_SLICE_NAME, UserActions } from '#src/js/redux/reducers/slices/login-slice';
+import { USER_SLICE_NAME, UserActions } from '#src/js/redux/reducers/slices/user-slice';
 
 (() => {
   // @ts-ignore
@@ -20,7 +20,7 @@ import { USER_SLICE_NAME, UserActions } from '#src/js/redux/reducers/slices/logi
   store.subscribe(() => {
     localStorage.setItem(
       USER_SLICE_NAME,
-      JSON.stringify(store.getState().loginReducer)
+      JSON.stringify(store.getState().userReducer)
     );
   });
   
