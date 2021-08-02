@@ -5,7 +5,7 @@ import { IsNotEmpty, MinLength } from 'class-validator';
 import InputHint from '#components/input-hint/input-hint';
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
-import { isAuthorizedSelector, isLoginPendingSelector, loginErrorSelector } from '#src/js/redux/selectors';
+import { isAuthorizedSelector, isUserRequestPendingSelector, userRequestErrorSelector } from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import UIkit from 'uikit';
@@ -31,8 +31,8 @@ const Login: FC = () => {
     }
   }, [history, isAuthorized]);
 
-  const isPending = useSelector(isLoginPendingSelector);
-  const loginError = useSelector(loginErrorSelector);
+  const isPending = useSelector(isUserRequestPendingSelector);
+  const loginError = useSelector(userRequestErrorSelector);
 
   const { register, handleSubmit, formState: { errors } } = useForm<UserFormData>({
     resolver: classValidatorResolver(UserFormData),

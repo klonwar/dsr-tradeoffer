@@ -27,7 +27,13 @@ const userSlice = createSlice({
       state.error = null;
     },
     stateFromStorage: () => {
-      const stateFromStorage = JSON.parse(localStorage.getItem(USER_SLICE_NAME));
+      let stateFromStorage;
+      try {
+        stateFromStorage = JSON.parse(localStorage.getItem(USER_SLICE_NAME));
+      } catch (e) {
+        stateFromStorage = null;
+      }
+      
       if (stateFromStorage)
         return stateFromStorage;
     }
