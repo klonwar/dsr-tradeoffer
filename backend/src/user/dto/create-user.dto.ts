@@ -1,32 +1,39 @@
 import {
   IsDateString,
   IsEmail,
+  IsMobilePhone,
   IsNotEmpty,
-  Length,
+  IsOptional,
+  Matches,
   MinLength,
 } from 'class-validator';
 
 export class CreateUserDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: `Нужно указать логин` })
   username: string;
 
-  @IsNotEmpty()
-  @MinLength(8)
+  @MinLength(8, { message: `Нужно ввести >= $constraint1 символов` })
+  @IsNotEmpty({ message: `Нужно указать пароль` })
   password: string;
 
-  @IsEmail()
-  email?: string;
+  @IsNotEmpty({ message: `Нужно указать имя` })
+  firstName: string;
 
-  @IsNotEmpty()
-  firstName?: string;
+  @IsEmail(undefined, { message: `Некорректный email` })
+  email: string;
 
-  @IsNotEmpty()
-  @Length(10)
-  phone?: string;
+  @IsMobilePhone(`ru-RU`, { strictMode: false }, { message: `Неверный формат` })
+  @Matches(/^[0-9]{10}$/, { message: `Введите 10 символов без кода страны` })
+  @IsNotEmpty({ message: `Нужно указать номер` })
+  phone: string;
 
-  @IsNotEmpty()
-  @IsDateString({ strict: false })
-  birthday?: string;
+  @IsDateString({ strict: false }, { message: `Неверный формат` })
+  @IsNotEmpty({ message: `Нужно указать дату рождения` })
+  birthday: string;
 
+  @Matches(/^[^\n]+\.((png)|(jp[e]?g))$/, {
+    message: `Фотография должна быть .png или .jpg/.jpeg`,
+  })
+  @IsOptional()
   photo?: string;
 }
