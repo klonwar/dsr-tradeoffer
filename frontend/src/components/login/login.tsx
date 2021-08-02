@@ -34,7 +34,7 @@ const Login: FC = () => {
   const isPending = useSelector(isUserRequestPendingSelector);
   const loginError = useSelector(userRequestErrorSelector);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<UserFormData>({
+  const { register, handleSubmit, formState: { errors, isSubmitted } } = useForm<UserFormData>({
     resolver: classValidatorResolver(UserFormData),
   });
 
@@ -43,7 +43,7 @@ const Login: FC = () => {
   });
 
   useEffect(() => {
-    if (loginError) {
+    if (isSubmitted && loginError) {
       const codeToMessage = new Map();
       codeToMessage.set(`401`, `Данные неверны`);
 
@@ -54,7 +54,7 @@ const Login: FC = () => {
         pos: `bottom-right`,
       });
     }
-  }, [loginError]);
+  }, [loginError, isSubmitted]);
 
   return (
     <div className={`uk-flex uk-flex-center uk-flex-middle uk-width-1-1 uk-height-1-1`}>
