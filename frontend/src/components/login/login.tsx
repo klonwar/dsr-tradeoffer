@@ -45,7 +45,7 @@ const Login: FC = () => {
   const isPending = useSelector(isUserRequestPendingSelector);
   const loginError = useSelector(userRequestErrorSelector);
 
-  const { register, handleSubmit, formState: { errors, isSubmitted } } = useForm<UserFormData>({
+  const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm<UserFormData>({
     resolver: classValidatorResolver(UserFormData),
   });
 
@@ -54,7 +54,7 @@ const Login: FC = () => {
   });
 
   useEffect(() => {
-    if (isSubmitted && loginError) {
+    if (isSubmitSuccessful && loginError) {
       const codeToMessage = new Map();
       codeToMessage.set(`401`, `Данные неверны`);
 
@@ -65,7 +65,7 @@ const Login: FC = () => {
         pos: `bottom-right`,
       });
     }
-  }, [loginError, isSubmitted]);
+  }, [loginError, isSubmitSuccessful]);
 
   return (
     <div className={`uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-width-1-1 uk-height-1-1`}>

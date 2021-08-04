@@ -16,7 +16,7 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
   const registrationError = useSelector(userRequestErrorSelector);
 
   const { registrationState } = useContext(RegistrationContext);
-  const { handleSubmit, setValue, formState: { errors, isSubmitted } } = useForm<CreateUserDto>({
+  const { handleSubmit, setValue, formState: { errors, isSubmitSuccessful } } = useForm<CreateUserDto>({
     resolver: classValidatorResolver(CreateUserDto),
   });
 
@@ -30,13 +30,13 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
   }, [registrationState, setValue]);
 
   useEffect(() => {
-    if (isSubmitted && registrationError) {
+    if (isSubmitSuccessful && registrationError) {
       UIkit.notification({
         message: registrationError.message,
         pos: `bottom-right`,
       });
     }
-  }, [registrationError, isSubmitted]);
+  }, [registrationError, isSubmitSuccessful]);
 
   return (
     <form onSubmit={handleSubmit((data) => {
