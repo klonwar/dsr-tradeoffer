@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { isAuthorizedSelector } from '#src/js/redux/selectors';
 import { Link, useHistory } from 'react-router-dom';
 import { Wizard, WizardActionOverrideData, WizardStep } from '#components/wizard/wizard';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { FirstRegistrationStep } from './steps/first-registration-step';
 import { SecondRegistrationStep } from './steps/second-registration-step';
 import { ThirdRegistrationStep } from '#components/registration/steps/third-registration-step';

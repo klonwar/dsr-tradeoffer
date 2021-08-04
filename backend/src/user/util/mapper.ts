@@ -1,7 +1,7 @@
-import { UserDto } from '#src/user/dto/user.dto';
 import { Profile } from '#src/user/entity/profile.entity';
 import { User } from '#src/user/entity/user.entity';
 import * as moment from 'moment';
+import { UserDto } from '#server/common/dto/user.dto';
 
 export const toUserDTO = (user: User, profile?: Profile): UserDto => {
   const { id, login: username, role } = user;

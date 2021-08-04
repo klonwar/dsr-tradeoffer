@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { SerializedError } from '@reduxjs/toolkit';
 import { Expose } from 'class-transformer';
-import { BackendErrorDto } from '#src/js/dto/backend-error.dto';
+import { BackendErrorDto } from '#server/common/dto/backend-error.dto';
 
 export class SerializedAxiosError implements SerializedError {
   @Expose()

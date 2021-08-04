@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 
 export interface RegistrationOperationResult {
   access_token: string;

@@ -94,6 +94,7 @@ module.exports = {
       "#components": path.resolve(__dirname, `src`, `components`),
       "#src": path.resolve(__dirname, `src`),
       "#client": path.resolve(__dirname),
+      "#server": path.resolve(__dirname, `..`, `backend`)
     },
   },
   optimization: optimization(),

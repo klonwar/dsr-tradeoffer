@@ -1,11 +1,11 @@
 import { IsOptional } from 'class-validator';
-import { Match } from '#src/js/class-validator/validator-extend-match-decorator';
+import { Match } from '#server/common/validators/validator-extend-match-decorator';
 import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { createRegistrationInput } from '#components/registration/util/create-registration-input';
 import { RegistrationContext } from '#components/registration/registration';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 
 class FirstStepData extends CreateUserDto {
 

@@ -6,7 +6,7 @@ import { isUserRequestPendingSelector, userRequestErrorSelector } from '#src/js/
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import UIkit from 'uikit';
 
 export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {

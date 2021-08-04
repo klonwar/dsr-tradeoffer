@@ -5,7 +5,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { createRegistrationInput } from '#components/registration/util/create-registration-input';
 import InputHint from '#components/input-hint/input-hint';
 import { RegistrationContext } from '#components/registration/registration';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 
 export class SecondStepData extends CreateUserDto {
   @IsOptional()

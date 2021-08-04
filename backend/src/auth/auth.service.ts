@@ -7,11 +7,11 @@ import {
 import { UsersService } from '#src/user/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { UserDto } from '#src/user/dto/user.dto';
 import { toUserDTO } from '#src/user/util/mapper';
-import { JwtDto } from '#src/user/dto/jwt.dto';
-import { CreateUserDto } from '#src/user/dto/create-user.dto';
 import { getMessageFromValidator } from '#src/user/util/get-message-from-validator';
+import { UserDto } from '#server/common/dto/user.dto';
+import { JwtDto } from '#server/common/dto/jwt.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {

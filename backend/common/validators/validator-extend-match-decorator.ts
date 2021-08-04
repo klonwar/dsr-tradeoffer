@@ -1,6 +1,7 @@
 import { ClassConstructor } from 'class-transformer';
 import {
-  registerDecorator, ValidationArguments,
+  registerDecorator,
+  ValidationArguments,
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,

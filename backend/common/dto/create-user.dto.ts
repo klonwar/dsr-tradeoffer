@@ -1,5 +1,13 @@
-import { IsDateString, IsEmail, IsMobilePhone, IsNotEmpty, IsOptional, Matches, MinLength } from 'class-validator';
-import { MaxDateString } from '#src/js/class-validator/validator-extend-max-date-string-decorator';
+import {
+  IsDateString,
+  IsEmail,
+  IsMobilePhone,
+  IsNotEmpty,
+  IsOptional,
+  Matches,
+  MinLength,
+} from 'class-validator';
+import { MaxDateString } from '#server/common/validators/validator-extend-max-date-string-decorator';
 
 const get18yoDate = () => {
   const targetDate = new Date();
@@ -32,7 +40,9 @@ export class CreateUserDto {
   @IsNotEmpty({ message: `Нужно указать дату рождения` })
   birthday: string;
 
-  @Matches(/^[^\n]+\.((png)|(jp[e]?g))$/, { message: `Фотография должна быть .png или .jpg/.jpeg` })
+  @Matches(/^[^\n]+\.((png)|(jp[e]?g))$/, {
+    message: `Фотография должна быть .png или .jpg/.jpeg`,
+  })
   @IsOptional()
   photo?: string;
 }

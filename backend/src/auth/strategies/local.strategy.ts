@@ -6,9 +6,9 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserDto } from '#src/user/dto/user.dto';
 import { getMessageFromValidator } from '#src/user/util/get-message-from-validator';
-import { LoginUserDto } from '#src/user/dto/login-user.dto';
+import { UserDto } from '#server/common/dto/user.dto';
+import { LoginUserDto } from '#server/common/dto/login-user.dto';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {

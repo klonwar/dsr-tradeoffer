@@ -9,7 +9,7 @@ import { isAuthorizedSelector, isUserRequestPendingSelector, userRequestErrorSel
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import UIkit from 'uikit';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 
 export class UserFormData extends CreateUserDto {
 

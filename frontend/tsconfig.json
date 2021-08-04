@@ -11,7 +11,8 @@
     "paths": {
       "#components/*": ["src/components/*"],
       "#src/*": ["src/*"],
-      "#client/*": ["*"]
+      "#client/*": ["*"],
+      "#server/*": ["../backend/*"]
     },
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
