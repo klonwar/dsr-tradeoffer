@@ -49,17 +49,21 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
             <div key={key} className={`uk-margin-small uk-margin-remove-bottom`}>
               <div className={`uk-flex`}>
                 <div>{keyToLabelText.get(key as CreateUserDtoKeyWithPwdConfirmation)}:</div>
-                <div className={`uk-width-expand uk-text-right`}>{
-                  (
-                    (key === `password`)
-                      ? registrationState[key]?.replaceAll(/[^\n]/g, `*`)
-                      : registrationState[key]
-                  ) ?? `Отсутствует`
-                }</div>
+                <div className={`uk-width-expand uk-text-right`}>{(() => {
+                  if (key === `password`)
+                    return registrationState[key]?.replaceAll(/[^\n]/g, `*`) ?? `Не введен`;
+
+                  if (key === `photo`)
+                    return (registrationState[key]) ? `Загружено` : `Не загружено`;
+
+                  return registrationState[key] ?? `Отсутствует`;
+                })()}</div>
               </div>
               {(errors[key])
                 ? (
-                  <span className={`uk-label-danger uk-padding-small uk-padding-remove-vertical`}>{errors[key].message}</span>
+                  <span className={`uk-label-danger uk-padding-small uk-padding-remove-vertical`}>
+                    {errors[key].message}
+                  </span>
                 )
                 : null
               }
