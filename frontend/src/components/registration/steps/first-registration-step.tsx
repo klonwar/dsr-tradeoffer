@@ -43,7 +43,6 @@ export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
         {
           createRegistrationInput<FirstStepData>({
             name: `username`,
-            label: `Имя пользователя`,
             placeholder: `bradeazy`,
             icon: `user`,
             isRequired: true,
@@ -55,7 +54,6 @@ export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
         {
           createRegistrationInput<FirstStepData>({
             name: `email`,
-            label: `Почта`,
             type: `email`,
             placeholder: `your@gmail.com`,
             icon: `mail`,
@@ -68,7 +66,6 @@ export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
         {
           createRegistrationInput<FirstStepData>({
             name: `password`,
-            label: `Пароль`,
             type: `password`,
             placeholder: `12345678`,
             icon: `lock`,
@@ -81,7 +78,6 @@ export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
         {
           createRegistrationInput<FirstStepData>({
             name: `passwordConfirmation`,
-            label: `Подтверждение пароля`,
             type: `password`,
             placeholder: `12345678`,
             icon: `lock`,

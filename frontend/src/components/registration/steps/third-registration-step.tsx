@@ -8,6 +8,7 @@ import { Operations } from '#src/js/redux/operations/operations';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import UIkit from 'uikit';
+import { CreateUserDtoKeyWithPwdConfirmation, keyToLabelText } from '#components/registration/util/key-to-label-text';
 
 export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
   const dispatch = useAppDispatch();
@@ -42,18 +43,30 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
       dispatch(Operations.registration(data));
     })}>
       <h1 className={`uk-card-title`}>Все верно?</h1>
-      <div className={`uk-flex uk-flex-column uk-flex-middle`}>
-        <pre>
-          {JSON.stringify(registrationState, null, 2)}
-        </pre>
+      <div className={`uk-flex uk-flex-column`}>
+        {Object.entries(new CreateUserDto()).map(([key]) => {
+          return (
+            <div key={key} className={`uk-margin-small uk-margin-remove-bottom`}>
+              <div className={`uk-flex`}>
+                <div>{keyToLabelText.get(key as CreateUserDtoKeyWithPwdConfirmation)}:</div>
+                <div className={`uk-width-expand uk-text-right`}>{
+                  (
+                    (key === `password`)
+                      ? registrationState[key]?.replaceAll(/[^\n]/g, `*`)
+                      : registrationState[key]
+                  ) ?? `Отсутствует`
+                }</div>
+              </div>
+              {(errors[key])
+                ? (
+                  <span className={`uk-label-danger uk-padding-small uk-padding-remove-vertical`}>{errors[key].message}</span>
+                )
+                : null
+              }
+            </div>
+          );
+        })}
       </div>
-      {(errors) ? (
-        <div className={`uk-flex uk-flex-column uk-flex-middle`}>
-          <pre>
-            {JSON.stringify(errors, null, 2)}
-          </pre>
-        </div>
-      ) : null}
       <div className={`uk-child-width-expand uk-margin  uk-margin-remove-bottom`} uk-grid={``}>
         <div>
           <a href={`#`} className={`uk-button uk-button-default uk-width-1-1`}

@@ -1,11 +1,12 @@
-import { FieldErrors } from 'react-hook-form';
+import { FieldErrors, FieldPath } from 'react-hook-form';
 import React from 'react';
 import InputHint from '#components/input-hint/input-hint';
+import { keyToLabelText } from '#components/registration/util/key-to-label-text';
+import { CreateUserDto } from '#client/../backend/common/dto/create-user.dto';
 
 interface CreateInputPropsInterface<T> {
-  name: string,
+  name: FieldPath<CreateUserDto> | `passwordConfirmation`,
   type?: string,
-  label: string,
   icon: string,
   placeholder: string,
   isRequired?: boolean,
@@ -16,7 +17,6 @@ interface CreateInputPropsInterface<T> {
 export const createRegistrationInput = <T extends unknown>({
                                                              name,
                                                              type = `text`,
-                                                             label,
                                                              icon,
                                                              placeholder,
                                                              isRequired = false,
@@ -26,7 +26,7 @@ export const createRegistrationInput = <T extends unknown>({
                                                            }: CreateInputPropsInterface<T>): React.ReactNode => (
   <div className={`uk-inline uk-width-expand uk-margin-small uk-margin-remove-top`}>
     <div className='uk-flex uk-form-label'>
-      <span>{label}</span>
+      <span>{keyToLabelText.get(name) ?? `unknown`}</span>
       {(isRequired) ? <span className={`RedAsterisk`}>*</span> : null}
     </div>
     <div className={`uk-position-relative`}>

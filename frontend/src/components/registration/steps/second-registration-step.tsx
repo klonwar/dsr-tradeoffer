@@ -6,6 +6,7 @@ import { createRegistrationInput } from '#components/registration/util/create-re
 import InputHint from '#components/input-hint/input-hint';
 import { RegistrationContext } from '#components/registration/registration';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
+import { keyToLabelText } from '#components/registration/util/key-to-label-text';
 
 export class SecondStepData extends CreateUserDto {
   @IsOptional()
@@ -23,7 +24,7 @@ export class SecondStepData extends CreateUserDto {
 const getPhotoInput = (register, errors) => (
   <div className={`uk-inline uk-width-expand uk-margin-small uk-margin-remove-top`}>
     <div className='uk-flex uk-form-label'>
-      <span>Фотография</span>
+      <span>{keyToLabelText.get(`photo`)}</span>
     </div>
     <div className={`uk-position-relative`}>
       <div className={`uk-flex`} uk-form-custom={`target: true`}>
@@ -67,7 +68,6 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
         {
           createRegistrationInput<SecondStepData>({
             name: `firstName`,
-            label: `Ваше имя`,
             placeholder: `Вася`,
             icon: `user`,
             isRequired: true,
@@ -79,7 +79,6 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
         {
           createRegistrationInput<SecondStepData>({
             name: `phone`,
-            label: `Телефон`,
             type: `tel`,
             placeholder: `(800)-555-35-35`,
             icon: `phone`,
@@ -92,7 +91,6 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
         {
           createRegistrationInput<SecondStepData>({
             name: `birthday`,
-            label: `Дата рождения`,
             type: `date`,
             placeholder: ``,
             icon: `lock`,
