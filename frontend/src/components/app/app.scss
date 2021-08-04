@@ -1,0 +1,18 @@
+@include disable-chrome-autocomplete($default-text-color, $default-font);
+
+html, body, #root {
+  @extend %custom-scrollbar;
+  width: 100%;
+  height: 100vh;
+
+  color: #333;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  font-family: "Fira Code", monospace !important;
+}

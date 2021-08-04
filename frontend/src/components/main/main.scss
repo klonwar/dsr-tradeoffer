@@ -1,0 +1,42 @@
+.MainWrapper {
+  display: flex;
+  justify-content: center;
+
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 140px;
+    width: 100%;
+    align-items: center;
+
+    @media (min-width: $breakpoint-small) {
+      width: $breakpoint-small - 50px;
+      align-items: flex-start;
+    }
+
+    @media (min-width: $breakpoint-medium) {
+      width: $breakpoint-medium - 100px;
+    }
+
+    @media (min-width: $breakpoint-large) {
+      width: $breakpoint-large - 200px;
+    }
+
+    & h4 {
+      max-width: 600px;
+    }
+  }
+
+  &-buttons {
+    @media (max-width: $breakpoint-small) {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    & > a:first-child {
+      margin-right: $margin-small-margin;
+    }
+  }
+}
