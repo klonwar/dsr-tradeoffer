@@ -1,0 +1,13 @@
+.Header {
+  &-link {
+    height: 50px;
+    width: 50px;
+    padding: $padding-small-padding;
+    background-size: cover;
+
+    &--withImage {
+      background-color: rgba(#fff, 0.85);
+      background-blend-mode: color;
+    }
+  }
+}
