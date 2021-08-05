@@ -12,6 +12,7 @@ import { getMessageFromValidator } from '#src/user/util/get-message-from-validat
 import { UserDto } from '#server/common/dto/user.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
+import * as fs from 'fs';
 
 @Injectable()
 export class AuthService {
@@ -39,32 +40,42 @@ export class AuthService {
   }
 
   async register(createUserDto: CreateUserDto): Promise<JwtDto> {
-    const validationError: string = await getMessageFromValidator(
-      CreateUserDto,
-      createUserDto,
-    );
-
-    if (validationError) throw new BadRequestException(validationError);
-
-    const { username, email } = createUserDto;
-
-    if (await this.usersService.findOneByUsername(username))
-      throw new ConflictException(
-        `Пользователь с таким логином уже существует`,
+    try {
+      const validationError: string = await getMessageFromValidator(
+        CreateUserDto,
+        createUserDto,
       );
 
-    if (await this.usersService.findOneByEmail(email))
-      throw new ConflictException(`Пользователь с такой почтой уже существует`);
+      if (validationError) throw new BadRequestException(validationError);
 
-    let newUser: UserDto;
-    try {
-      newUser = await this.usersService.createUser(createUserDto);
+      const { username, email } = createUserDto;
+
+      if (await this.usersService.findOneByUsername(username))
+        throw new ConflictException(
+          `Пользователь с таким логином уже существует`,
+        );
+
+      if (await this.usersService.findOneByEmail(email))
+        throw new ConflictException(
+          `Пользователь с такой почтой уже существует`,
+        );
+
+      let newUser: UserDto;
+      try {
+        newUser = await this.usersService.createUser(createUserDto);
+      } catch (e) {
+        throw new InternalServerErrorException(e);
+      }
+
+      return {
+        access_token: this.jwtService.sign(newUser),
+      };
     } catch (e) {
-      throw new InternalServerErrorException(e);
+      if (createUserDto.photoPath) {
+        // Удаляем загруженную фотографию, если произошла ошибка
+        await fs.unlink(createUserDto.photoPath, () => {});
+      }
+      throw e;
     }
-
-    return {
-      access_token: this.jwtService.sign(newUser),
-    };
   }
 }
