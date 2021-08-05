@@ -19,7 +19,7 @@ class FirstStepData extends CreateUserDto {
   @IsOptional()
   birthday;
   @IsOptional()
-  photo;
+  photoPath;
 
 }
 

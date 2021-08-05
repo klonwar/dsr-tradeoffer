@@ -47,15 +47,15 @@ export class UsersService {
     });
     await this.userRepository.save(userEntity);
 
-    const { email, phone, firstName, photo, birthday } = createUserDto;
+    const { email, phone, firstName, photoPath, birthday } = createUserDto;
 
     const userProfile = this.profileRepository.create({
       user_id: userEntity.id,
       email,
       phone,
       firstName,
-      photo,
       birthday: new Date(birthday),
+      photo: photoPath,
     });
 
     await this.profileRepository.save(userProfile);

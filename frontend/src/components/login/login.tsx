@@ -26,7 +26,7 @@ export class UserFormData extends CreateUserDto {
   birthday;
 
   @IsOptional()
-  photo;
+  photoPath;
 
 }
 

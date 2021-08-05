@@ -11,4 +11,4 @@ keyToLabelText.set(`passwordConfirmation`, `Подтверждение паро�
 keyToLabelText.set(`firstName`, `Ваше имя`);
 keyToLabelText.set(`phone`, `Телефон`);
 keyToLabelText.set(`birthday`, `Дата рождения`);
-keyToLabelText.set(`photo`, `Фотография`);
+keyToLabelText.set(`photoPath`, `Фотография`);

@@ -24,7 +24,7 @@ const PhotoInput: FC = () => {
   return (
     <div className={`uk-inline uk-width-expand uk-margin-small uk-margin-remove-top`}>
       <div className='uk-flex uk-form-label'>
-        <span>{keyToLabelText.get(`photo`)}</span>
+        <span>{keyToLabelText.get(`photoPath`)}</span>
       </div>
       <div className={`uk-position-relative`}>
         <div className={`uk-flex`} uk-form-custom={`target: true`}>

@@ -53,7 +53,7 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
                   if (key === `password`)
                     return registrationState[key]?.replaceAll(/[^\n]/g, `*`) ?? `Не введен`;
 
-                  if (key === `photo`)
+                  if (key === `photoPath`)
                     return (photo) ? photo.name : `Не загружено`;
 
                   return registrationState[key] ?? `Отсутствует`;

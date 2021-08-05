@@ -16,6 +16,6 @@ export const toUserDTO = (user: User, profile?: Profile): UserDto => {
     firstName,
     phone,
     birthday: moment(birthday).format(`YYYY-MM-DD`),
-    photo,
+    photoPath: photo,
   };
 };
