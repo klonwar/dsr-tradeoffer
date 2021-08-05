@@ -2,10 +2,10 @@ import { IsOptional } from 'class-validator';
 import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { createRegistrationInput } from '#components/registration/util/create-registration-input';
 import { RegistrationContext } from '#components/registration/registration';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { keyToLabelText } from '#components/registration/util/key-to-label-text';
+import { RegistrationInput } from '#components/registration/registration-input';
 
 export class SecondStepData extends CreateUserDto {
   @IsOptional()
@@ -65,40 +65,34 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
       <h1 className={`uk-card-title`}>Регистрация</h1>
       <div className={`uk-flex uk-flex-column uk-flex-middle`}>
         <form id={`user-info-form`} onSubmit={onSubmit}>
-          {
-            createRegistrationInput<SecondStepData>({
-              name: `firstName`,
-              placeholder: `Вася`,
-              icon: `user`,
-              isRequired: true,
-              register,
-              errors,
-            })
-          }
+          <RegistrationInput
+            name={`firstName`}
+            placeholder={`Вася`}
+            icon={`user`}
+            isRequired={true}
+            register={register}
+            errors={errors}
+          />
 
-          {
-            createRegistrationInput<SecondStepData>({
-              name: `phone`,
-              type: `tel`,
-              placeholder: `(800)-555-35-35`,
-              icon: `phone`,
-              isRequired: true,
-              register,
-              errors,
-            })
-          }
+          <RegistrationInput
+            name={`phone`}
+            type={`tel`}
+            placeholder={`8005553535`}
+            icon={`phone`}
+            isRequired={true}
+            register={register}
+            errors={errors}
+          />
 
-          {
-            createRegistrationInput<SecondStepData>({
-              name: `birthday`,
-              type: `date`,
-              placeholder: ``,
-              icon: `lock`,
-              isRequired: true,
-              register,
-              errors,
-            })
-          }
+          <RegistrationInput
+            name={`birthday`}
+            type={`date`}
+            placeholder={``}
+            icon={`lock`}
+            isRequired={true}
+            register={register}
+            errors={errors}
+          />
         </form>
 
         <PhotoInput />

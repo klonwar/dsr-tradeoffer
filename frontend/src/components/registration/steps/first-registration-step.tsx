@@ -3,9 +3,9 @@ import { Match } from '#server/common/validators/validator-extend-match-decorato
 import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { createRegistrationInput } from '#components/registration/util/create-registration-input';
 import { RegistrationContext } from '#components/registration/registration';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
+import { RegistrationInput } from '#components/registration/registration-input';
 
 class FirstStepData extends CreateUserDto {
 
@@ -39,53 +39,44 @@ export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
     <form onSubmit={onSubmit}>
       <h1 className={`uk-card-title`}>Регистрация</h1>
       <div className={`uk-flex uk-flex-column uk-flex-middle`}>
+        <RegistrationInput
+          name={`username`}
+          placeholder={`bradeazy`}
+          icon={`user`}
+          isRequired={true}
+          register={register}
+          errors={errors}
+        />
 
-        {
-          createRegistrationInput<FirstStepData>({
-            name: `username`,
-            placeholder: `bradeazy`,
-            icon: `user`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
+        <RegistrationInput
+          name={`email`}
+          type={`email`}
+          placeholder={`your@gmail.com`}
+          icon={`mail`}
+          isRequired={true}
+          register={register}
+          errors={errors}
+        />
 
-        {
-          createRegistrationInput<FirstStepData>({
-            name: `email`,
-            type: `email`,
-            placeholder: `your@gmail.com`,
-            icon: `mail`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
+        <RegistrationInput
+          name={`password`}
+          type={`password`}
+          icon={`lock`}
+          placeholder={`12345678`}
+          isRequired={true}
+          register={register}
+          errors={errors}
+        />
 
-        {
-          createRegistrationInput<FirstStepData>({
-            name: `password`,
-            type: `password`,
-            placeholder: `12345678`,
-            icon: `lock`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
-
-        {
-          createRegistrationInput<FirstStepData>({
-            name: `passwordConfirmation`,
-            type: `password`,
-            placeholder: `12345678`,
-            icon: `lock`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
+        <RegistrationInput
+          name={`passwordConfirmation`}
+          type={`password`}
+          icon={`lock`}
+          placeholder={`12345678`}
+          isRequired={true}
+          register={register}
+          errors={errors}
+        />
       </div>
       <div className={`uk-child-width-expand uk-margin uk-margin-remove-bottom`} uk-grid={``}>
         <div>
