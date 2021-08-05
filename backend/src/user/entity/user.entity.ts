@@ -37,6 +37,6 @@ export class User {
   }
 
   // Relations
-  @OneToOne(() => Profile, (profile) => profile.user)
+  @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   profile: Profile;
 }

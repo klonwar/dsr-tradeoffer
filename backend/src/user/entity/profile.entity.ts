@@ -22,7 +22,7 @@ export class Profile {
   photo: string;
 
   // Relations
-  @OneToOne(() => User, { primary: true, onDelete: `CASCADE`, cascade: true })
+  @OneToOne(() => User, { primary: true, onDelete: `CASCADE` })
   @JoinColumn({ name: `user_id` })
   user: User;
 }

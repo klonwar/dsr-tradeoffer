@@ -35,16 +35,9 @@ export class UsersService {
 
   async createUser(createUserDto: CreateUserDto): Promise<UserDto> {
     const { username, password } = createUserDto;
-
-    const userEntity = this.userRepository.create({
-      login: username,
-      password,
-    });
-
     const { email, phone, firstName, photoPath, birthday } = createUserDto;
 
     const userProfile = this.profileRepository.create({
-      user: userEntity,
       email,
       phone,
       firstName,
@@ -52,7 +45,15 @@ export class UsersService {
       photo: photoPath,
     });
 
-    await this.profileRepository.save(userProfile);
+    const userEntity = this.userRepository.create({
+      login: username,
+      password,
+      profile: userProfile,
+    });
+
+    await this.userRepository.save(userEntity);
+
+    console.log(userEntity);
 
     return toUserDTO(userEntity);
   }
