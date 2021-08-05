@@ -25,7 +25,6 @@ export class IsPhotoPathConstraint implements ValidatorConstraintInterface {
   }
 
   defaultMessage(args: ValidationArguments) {
-    const [constraintProperty]: Date[] = args.constraints;
-    return `${args.property} must not be bigger than ${constraintProperty}`;
+    return `${args.property} must be image`;
   }
 }
