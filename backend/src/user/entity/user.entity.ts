@@ -1,5 +1,12 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Profile } from '#src/user/entity/profile.entity';
 
 export enum UserRole {
   ADMIN = `admin`,
@@ -28,4 +35,8 @@ export class User {
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
   }
+
+  // Relations
+  @OneToOne(() => Profile, (profile) => profile.user)
+  profile: Profile;
 }

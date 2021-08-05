@@ -23,10 +23,7 @@ export class AuthService {
     // Найдем пользователя по переданным данным и проверим пароль
     const user = await this.usersService.findOneByUsername(username);
     if (user && (await bcrypt.compare(password, user.password))) {
-      // Загрузим дополнительную информацию о пользователе
-      const userProfile = await this.usersService.findUserProfile(user);
-
-      return toUserDTO(user, userProfile);
+      return toUserDTO(user);
     }
     return null;
   }

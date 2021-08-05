@@ -18,24 +18,19 @@ export class UsersService {
 
   // Выгрузка информации о всех пользователях с добавлением данных из Profile
   async findAll(): Promise<UserDto[]> {
-    const users = await this.userRepository.find();
-    const profiles = (
-      await Promise.allSettled(users.map((user) => this.findUserProfile(user)))
-    ).map((item) => (item.status === `fulfilled` ? item.value : null));
-
-    return users.map((user, index) => toUserDTO(user, profiles[index]));
+    const users = await this.userRepository.find({ relations: [`profile`] });
+    return users.map((user) => toUserDTO(user));
   }
 
   findOneByUsername(username: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { login: username } });
+    return this.userRepository.findOne({
+      where: { login: username },
+      relations: [`profile`],
+    });
   }
 
   findOneByEmail(email: string): Promise<Profile | undefined> {
     return this.profileRepository.findOne({ email });
-  }
-
-  findUserProfile(user: User): Promise<Profile> {
-    return this.profileRepository.findOne(user.id);
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<UserDto> {
@@ -45,12 +40,11 @@ export class UsersService {
       login: username,
       password,
     });
-    await this.userRepository.save(userEntity);
 
     const { email, phone, firstName, photoPath, birthday } = createUserDto;
 
     const userProfile = this.profileRepository.create({
-      user_id: userEntity.id,
+      user: userEntity,
       email,
       phone,
       firstName,
@@ -60,6 +54,6 @@ export class UsersService {
 
     await this.profileRepository.save(userProfile);
 
-    return toUserDTO(userEntity, userProfile);
+    return toUserDTO(userEntity);
   }
 }
