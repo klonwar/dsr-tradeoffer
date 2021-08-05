@@ -53,8 +53,6 @@ export class UsersService {
 
     await this.userRepository.save(userEntity);
 
-    console.log(userEntity);
-
     return toUserDTO(userEntity);
   }
 }

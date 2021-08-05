@@ -6,9 +6,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './user/users.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from '#src/auth/guards/jwt-auth.guard';
+import { UploadsModule } from '#src/uploads/uploads.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(), UsersModule, AuthModule, UploadsModule],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
