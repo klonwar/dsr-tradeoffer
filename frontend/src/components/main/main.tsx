@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { isAuthorizedSelector, userDataSelector } from '#src/js/redux/selectors';
-import jwt from 'jsonwebtoken';
+import { isAuthorizedSelector } from '#src/js/redux/selectors';
 
 const MainUnauthorized: FC = () => {
   return (

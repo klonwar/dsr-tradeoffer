@@ -9,16 +9,31 @@ export interface RegistrationOperationResult {
   access_token: string;
 }
 
-export const registrationOperation: AsyncThunkPayloadCreator<RegistrationOperationResult, CreateUserDto, { rejectValue: SerializedAxiosError }> =
-  async (payload, { rejectWithValue }) => {
-    try {
-      const res = await axiosInstance.post<RegistrationOperationResult>(`auth/register`, payload);
-      return res.data;
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        return rejectWithValue(classToPlain(new SerializedAxiosError(e)));
-      } else {
-        return rejectWithValue(e);
-      }
+export const registrationOperation: AsyncThunkPayloadCreator<RegistrationOperationResult, {
+  data: CreateUserDto,
+  photo?: File
+}, { rejectValue: SerializedAxiosError }> = async ({
+                                                     data,
+                                                     photo = null,
+                                                   }, { rejectWithValue }) => {
+  try {
+    const formData = new FormData();
+    Object.entries(data).map(([key, value]) => {
+      formData.append(key, value);
+    });
+    formData.append(`photo`, photo);
+    const res = await axiosInstance.post<RegistrationOperationResult>(`auth/register`, formData, {
+      headers: {
+        'Content-Type': `multipart/form-data`,
+      },
+    });
+
+    return res.data;
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return rejectWithValue(classToPlain(new SerializedAxiosError(e)));
+    } else {
+      return rejectWithValue(e);
     }
-  };
+  }
+};

@@ -11,10 +11,13 @@ import { ThirdRegistrationStep } from '#components/registration/steps/third-regi
 export const RegistrationContext = createContext<{
   registrationState: Partial<CreateUserDto>;
   appendToState: (data: Partial<CreateUserDto>) => void;
+  photo: File;
+  setPhoto: (file: File) => void
 }>(null);
 
 const Registration: FC = () => {
   const [registrationState, setRegistrationState] = useState<Partial<CreateUserDto>>({});
+  const [photo, setPhoto] = useState<File>(null);
   const history = useHistory();
   const isAuthorized = useSelector(isAuthorizedSelector);
   const [progress, setProgress] = useState<number>(0);
@@ -35,7 +38,7 @@ const Registration: FC = () => {
   }, [history, isAuthorized]);
 
   return (
-    <RegistrationContext.Provider value={{ registrationState, appendToState }}>
+    <RegistrationContext.Provider value={{ registrationState, appendToState, photo, setPhoto }}>
       <div className={`uk-flex uk-flex-column uk-margin-auto-vertical uk-flex-middle uk-width-1-1`}>
         <h4 className={`uk-margin-remove`}>
           {Math.min(progress + 1, maxProgress)} / {maxProgress}

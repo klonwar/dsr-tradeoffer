@@ -15,7 +15,7 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
   const isPending = useSelector(isUserRequestPendingSelector);
   const registrationError = useSelector(userRequestErrorSelector);
 
-  const { registrationState } = useContext(RegistrationContext);
+  const { registrationState, photo } = useContext(RegistrationContext);
   const { handleSubmit, setValue, formState: { errors, isSubmitSuccessful } } = useForm<CreateUserDto>({
     resolver: classValidatorResolver(CreateUserDto),
   });
@@ -40,11 +40,11 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
 
   return (
     <form onSubmit={handleSubmit((data) => {
-      dispatch(Operations.registration(data));
+      dispatch(Operations.registration({data, photo}));
     })}>
       <h1 className={`uk-card-title`}>Все верно?</h1>
       <div className={`uk-flex uk-flex-column`}>
-        {Object.entries(new CreateUserDto()).map(([key]) => {
+        {Object.keys(new CreateUserDto()).map((key) => {
           return (
             <div key={key} className={`uk-margin-small uk-margin-remove-bottom`}>
               <div className={`uk-flex`}>
@@ -54,7 +54,7 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
                     return registrationState[key]?.replaceAll(/[^\n]/g, `*`) ?? `Не введен`;
 
                   if (key === `photo`)
-                    return (registrationState[key]) ? `Загружено` : `Не загружено`;
+                    return (photo) ? photo.name : `Не загружено`;
 
                   return registrationState[key] ?? `Отсутствует`;
                 })()}</div>
