@@ -1,51 +1,10 @@
-import { IsOptional } from 'class-validator';
 import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { RegistrationContext } from '#components/registration/registration';
-import { CreateUserDto } from '#server/common/dto/create-user.dto';
-import { keyToLabelText } from '#components/registration/util/key-to-label-text';
 import { RegistrationInput } from '#components/registration/registration-input';
-
-export class SecondStepData extends CreateUserDto {
-  @IsOptional()
-  username;
-
-  @IsOptional()
-  password;
-
-  @IsOptional()
-  email;
-}
-
-const PhotoInput: FC = () => {
-  const { setPhoto } = useContext(RegistrationContext);
-
-  return (
-    <div className={`uk-inline uk-width-expand uk-margin-small uk-margin-remove-top`}>
-      <div className='uk-flex uk-form-label'>
-        <span>{keyToLabelText.get(`photoPath`)}</span>
-      </div>
-      <div className={`uk-position-relative`}>
-        <div className={`uk-flex`} uk-form-custom={`target: true`}>
-          <input type={`file`} onChange={(e) => {
-            if (e.target) {
-              setPhoto(e.target.files[0]);
-            }
-          }} />
-          <input
-            type={`text`}
-            className={`uk-width-expand uk-input`}
-            placeholder={`Выбрать файл`}
-            disabled={true}
-            style={{ marginRight: `5px` }}
-          />
-          <a href={`#`} className={`uk-button uk-button-default`}>Загрузить</a>
-        </div>
-      </div>
-    </div>
-  );
-};
+import { SecondStepData } from '#components/registration/dto/second-registration-step.dto';
+import { RegistrationPhotoInput } from '../registration-photo-input';
 
 export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> = ({ next, prev }) => {
   const { appendToState } = useContext(RegistrationContext);
@@ -95,7 +54,7 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
           />
         </form>
 
-        <PhotoInput />
+        <RegistrationPhotoInput />
       </div>
       <div className={`uk-child-width-expand uk-margin  uk-margin-remove-bottom`} uk-grid={``}>
         <div>

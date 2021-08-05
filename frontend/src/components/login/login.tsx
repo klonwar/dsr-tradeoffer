@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { IsOptional } from 'class-validator';
 import InputHint from '#components/input-hint/input-hint';
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
@@ -9,26 +8,7 @@ import { isAuthorizedSelector, isUserRequestPendingSelector, userRequestErrorSel
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import UIkit from 'uikit';
-import { CreateUserDto } from '#server/common/dto/create-user.dto';
-
-export class UserFormData extends CreateUserDto {
-
-  @IsOptional()
-  firstName;
-
-  @IsOptional()
-  email;
-
-  @IsOptional()
-  phone;
-
-  @IsOptional()
-  birthday;
-
-  @IsOptional()
-  photoPath;
-
-}
+import { LoginUserDto } from '#server/common/dto/login-user.dto';
 
 const Login: FC = () => {
   const dispatch = useAppDispatch();
@@ -45,8 +25,8 @@ const Login: FC = () => {
   const isPending = useSelector(isUserRequestPendingSelector);
   const loginError = useSelector(userRequestErrorSelector);
 
-  const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm<UserFormData>({
-    resolver: classValidatorResolver(UserFormData),
+  const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm<LoginUserDto>({
+    resolver: classValidatorResolver(LoginUserDto),
   });
 
   const onSubmit = handleSubmit((data) => {

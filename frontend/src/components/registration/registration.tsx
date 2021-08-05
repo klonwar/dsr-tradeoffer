@@ -2,11 +2,12 @@ import React, { createContext, FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { isAuthorizedSelector } from '#src/js/redux/selectors';
 import { Link, useHistory } from 'react-router-dom';
-import { Wizard, WizardActionOverrideData, WizardStep } from '#components/wizard/wizard';
+import { Wizard, WizardActionOverrideData } from '#components/wizard/wizard';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { FirstRegistrationStep } from './steps/first-registration-step';
 import { SecondRegistrationStep } from './steps/second-registration-step';
 import { ThirdRegistrationStep } from '#components/registration/steps/third-registration-step';
+import { WizardStep } from '#components/wizard/wizard-step';
 
 export const RegistrationContext = createContext<{
   registrationState: Partial<CreateUserDto>;

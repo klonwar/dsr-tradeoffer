@@ -1,10 +1,10 @@
 import { IsNotEmpty, MinLength } from 'class-validator';
 
 export class LoginUserDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: `Нужно указать логин` })
   username: string;
 
-  @IsNotEmpty()
-  @MinLength(8)
+  @MinLength(8, { message: `Нужно ввести >= $constraint1 символов` })
+  @IsNotEmpty({ message: `Нужно указать пароль` })
   password: string;
 }

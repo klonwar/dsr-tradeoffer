@@ -1,27 +1,9 @@
-import { IsOptional } from 'class-validator';
-import { Match } from '#server/common/validators/validator-extend-match-decorator';
 import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { RegistrationContext } from '#components/registration/registration';
-import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { RegistrationInput } from '#components/registration/registration-input';
-
-class FirstStepData extends CreateUserDto {
-
-  @Match(FirstStepData, (s) => s.password, { message: `Пароли не совпадают` })
-  passwordConfirmation;
-
-  @IsOptional()
-  firstName;
-  @IsOptional()
-  phone;
-  @IsOptional()
-  birthday;
-  @IsOptional()
-  photoPath;
-
-}
+import { FirstStepData } from '#components/registration/dto/first-registration-step.dto';
 
 export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
   const { appendToState } = useContext(RegistrationContext);
