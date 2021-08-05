@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -8,7 +7,6 @@ import { UsersService } from '#src/user/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { toUserDTO } from '#src/user/util/mapper';
-import { getMessageFromValidator } from '#src/user/util/get-message-from-validator';
 import { UserDto } from '#server/common/dto/user.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
@@ -41,13 +39,6 @@ export class AuthService {
 
   async register(createUserDto: CreateUserDto): Promise<JwtDto> {
     try {
-      const validationError: string = await getMessageFromValidator(
-        CreateUserDto,
-        createUserDto,
-      );
-
-      if (validationError) throw new BadRequestException(validationError);
-
       const { username, email } = createUserDto;
 
       if (await this.usersService.findOneByUsername(username))
