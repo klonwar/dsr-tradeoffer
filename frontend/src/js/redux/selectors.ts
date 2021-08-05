@@ -35,3 +35,10 @@ export const userDataSelector = createSelector<RootState, string, UserDto>(
   jwtTokenSelector,
   (jwtToken) => (jwtToken) ? jwtDecode(jwtToken) as UserDto : undefined,
 );
+
+export const userPhotoUrlSelector = createSelector<RootState, UserDto, string>(
+  userDataSelector,
+  (userData) => (userData?.photoPath)
+    ? `${process.env[`SERVER_ORIGIN`]}/${userData.photoPath.replace(/\\/, `/`)}`
+    : undefined,
+);
