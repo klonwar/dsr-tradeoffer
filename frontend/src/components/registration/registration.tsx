@@ -2,19 +2,23 @@ import React, { createContext, FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { isAuthorizedSelector } from '#src/js/redux/selectors';
 import { Link, useHistory } from 'react-router-dom';
-import { Wizard, WizardActionOverrideData, WizardStep } from '#components/wizard/wizard';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
+import { Wizard, WizardActionOverrideData } from '#components/wizard/wizard';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { FirstRegistrationStep } from './steps/first-registration-step';
 import { SecondRegistrationStep } from './steps/second-registration-step';
 import { ThirdRegistrationStep } from '#components/registration/steps/third-registration-step';
+import { WizardStep } from '#components/wizard/wizard-step';
 
 export const RegistrationContext = createContext<{
   registrationState: Partial<CreateUserDto>;
   appendToState: (data: Partial<CreateUserDto>) => void;
+  photo: File;
+  setPhoto: (file: File) => void
 }>(null);
 
 const Registration: FC = () => {
   const [registrationState, setRegistrationState] = useState<Partial<CreateUserDto>>({});
+  const [photo, setPhoto] = useState<File>(null);
   const history = useHistory();
   const isAuthorized = useSelector(isAuthorizedSelector);
   const [progress, setProgress] = useState<number>(0);
@@ -35,7 +39,7 @@ const Registration: FC = () => {
   }, [history, isAuthorized]);
 
   return (
-    <RegistrationContext.Provider value={{ registrationState, appendToState }}>
+    <RegistrationContext.Provider value={{ registrationState, appendToState, photo, setPhoto }}>
       <div className={`uk-flex uk-flex-column uk-margin-auto-vertical uk-flex-middle uk-width-1-1`}>
         <h4 className={`uk-margin-remove`}>
           {Math.min(progress + 1, maxProgress)} / {maxProgress}

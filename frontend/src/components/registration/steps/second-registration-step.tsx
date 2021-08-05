@@ -1,50 +1,10 @@
-import { IsOptional } from 'class-validator';
 import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { createRegistrationInput } from '#components/registration/util/create-registration-input';
-import InputHint from '#components/input-hint/input-hint';
 import { RegistrationContext } from '#components/registration/registration';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
-
-export class SecondStepData extends CreateUserDto {
-  @IsOptional()
-  username;
-
-  @IsOptional()
-  password;
-
-  @IsOptional()
-  email;
-}
-
-// todo
-
-const getPhotoInput = (register, errors) => (
-  <div className={`uk-inline uk-width-expand uk-margin-small uk-margin-remove-top`}>
-    <div className='uk-flex uk-form-label'>
-      <span>Фотография</span>
-    </div>
-    <div className={`uk-position-relative`}>
-      <div className={`uk-flex`} uk-form-custom={`target: true`}>
-        <input type={`file`} {...register(`photo`)} />
-        <input
-          type={`text`}
-          className={`uk-width-expand uk-input${(errors.photo) ? ` uk-form-danger` : ``}`}
-          placeholder={`Выбрать файл`}
-          disabled={true}
-          style={{ marginRight: `5px` }}
-        />
-        <InputHint
-          text={errors.photo?.message}
-          className={`uk-position-center-right-out`}
-          isActive={!!errors.photo}
-        />
-        <a href={`#`} className={`uk-button uk-button-default`}>Загрузить</a>
-      </div>
-    </div>
-  </div>
-);
+import { RegistrationInput } from '#components/registration/registration-input';
+import { SecondStepData } from '#components/registration/dto/second-registration-step.dto';
+import { RegistrationPhotoInput } from '../registration-photo-input';
 
 export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> = ({ next, prev }) => {
   const { appendToState } = useContext(RegistrationContext);
@@ -60,50 +20,41 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
 
 
   return (
-    <form onSubmit={onSubmit}>
+    <>
       <h1 className={`uk-card-title`}>Регистрация</h1>
       <div className={`uk-flex uk-flex-column uk-flex-middle`}>
+        <form id={`user-info-form`} onSubmit={onSubmit}>
+          <RegistrationInput
+            name={`firstName`}
+            placeholder={`Вася`}
+            icon={`user`}
+            isRequired={true}
+            register={register}
+            errors={errors}
+          />
 
-        {
-          createRegistrationInput<SecondStepData>({
-            name: `firstName`,
-            label: `Ваше имя`,
-            placeholder: `Вася`,
-            icon: `user`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
+          <RegistrationInput
+            name={`phone`}
+            type={`tel`}
+            placeholder={`8005553535`}
+            icon={`phone`}
+            isRequired={true}
+            register={register}
+            errors={errors}
+          />
 
-        {
-          createRegistrationInput<SecondStepData>({
-            name: `phone`,
-            label: `Телефон`,
-            type: `tel`,
-            placeholder: `(800)-555-35-35`,
-            icon: `phone`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
+          <RegistrationInput
+            name={`birthday`}
+            type={`date`}
+            placeholder={``}
+            icon={`lock`}
+            isRequired={true}
+            register={register}
+            errors={errors}
+          />
+        </form>
 
-        {
-          createRegistrationInput<SecondStepData>({
-            name: `birthday`,
-            label: `Дата рождения`,
-            type: `date`,
-            placeholder: ``,
-            icon: `lock`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
-
-        {/* todo getPhotoInput(register, errors) */}
-
+        <RegistrationPhotoInput />
       </div>
       <div className={`uk-child-width-expand uk-margin  uk-margin-remove-bottom`} uk-grid={``}>
         <div>
@@ -116,13 +67,13 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
           </a>
         </div>
         <div>
-          <button className={`uk-button uk-button-primary uk-width-1-1`}
+          <button form={`user-info-form`} className={`uk-button uk-button-primary uk-width-1-1`}
                   type={`submit`}>
             Далее &gt;
           </button>
         </div>
       </div>
-    </form>
+    </>
   );
 };
 

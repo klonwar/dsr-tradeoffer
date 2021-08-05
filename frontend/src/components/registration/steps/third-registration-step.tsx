@@ -6,16 +6,17 @@ import { isUserRequestPendingSelector, userRequestErrorSelector } from '#src/js/
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import UIkit from 'uikit';
+import { CreateUserDtoKeyWithPwdConfirmation, keyToLabelText } from '#components/registration/util/key-to-label-text';
 
 export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
   const dispatch = useAppDispatch();
   const isPending = useSelector(isUserRequestPendingSelector);
   const registrationError = useSelector(userRequestErrorSelector);
 
-  const { registrationState } = useContext(RegistrationContext);
-  const { handleSubmit, setValue, formState: { errors, isSubmitted } } = useForm<CreateUserDto>({
+  const { registrationState, photo } = useContext(RegistrationContext);
+  const { handleSubmit, setValue, formState: { errors, isSubmitSuccessful } } = useForm<CreateUserDto>({
     resolver: classValidatorResolver(CreateUserDto),
   });
 
@@ -29,31 +30,47 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
   }, [registrationState, setValue]);
 
   useEffect(() => {
-    if (isSubmitted && registrationError) {
+    if (isSubmitSuccessful && registrationError) {
       UIkit.notification({
         message: registrationError.message,
         pos: `bottom-right`,
       });
     }
-  }, [registrationError, isSubmitted]);
+  }, [registrationError, isSubmitSuccessful]);
 
   return (
     <form onSubmit={handleSubmit((data) => {
-      dispatch(Operations.registration(data));
+      dispatch(Operations.registration({data, photo}));
     })}>
       <h1 className={`uk-card-title`}>Все верно?</h1>
-      <div className={`uk-flex uk-flex-column uk-flex-middle`}>
-        <pre>
-          {JSON.stringify(registrationState, null, 2)}
-        </pre>
+      <div className={`uk-flex uk-flex-column`}>
+        {Object.keys(new CreateUserDto()).map((key) => {
+          return (
+            <div key={key} className={`uk-margin-small uk-margin-remove-bottom`}>
+              <div className={`uk-flex`}>
+                <div>{keyToLabelText.get(key as CreateUserDtoKeyWithPwdConfirmation)}:</div>
+                <div className={`uk-width-expand uk-text-right`}>{(() => {
+                  if (key === `password`)
+                    return registrationState[key]?.replaceAll(/[^\n]/g, `*`) ?? `Не введен`;
+
+                  if (key === `photoPath`)
+                    return (photo) ? photo.name : `Не загружено`;
+
+                  return registrationState[key] ?? `Отсутствует`;
+                })()}</div>
+              </div>
+              {(errors[key])
+                ? (
+                  <span className={`uk-label-danger uk-padding-small uk-padding-remove-vertical`}>
+                    {errors[key].message}
+                  </span>
+                )
+                : null
+              }
+            </div>
+          );
+        })}
       </div>
-      {(errors) ? (
-        <div className={`uk-flex uk-flex-column uk-flex-middle`}>
-          <pre>
-            {JSON.stringify(errors, null, 2)}
-          </pre>
-        </div>
-      ) : null}
       <div className={`uk-child-width-expand uk-margin  uk-margin-remove-bottom`} uk-grid={``}>
         <div>
           <a href={`#`} className={`uk-button uk-button-default uk-width-1-1`}

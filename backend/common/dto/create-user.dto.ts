@@ -7,6 +7,14 @@ import {
   Matches,
   MinLength,
 } from 'class-validator';
+import { MaxDateString } from '#server/common/validators/validator-extend-max-date-string-decorator';
+import { IsPhotoPath } from '#server/common/validators/validator-extend-is-photo-path';
+
+const get18yoDate = () => {
+  const targetDate = new Date();
+  targetDate.setFullYear(targetDate.getFullYear() - 18);
+  return targetDate;
+};
 
 export class CreateUserDto {
   @IsNotEmpty({ message: `Нужно указать логин` })
@@ -27,13 +35,13 @@ export class CreateUserDto {
   @IsNotEmpty({ message: `Нужно указать номер` })
   phone: string;
 
-  @IsDateString({ strict: false }, { message: `Неверный формат` })
+  @MaxDateString(new Date(), { message: `Введите корректную дату рождения` })
+  @MaxDateString(get18yoDate(), { message: `Вам должно быть 18 лет` })
+  @IsDateString({ strict: false }, { message: `Неверный формат даты` })
   @IsNotEmpty({ message: `Нужно указать дату рождения` })
   birthday: string;
 
-  @Matches(/^[^\n]+\.((png)|(jp[e]?g))$/, {
-    message: `Фотография должна быть .png или .jpg/.jpeg`,
-  })
+  @IsPhotoPath()
   @IsOptional()
-  photo?: string;
+  photoPath?: string;
 }

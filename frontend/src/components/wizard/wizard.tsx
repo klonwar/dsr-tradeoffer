@@ -6,51 +6,22 @@
  * свой простой Wizard.
  * */
 
-import React, { createContext, FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, FC, useCallback, useEffect, useState } from 'react';
+import { WizardStepContext, WizardStepElement } from '#components/wizard/wizard-step';
 
-interface WizardContextInterface {
+export interface WizardContextInterface {
   step: number;
   length: number;
 }
 
-interface WizardContextActionsInterface {
+export interface WizardContextActionsInterface {
   next: () => void;
   prev: () => void;
 }
 
-interface WizardStepContextInterface {
-  index: number;
-  softHide: boolean;
-}
+export const WizardContext = createContext<WizardContextInterface>(null);
+export const WizardContextActions = createContext<WizardContextActionsInterface>(null);
 
-const WizardContext = createContext<WizardContextInterface>(null);
-const WizardContextActions = createContext<WizardContextActionsInterface>(null);
-const WizardStepContext = createContext<WizardStepContextInterface>(null);
-
-interface WizardStepProps {
-  render: (wizardContext: WizardContextInterface & WizardContextActionsInterface) => React.ReactNode;
-}
-
-interface WizardStepElement extends JSX.Element {}
-
-export const WizardStep: FC<WizardStepProps> = (props) => {
-  const { render } = props;
-
-  const wizardContext = useContext(WizardContext);
-  const wizardContextActions = useContext(WizardContextActions);
-  const wizardStepContext = useContext(WizardStepContext);
-
-  const hidden = wizardContext.step !== wizardStepContext.index;
-
-  if (!wizardStepContext.softHide && hidden)
-    return null;
-
-  return (
-    <div style={{display: (hidden) ? `none` : `block`}}>
-      {render({ ...wizardContext, ...wizardContextActions })}
-    </div> as WizardStepElement
-  );
-};
 
 export interface WizardActionOverrideData {
   prevContext: WizardContextInterface;

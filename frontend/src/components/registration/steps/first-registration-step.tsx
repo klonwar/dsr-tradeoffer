@@ -1,27 +1,9 @@
-import { IsOptional } from 'class-validator';
-import { Match } from '#src/js/class-validator/validator-extend-match-decorator';
 import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { createRegistrationInput } from '#components/registration/util/create-registration-input';
 import { RegistrationContext } from '#components/registration/registration';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
-
-class FirstStepData extends CreateUserDto {
-
-  @Match(FirstStepData, (s) => s.password, { message: `Пароли не совпадают` })
-  passwordConfirmation;
-
-  @IsOptional()
-  firstName;
-  @IsOptional()
-  phone;
-  @IsOptional()
-  birthday;
-  @IsOptional()
-  photo;
-
-}
+import { RegistrationInput } from '#components/registration/registration-input';
+import { FirstStepData } from '#components/registration/dto/first-registration-step.dto';
 
 export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
   const { appendToState } = useContext(RegistrationContext);
@@ -39,57 +21,44 @@ export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
     <form onSubmit={onSubmit}>
       <h1 className={`uk-card-title`}>Регистрация</h1>
       <div className={`uk-flex uk-flex-column uk-flex-middle`}>
+        <RegistrationInput
+          name={`username`}
+          placeholder={`bradeazy`}
+          icon={`user`}
+          isRequired={true}
+          register={register}
+          errors={errors}
+        />
 
-        {
-          createRegistrationInput<FirstStepData>({
-            name: `username`,
-            label: `Имя пользователя`,
-            placeholder: `bradeazy`,
-            icon: `user`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
+        <RegistrationInput
+          name={`email`}
+          type={`email`}
+          placeholder={`your@gmail.com`}
+          icon={`mail`}
+          isRequired={true}
+          register={register}
+          errors={errors}
+        />
 
-        {
-          createRegistrationInput<FirstStepData>({
-            name: `email`,
-            label: `Почта`,
-            type: `email`,
-            placeholder: `your@gmail.com`,
-            icon: `mail`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
+        <RegistrationInput
+          name={`password`}
+          type={`password`}
+          icon={`lock`}
+          placeholder={`12345678`}
+          isRequired={true}
+          register={register}
+          errors={errors}
+        />
 
-        {
-          createRegistrationInput<FirstStepData>({
-            name: `password`,
-            label: `Пароль`,
-            type: `password`,
-            placeholder: `12345678`,
-            icon: `lock`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
-
-        {
-          createRegistrationInput<FirstStepData>({
-            name: `passwordConfirmation`,
-            label: `Подтверждение пароля`,
-            type: `password`,
-            placeholder: `12345678`,
-            icon: `lock`,
-            isRequired: true,
-            register,
-            errors,
-          })
-        }
+        <RegistrationInput
+          name={`passwordConfirmation`}
+          type={`password`}
+          icon={`lock`}
+          placeholder={`12345678`}
+          isRequired={true}
+          register={register}
+          errors={errors}
+        />
       </div>
       <div className={`uk-child-width-expand uk-margin uk-margin-remove-bottom`} uk-grid={``}>
         <div>
