@@ -44,7 +44,7 @@ export class UsersService {
       email,
       phone,
       firstName,
-      birthday: new Date(birthday),
+      birthday,
       photo: photoPath,
     });
 

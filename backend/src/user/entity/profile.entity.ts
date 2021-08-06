@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { User } from '#src/user/entity/user.entity';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Transform, Type } from 'class-transformer';
+import * as moment from 'moment';
 
 @Entity()
 export class Profile {
@@ -17,9 +18,16 @@ export class Profile {
   @Column({ length: 10 })
   phone: string;
 
+  @Type(() => String)
+  @Transform(({ value }) =>
+    value ? moment(value).format(`YYYY-MM-DD`) : undefined,
+  )
   @Column({ type: `date` })
   birthday: Date;
 
+  @Transform(
+    ({ value }: { value: string }) => value?.replace(/\\/, `/`) ?? null,
+  )
   @Expose({ name: `photoPath` })
   @Column({ type: `text`, nullable: true })
   photo: string;
