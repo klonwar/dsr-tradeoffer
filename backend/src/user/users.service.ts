@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '#src/user/entity/user.entity';
 import { Repository } from 'typeorm';
@@ -6,6 +6,8 @@ import { Profile } from '#src/user/entity/profile.entity';
 import { UserDto } from '#server/common/dto/user.dto';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
+import { JwtDto } from '#server/common/dto/jwt.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +16,7 @@ export class UsersService {
     private userRepository: Repository<User>,
     @InjectRepository(Profile)
     private profileRepository: Repository<Profile>,
+    private jwtService: JwtService,
   ) {}
 
   // Выгрузка информации о всех пользователях с добавлением данных из Profile
@@ -53,6 +56,28 @@ export class UsersService {
 
     await this.userRepository.save(userEntity);
 
-    return toUserDTO(userEntity);
+    return userEntity;
+  }
+
+  async editProfile(
+    user: User,
+    plainEditProfileDto: EditProfileDto,
+  ): Promise<JwtDto> {
+    const { email, phone, firstName, birthday } = plainEditProfileDto;
+
+    if (user.profile.email !== email)
+      if (await this.findOneByEmail(email))
+        throw new ConflictException(
+          `Пользователь с такой почтой уже существует`,
+        );
+
+    if (firstName) user.profile.firstName = firstName;
+    if (email) user.profile.email = email;
+    if (phone) user.profile.phone = phone;
+    if (birthday) user.profile.birthday = birthday as any;
+
+    await this.profileRepository.save(user.profile);
+
+    return user.toJwtDto(this.jwtService);
   }
 }
