@@ -1,0 +1,114 @@
+import React, { FC } from 'react';
+import { userDataSelector, userPhotoUrlSelector } from '#src/js/redux/selectors';
+import { useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
+import { ProfileInput } from '#components/profile/profile-input';
+
+export const Profile: FC = () => {
+  const userData = useSelector(userDataSelector);
+  const userPhotoUrl = useSelector(userPhotoUrlSelector);
+  const { handleSubmit, register, formState: { isDirty, errors }, reset } = useForm<EditProfileDto>({
+    defaultValues: {
+      firstName: userData.firstName,
+      email: userData.email,
+      phone: userData.phone,
+      birthday: userData.birthday,
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const changePhoto = () => {
+    console.log(`Not implemented`);
+  };
+
+  const changePassword = () => {
+    console.log(`Not implemented`);
+  };
+
+  return (
+    <div className={`uk-padding-small uk-flex-center`} uk-grid={``}>
+      <div className={`uk-width-medium uk-width-1-3@s uk-width-1-4@m`}>
+        <div className={`uk-card uk-card-default uk-card-body`}>
+          <div className={`PhotoContainer uk-width-1-1`} style={{
+            backgroundImage: `url(${userPhotoUrl})`,
+          }} />
+        </div>
+        <div className={`uk-margin-top`} uk-margin={``}>
+          <button className={`uk-width-1-1 uk-button uk-button-default`}
+                  onClick={changePhoto}>Обновить фотографию
+          </button>
+          <button className={`uk-width-1-1 uk-button uk-button-default`}
+                  onClick={changePassword}>Изменить пароль
+          </button>
+        </div>
+      </div>
+      <div className={`uk-width-1-1 uk-width-2-3@s uk-width-1-2@m`}>
+        <div className={`uk-card uk-card-default uk-card-body`}>
+          <h2>{userData.username}</h2>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={`uk-flex-middle`}
+          >
+            <ProfileInput
+              name={`firstName`}
+              placeholder={`Вася`}
+              register={register}
+              errors={errors} />
+
+            <ProfileInput
+              name={`email`}
+              type={`email`}
+              placeholder={`your@gmail.com`}
+              register={register}
+              errors={errors} />
+
+            <ProfileInput
+              name={`phone`}
+              type={`tel`}
+              placeholder={`8005553535`}
+              register={register}
+              errors={errors} />
+
+            <ProfileInput
+              name={`birthday`}
+              type={`date`}
+              placeholder={``}
+              register={register}
+              errors={errors} />
+
+            <div className={`uk-margin-top`}>
+              {(isDirty) ? (
+                <div className={`uk-flex uk-flex-right`}>
+                  <a href={`#`} className={`uk-button uk-button-default`}
+                     onClick={(e) => {
+                       e.preventDefault();
+                       reset();
+                     }}>
+                    Отменить
+                  </a>
+                  <button className={`uk-button uk-button-primary uk-margin-left`}
+                          type={`submit`}
+                          disabled={!isDirty}
+                  >
+                    Сохранить
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </form>
+        </div>
+
+        {(!isDirty) ? (
+          <div className={`uk-text-muted uk-margin-top uk-text-center`}
+               style={{ userSelect: `none` }}>
+            Нажмите на любое поле для редактирования
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+};
