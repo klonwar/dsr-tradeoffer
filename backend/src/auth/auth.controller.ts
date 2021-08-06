@@ -16,6 +16,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { JwtDto } from '#server/common/dto/jwt.dto';
 
 @Controller(`auth`)
 export class AuthController {
@@ -24,7 +25,7 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post(`login`)
-  async login(@Request() req) {
+  async login(@Request() req): Promise<JwtDto> {
     return this.authService.login(req.user);
   }
 
@@ -60,7 +61,7 @@ export class AuthController {
   async register(
     @UploadedFile() photo: Express.Multer.File,
     @Body() createUserDto: CreateUserDto,
-  ) {
+  ): Promise<JwtDto> {
     return this.authService.register({
       ...createUserDto,
       photoPath: photo?.path,
