@@ -1,18 +1,18 @@
 import axiosInstance from '#src/js/axios/axios-instance';
-import { LoginUserDto } from '#server/common/dto/login-user.dto';
+import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
+import { JwtDto } from '#server/common/dto/jwt.dto';
 import axios from 'axios';
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
-import { JwtDto } from '#server/common/dto/jwt.dto';
 
-export class LoginOperationResult extends JwtDto {
+export class EditProfileOperationResult extends JwtDto {
 }
 
-export const loginOperation: AsyncThunkPayloadCreator<LoginOperationResult, LoginUserDto, { rejectValue: SerializedAxiosError }> =
+export const editProfileOperation: AsyncThunkPayloadCreator<EditProfileOperationResult, EditProfileDto, { rejectValue: SerializedAxiosError }> =
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.post<LoginOperationResult>(`auth/login`, payload);
+      const res = await axiosInstance.put<EditProfileOperationResult>(`user/edit_profile`, payload);
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

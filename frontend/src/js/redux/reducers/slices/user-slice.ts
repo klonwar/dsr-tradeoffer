@@ -59,11 +59,20 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(Operations.login.pending, onPending)
-      .addCase(Operations.registration.pending, onPending)
       .addCase(Operations.login.rejected, onError)
-      .addCase(Operations.registration.rejected, onError)
       .addCase(Operations.login.fulfilled, onFulfilled)
-      .addCase(Operations.registration.fulfilled, onFulfilled);
+      .addCase(Operations.registration.pending, onPending)
+      .addCase(Operations.registration.rejected, onError)
+      .addCase(Operations.registration.fulfilled, onFulfilled)
+      .addCase(Operations.editProfile.pending, (state) => {
+        state.pending = true;
+        state.error = null;
+      })
+      .addCase(Operations.editProfile.rejected, (state, action) => {
+        state.pending = false;
+        state.error = action.payload;
+      })
+      .addCase(Operations.editProfile.fulfilled, onFulfilled);
   },
 });
 
