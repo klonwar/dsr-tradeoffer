@@ -12,20 +12,6 @@ export const jwtTokenSelector: AppSelector<string> = (state) => state.userReduce
 
 export const userRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userReducer.error;
 
-export const isLoginSuccessfulSelector = createSelector<RootState, string, SerializedAxiosError, boolean | undefined>(
-  jwtTokenSelector,
-  userRequestErrorSelector,
-  (loginResult, loginError) => {
-    if (loginResult)
-      return true;
-
-    if (loginError)
-      return false;
-
-    return undefined;
-  },
-);
-
 export const isAuthorizedSelector = createSelector<RootState, string, boolean>(
   jwtTokenSelector,
   (res) => !!res,
