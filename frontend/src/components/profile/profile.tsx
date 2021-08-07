@@ -15,6 +15,7 @@ import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-err
 import noPhoto from '#src/icons/no-photo.svg';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { ProfilePhotoForm } from '#components/profile/profile-photo-form';
+import { ProfilePasswordForm } from '#components/profile/profile-password-form';
 
 export const Profile: FC = () => {
   useAuthorizedOnly();
@@ -65,10 +66,8 @@ export const Profile: FC = () => {
           }} />
         </div>
         <div className={`uk-margin-top`} uk-margin={``}>
-           <ProfilePhotoForm />
-          <button className={`uk-width-1-1 uk-button uk-button-default`}
-                  onClick={changePassword}>Изменить пароль
-          </button>
+          <ProfilePhotoForm />
+          <ProfilePasswordForm />
         </div>
       </div>
       <div className={`uk-width-1-1 uk-width-2-3@s uk-width-1-2@m`}>

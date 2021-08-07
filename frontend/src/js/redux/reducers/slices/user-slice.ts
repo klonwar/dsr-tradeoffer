@@ -82,7 +82,11 @@ const userSlice = createSlice({
 
       .addCase(Operations.setPhoto.pending, onPendingSaveResult)
       .addCase(Operations.setPhoto.rejected, onErrorSaveResult)
-      .addCase(Operations.setPhoto.fulfilled, onFulfilled);
+      .addCase(Operations.setPhoto.fulfilled, onFulfilled)
+
+      .addCase(Operations.changePassword.pending, onPendingSaveResult)
+      .addCase(Operations.changePassword.rejected, onErrorSaveResult)
+      .addCase(Operations.changePassword.fulfilled, onFulfilled);
   },
 });
 
