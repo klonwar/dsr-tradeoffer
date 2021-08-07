@@ -1,29 +1,21 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import InputHint from '#components/input-hint/input-hint';
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
-import { isAuthorizedSelector, isUserRequestPendingSelector, userRequestErrorSelector } from '#src/js/redux/selectors';
+import { isUserRequestPendingSelector } from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import UIkit from 'uikit';
+import { Link } from 'react-router-dom';
 import { LoginUserDto } from '#server/common/dto/login-user.dto';
+import { useUnauthorizedOnly } from '#src/js/hooks/use-unauthorized-only';
+import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 
 const Login: FC = () => {
+  useUnauthorizedOnly();
+
   const dispatch = useAppDispatch();
-  const history = useHistory();
-
-  const isAuthorized = useSelector(isAuthorizedSelector);
-
-  useEffect(() => {
-    if (isAuthorized) {
-      history.replace(`/`);
-    }
-  }, [history, isAuthorized]);
-
   const isPending = useSelector(isUserRequestPendingSelector);
-  const loginError = useSelector(userRequestErrorSelector);
 
   const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm<LoginUserDto>({
     resolver: classValidatorResolver(LoginUserDto),
@@ -33,19 +25,7 @@ const Login: FC = () => {
     dispatch(Operations.login(data));
   });
 
-  useEffect(() => {
-    if (isSubmitSuccessful && loginError) {
-      const codeToMessage = new Map();
-      codeToMessage.set(`401`, `Данные неверны`);
-
-      UIkit.notification({
-        message: (loginError.code)
-          ? codeToMessage.get(loginError.code) ?? loginError.message
-          : loginError.message,
-        pos: `bottom-right`,
-      });
-    }
-  }, [loginError, isSubmitSuccessful]);
+  useShowUserRequestError(isSubmitSuccessful);
 
   return (
     <div className={`uk-flex uk-flex-column uk-flex-center uk-flex-middle uk-width-1-1 uk-height-1-1`}>

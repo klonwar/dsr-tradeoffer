@@ -1,13 +1,12 @@
-import React, { createContext, FC, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { isAuthorizedSelector } from '#src/js/redux/selectors';
-import { Link, useHistory } from 'react-router-dom';
+import React, { createContext, FC, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Wizard, WizardActionOverrideData } from '#components/wizard/wizard';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { FirstRegistrationStep } from './steps/first-registration-step';
 import { SecondRegistrationStep } from './steps/second-registration-step';
 import { ThirdRegistrationStep } from '#components/registration/steps/third-registration-step';
 import { WizardStep } from '#components/wizard/wizard-step';
+import { useUnauthorizedOnly } from '#src/js/hooks/use-unauthorized-only';
 
 export const RegistrationContext = createContext<{
   registrationState: Partial<CreateUserDto>;
@@ -17,10 +16,10 @@ export const RegistrationContext = createContext<{
 }>(null);
 
 const Registration: FC = () => {
+  useUnauthorizedOnly();
+
   const [registrationState, setRegistrationState] = useState<Partial<CreateUserDto>>({});
   const [photo, setPhoto] = useState<File>(null);
-  const history = useHistory();
-  const isAuthorized = useSelector(isAuthorizedSelector);
   const [progress, setProgress] = useState<number>(0);
   const [maxProgress, setMaxProgress] = useState<number>(3);
 
@@ -31,12 +30,6 @@ const Registration: FC = () => {
 
   const appendToState = (data: Partial<CreateUserDto>) =>
     setRegistrationState({ ...registrationState, ...data });
-
-  useEffect(() => {
-    if (isAuthorized) {
-      history.replace(`/`);
-    }
-  }, [history, isAuthorized]);
 
   return (
     <RegistrationContext.Provider value={{ registrationState, appendToState, photo, setPhoto }}>
