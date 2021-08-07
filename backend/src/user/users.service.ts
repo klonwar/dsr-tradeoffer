@@ -14,6 +14,7 @@ import { JwtDto } from '#server/common/dto/jwt.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
 import * as bcrypt from 'bcrypt';
+import { PhotoEntity } from '#src/photos/entity/photo.entity';
 
 @Injectable()
 export class UsersService {
@@ -22,19 +23,23 @@ export class UsersService {
     private userRepository: Repository<User>,
     @InjectRepository(Profile)
     private profileRepository: Repository<Profile>,
+    @InjectRepository(PhotoEntity)
+    private photoRepository: Repository<PhotoEntity>,
     private jwtService: JwtService,
   ) {}
 
   // Выгрузка информации о всех пользователях с добавлением данных из Profile
   async findAll(): Promise<UserDto[]> {
-    const users = await this.userRepository.find({ relations: [`profile`] });
+    const users = await this.userRepository.find({
+      relations: [`profile`, `profile.photo`],
+    });
     return users.map((user) => user.toDto());
   }
 
   findOneByUsername(username: string): Promise<User | undefined> {
     return this.userRepository.findOne({
       where: { login: username },
-      relations: [`profile`],
+      relations: [`profile`, `profile.photo`],
     });
   }
 
@@ -46,12 +51,20 @@ export class UsersService {
     const { username, password } = createUserDto;
     const { email, phone, firstName, photoPath, birthday } = createUserDto;
 
+    let photo;
+    if (photoPath) {
+      photo = this.photoRepository.create({
+        photo_path: photoPath,
+      });
+      await this.photoRepository.save(photo);
+    }
+
     const userProfile = this.profileRepository.create({
       email,
       phone,
       firstName,
       birthday,
-      photo: photoPath,
+      photo,
     });
 
     const userEntity = this.userRepository.create({
@@ -88,7 +101,13 @@ export class UsersService {
   }
 
   async setPhoto(user: User, photoPath: string): Promise<JwtDto> {
-    user.profile.photo = photoPath;
+    const newPhoto = await this.photoRepository.create({
+      photo_path: photoPath,
+    });
+    await this.photoRepository.save(newPhoto);
+
+    user.profile.photo = newPhoto;
+
     await this.userRepository.save(user);
 
     return user.toJwtDto(this.jwtService);

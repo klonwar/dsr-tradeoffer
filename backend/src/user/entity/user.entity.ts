@@ -57,8 +57,10 @@ export class User {
     const plainUserDto = {
       ...plainThis,
       ...plainThis.profile,
+      ...plainThis.profile.photo,
     };
     delete plainUserDto.profile;
+    delete plainUserDto.photo;
 
     // Validate
     const userDto = plainToClass(UserDto, plainUserDto);
