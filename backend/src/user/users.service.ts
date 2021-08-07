@@ -1,11 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '#src/user/entity/user.entity';
 import { Repository } from 'typeorm';
 import { Profile } from '#src/user/entity/profile.entity';
-import { toUserDTO } from '#src/user/util/mapper';
 import { UserDto } from '#server/common/dto/user.dto';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
+import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
+import { JwtDto } from '#server/common/dto/jwt.dto';
+import { JwtService } from '@nestjs/jwt';
+import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -14,12 +22,13 @@ export class UsersService {
     private userRepository: Repository<User>,
     @InjectRepository(Profile)
     private profileRepository: Repository<Profile>,
+    private jwtService: JwtService,
   ) {}
 
   // Выгрузка информации о всех пользователях с добавлением данных из Profile
   async findAll(): Promise<UserDto[]> {
     const users = await this.userRepository.find({ relations: [`profile`] });
-    return users.map((user) => toUserDTO(user));
+    return users.map((user) => user.toDto());
   }
 
   findOneByUsername(username: string): Promise<User | undefined> {
@@ -33,7 +42,7 @@ export class UsersService {
     return this.profileRepository.findOne({ email });
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<UserDto> {
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     const { username, password } = createUserDto;
     const { email, phone, firstName, photoPath, birthday } = createUserDto;
 
@@ -41,7 +50,7 @@ export class UsersService {
       email,
       phone,
       firstName,
-      birthday: new Date(birthday),
+      birthday,
       photo: photoPath,
     });
 
@@ -53,8 +62,49 @@ export class UsersService {
 
     await this.userRepository.save(userEntity);
 
-    console.log(userEntity);
+    return userEntity;
+  }
 
-    return toUserDTO(userEntity);
+  async editProfile(
+    user: User,
+    plainEditProfileDto: EditProfileDto,
+  ): Promise<JwtDto> {
+    const { email, phone, firstName, birthday } = plainEditProfileDto;
+
+    if (user.profile.email !== email)
+      if (await this.findOneByEmail(email))
+        throw new ConflictException(
+          `Пользователь с такой почтой уже существует`,
+        );
+
+    if (firstName) user.profile.firstName = firstName;
+    if (email) user.profile.email = email;
+    if (phone) user.profile.phone = phone;
+    if (birthday) user.profile.birthday = birthday as any;
+
+    await this.profileRepository.save(user.profile);
+
+    return user.toJwtDto(this.jwtService);
+  }
+
+  async setPhoto(user: User, photoPath: string): Promise<JwtDto> {
+    user.profile.photo = photoPath;
+    await this.userRepository.save(user);
+
+    return user.toJwtDto(this.jwtService);
+  }
+
+  async changePassword(
+    user: User,
+    changePasswordDto: ChangePasswordDto,
+  ): Promise<JwtDto> {
+    if (!(await bcrypt.compare(changePasswordDto.oldPassword, user.password)))
+      throw new BadRequestException(`Старый пароль указан неверно`);
+
+    user.password = await bcrypt.hash(changePasswordDto.newPassword, 10);
+
+    await this.userRepository.save(user);
+
+    return user.toJwtDto(this.jwtService);
   }
 }

@@ -5,10 +5,17 @@ import HeaderWrapper from '#components/header/header-wrapper';
 import Login from '#components/login/login';
 import Logout from '#components/logout/logout';
 import Registration from '#components/registration/registration';
+import { Profile } from '#components/profile/profile';
 
 const App: FC = () => {
   return (
     <Switch>
+      <Route path={`/profile`}>
+        <HeaderWrapper>
+          <Profile />
+        </HeaderWrapper>
+      </Route>
+
       <Route path={`/registration`}>
         <HeaderWrapper>
           <Registration />

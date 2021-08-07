@@ -2,18 +2,17 @@ import React, { FC, useContext, useEffect } from 'react';
 import { RegistrationContext } from '#components/registration/registration';
 import { FieldPath, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { isUserRequestPendingSelector, userRequestErrorSelector } from '#src/js/redux/selectors';
+import { isUserRequestPendingSelector } from '#src/js/redux/selectors';
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
-import UIkit from 'uikit';
 import { CreateUserDtoKeyWithPwdConfirmation, keyToLabelText } from '#components/registration/util/key-to-label-text';
+import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 
 export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
   const dispatch = useAppDispatch();
   const isPending = useSelector(isUserRequestPendingSelector);
-  const registrationError = useSelector(userRequestErrorSelector);
 
   const { registrationState, photo } = useContext(RegistrationContext);
   const { handleSubmit, setValue, formState: { errors, isSubmitSuccessful } } = useForm<CreateUserDto>({
@@ -29,18 +28,11 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
     }
   }, [registrationState, setValue]);
 
-  useEffect(() => {
-    if (isSubmitSuccessful && registrationError) {
-      UIkit.notification({
-        message: registrationError.message,
-        pos: `bottom-right`,
-      });
-    }
-  }, [registrationError, isSubmitSuccessful]);
+  useShowUserRequestError(isSubmitSuccessful);
 
   return (
     <form onSubmit={handleSubmit((data) => {
-      dispatch(Operations.registration({data, photo}));
+      dispatch(Operations.registration({ data, photo }));
     })}>
       <h1 className={`uk-card-title`}>Все верно?</h1>
       <div className={`uk-flex uk-flex-column`}>

@@ -4,10 +4,9 @@ import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
+import { JwtDto } from '#server/common/dto/jwt.dto';
 
-export interface RegistrationOperationResult {
-  access_token: string;
-}
+export class RegistrationOperationResult extends JwtDto {}
 
 export const registrationOperation: AsyncThunkPayloadCreator<RegistrationOperationResult, {
   data: CreateUserDto,

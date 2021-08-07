@@ -9,6 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '#src/js/redux/store';
 import { USER_SLICE_NAME, UserActions } from '#src/js/redux/reducers/slices/user-slice';
+import axiosInstance from '#src/js/axios/axios-instance';
 
 (() => {
   // @ts-ignore
@@ -18,12 +19,22 @@ import { USER_SLICE_NAME, UserActions } from '#src/js/redux/reducers/slices/user
 
   // Сохранение состояния в localStorage
   store.subscribe(() => {
+    const userReducer = store.getState().userReducer;
     localStorage.setItem(
       USER_SLICE_NAME,
-      JSON.stringify(store.getState().userReducer)
+      JSON.stringify(userReducer),
     );
   });
-  
+
+  // Обновление хедера авторизации в axios
+  store.subscribe(() => {
+    const userReducer = store.getState().userReducer;
+    if (userReducer?.result?.access_token)
+      axiosInstance.defaults.headers.common[`Authorization`] = `Bearer ${userReducer.result.access_token}`;
+    else
+      delete axiosInstance.defaults.headers.common[`Authorization`];
+  });
+
   ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
