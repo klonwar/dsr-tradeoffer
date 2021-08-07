@@ -1,25 +1,41 @@
 import React, { FC } from 'react';
-import { userDataSelector, userPhotoUrlSelector } from '#src/js/redux/selectors';
+import {
+  isUserRequestPendingSelector,
+  userDataSelector,
+  userPhotoUrlSelector,
+  userRequestErrorSelector,
+} from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { ProfileInput } from '#components/profile/profile-input';
+import { useAppDispatch } from '#src/js/redux/store';
+import { Operations } from '#src/js/redux/operations/operations';
+import { useAuthorizedOnly } from '#src/js/hooks/use-authorized-only';
+import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 
 export const Profile: FC = () => {
+  useAuthorizedOnly();
+
+  const dispatch = useAppDispatch();
   const userData = useSelector(userDataSelector);
   const userPhotoUrl = useSelector(userPhotoUrlSelector);
-  const { handleSubmit, register, formState: { isDirty, errors }, reset } = useForm<EditProfileDto>({
+  const isPending = useSelector(isUserRequestPendingSelector);
+
+  const { handleSubmit, register, formState: { isDirty, errors, isSubmitSuccessful }, reset } = useForm<EditProfileDto>({
     defaultValues: {
-      firstName: userData.firstName,
-      email: userData.email,
-      phone: userData.phone,
-      birthday: userData.birthday,
+      firstName: userData?.firstName,
+      email: userData?.email,
+      phone: userData?.phone,
+      birthday: userData?.birthday,
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  useShowUserRequestError(isSubmitSuccessful);
+
+  const onSubmit = handleSubmit((data) => {
+    dispatch(Operations.editProfile(data));
+  });
 
   const changePhoto = () => {
     console.log(`Not implemented`);
@@ -48,9 +64,9 @@ export const Profile: FC = () => {
       </div>
       <div className={`uk-width-1-1 uk-width-2-3@s uk-width-1-2@m`}>
         <div className={`uk-card uk-card-default uk-card-body`}>
-          <h2>{userData.username}</h2>
+          <h2>{userData?.username}</h2>
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={onSubmit}
             className={`uk-flex-middle`}
           >
             <ProfileInput
@@ -92,7 +108,7 @@ export const Profile: FC = () => {
                   </a>
                   <button className={`uk-button uk-button-primary uk-margin-left`}
                           type={`submit`}
-                          disabled={!isDirty}
+                          disabled={!isDirty || isPending}
                   >
                     Сохранить
                   </button>
