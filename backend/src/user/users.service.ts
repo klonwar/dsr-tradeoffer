@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '#src/user/entity/user.entity';
 import { Repository } from 'typeorm';
@@ -8,6 +12,8 @@ import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { JwtService } from '@nestjs/jwt';
+import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -83,6 +89,20 @@ export class UsersService {
 
   async setPhoto(user: User, photoPath: string): Promise<JwtDto> {
     user.profile.photo = photoPath;
+    await this.userRepository.save(user);
+
+    return user.toJwtDto(this.jwtService);
+  }
+
+  async changePassword(
+    user: User,
+    changePasswordDto: ChangePasswordDto,
+  ): Promise<JwtDto> {
+    if (!(await bcrypt.compare(changePasswordDto.oldPassword, user.password)))
+      throw new BadRequestException(`Старый пароль указан неверно`);
+
+    user.password = await bcrypt.hash(changePasswordDto.newPassword, 10);
+
     await this.userRepository.save(user);
 
     return user.toJwtDto(this.jwtService);

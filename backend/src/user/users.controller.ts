@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Param,
+  Post,
   Put,
   Request,
   UploadedFile,
@@ -15,6 +16,7 @@ import { Public } from '#src/auth/decorators/public.decorator';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { PhotoInterceptor } from '#src/auth/interceptors/photo-interceptor';
+import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
 
 @Controller(`user`)
 export class UsersController {
@@ -42,6 +44,14 @@ export class UsersController {
     if (!photo) throw new BadRequestException(`Нужно передать фотографию`);
 
     return await this.usersService.setPhoto(req.user, photo.path);
+  }
+
+  @Put(`change_password`)
+  async changePassword(
+    @Request() req,
+    @Body() body: ChangePasswordDto,
+  ): Promise<JwtDto> {
+    return await this.usersService.changePassword(req.user, body);
   }
 
   @Public()
