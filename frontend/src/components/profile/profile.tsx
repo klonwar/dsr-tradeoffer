@@ -1,10 +1,5 @@
 import React, { FC } from 'react';
-import {
-  isUserRequestPendingSelector,
-  userDataSelector,
-  userPhotoUrlSelector,
-  userRequestErrorSelector,
-} from '#src/js/redux/selectors';
+import { isUserRequestPendingSelector, userDataSelector, userPhotoUrlSelector } from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
@@ -13,6 +8,7 @@ import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { useAuthorizedOnly } from '#src/js/hooks/use-authorized-only';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
+import noPhoto from '#src/icons/no-photo.svg';
 
 export const Profile: FC = () => {
   useAuthorizedOnly();
@@ -22,7 +18,12 @@ export const Profile: FC = () => {
   const userPhotoUrl = useSelector(userPhotoUrlSelector);
   const isPending = useSelector(isUserRequestPendingSelector);
 
-  const { handleSubmit, register, formState: { isDirty, errors, isSubmitSuccessful }, reset } = useForm<EditProfileDto>({
+  const {
+    handleSubmit,
+    register,
+    formState: { isDirty, errors, isSubmitSuccessful },
+    reset,
+  } = useForm<EditProfileDto>({
     defaultValues: {
       firstName: userData?.firstName,
       email: userData?.email,
@@ -50,7 +51,7 @@ export const Profile: FC = () => {
       <div className={`uk-width-medium uk-width-1-3@s uk-width-1-4@m`}>
         <div className={`uk-card uk-card-default uk-card-body`}>
           <div className={`PhotoContainer uk-width-1-1`} style={{
-            backgroundImage: `url(${userPhotoUrl})`,
+            backgroundImage: `url(${userPhotoUrl ?? noPhoto})`,
           }} />
         </div>
         <div className={`uk-margin-top`} uk-margin={``}>
