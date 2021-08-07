@@ -30,7 +30,7 @@ export const ProfileInput = <T extends unknown>(props: ProfileInputPropsInterfac
         <div className={`uk-position-relative uk-width-1-1`}>
           <input
             type={type}
-            className={`uk-width-1-1 uk-input uk-form-blank${(errors[name]) ? ` uk-form-danger` : ``}`}
+            className={`uk-width-1-1 uk-input ${(errors[name]) ? `uk-form-danger` : `uk-form-blank`}`}
             placeholder={placeholder}
             {...register(name)}
           />

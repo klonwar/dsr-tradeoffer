@@ -9,6 +9,7 @@ import { Operations } from '#src/js/redux/operations/operations';
 import { useAuthorizedOnly } from '#src/js/hooks/use-authorized-only';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 import noPhoto from '#src/icons/no-photo.svg';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 
 export const Profile: FC = () => {
   useAuthorizedOnly();
@@ -24,6 +25,8 @@ export const Profile: FC = () => {
     formState: { isDirty, errors, isSubmitSuccessful },
     reset,
   } = useForm<EditProfileDto>({
+    mode: `onTouched`,
+    resolver: classValidatorResolver(EditProfileDto),
     defaultValues: {
       firstName: userData?.firstName,
       email: userData?.email,
