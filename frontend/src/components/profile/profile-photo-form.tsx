@@ -56,7 +56,7 @@ export const ProfilePhotoForm: FC = () => {
             />
           </div>
           <button type={`submit`}
-                  className={`uk-button uk-button-default uk-padding-small uk-padding-remove-vertical`}
+                  className={`uk-button uk-button-primary uk-padding-small uk-padding-remove-vertical`}
                   uk-icon={`icon: check`}
                   disabled={isPending} />
         </div>
