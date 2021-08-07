@@ -23,9 +23,19 @@ const onPending = (state) => {
   state.error = null;
 };
 
+const onPendingSaveResult = (state) => {
+  state.pending = true;
+  state.error = null;
+};
+
 const onError = (state, action) => {
   state.pending = false;
   state.result = null;
+  state.error = action.payload;
+};
+
+const onErrorSaveResult = (state, action) => {
+  state.pending = false;
   state.error = action.payload;
 };
 
@@ -61,18 +71,18 @@ const userSlice = createSlice({
       .addCase(Operations.login.pending, onPending)
       .addCase(Operations.login.rejected, onError)
       .addCase(Operations.login.fulfilled, onFulfilled)
+
       .addCase(Operations.registration.pending, onPending)
       .addCase(Operations.registration.rejected, onError)
       .addCase(Operations.registration.fulfilled, onFulfilled)
-      .addCase(Operations.editProfile.pending, (state) => {
-        state.pending = true;
-        state.error = null;
-      })
-      .addCase(Operations.editProfile.rejected, (state, action) => {
-        state.pending = false;
-        state.error = action.payload;
-      })
-      .addCase(Operations.editProfile.fulfilled, onFulfilled);
+
+      .addCase(Operations.editProfile.pending, onPendingSaveResult)
+      .addCase(Operations.editProfile.rejected, onErrorSaveResult)
+      .addCase(Operations.editProfile.fulfilled, onFulfilled)
+
+      .addCase(Operations.setPhoto.pending, onPendingSaveResult)
+      .addCase(Operations.setPhoto.rejected, onErrorSaveResult)
+      .addCase(Operations.setPhoto.fulfilled, onFulfilled);
   },
 });
 

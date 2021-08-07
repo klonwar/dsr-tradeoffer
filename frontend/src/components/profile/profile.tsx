@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   isUserRequestPendingSelector,
   userDataSelector,
@@ -14,6 +14,7 @@ import { useAuthorizedOnly } from '#src/js/hooks/use-authorized-only';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 import noPhoto from '#src/icons/no-photo.svg';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { ProfilePhotoForm } from '#components/profile/profile-photo-form';
 
 export const Profile: FC = () => {
   useAuthorizedOnly();
@@ -45,16 +46,11 @@ export const Profile: FC = () => {
     if (userData) {
       reset({ ...userData });
     }
-    // eslint-disable-next-line
-  }, [userData]);
+  }, [userData, reset]);
 
   const onSubmit = handleSubmit((data) => {
     dispatch(Operations.editProfile(data));
   });
-
-  const changePhoto = () => {
-    console.log(`Not implemented`);
-  };
 
   const changePassword = () => {
     console.log(`Not implemented`);
@@ -69,9 +65,7 @@ export const Profile: FC = () => {
           }} />
         </div>
         <div className={`uk-margin-top`} uk-margin={``}>
-          <button className={`uk-width-1-1 uk-button uk-button-default`}
-                  onClick={changePhoto}>Обновить фотографию
-          </button>
+           <ProfilePhotoForm />
           <button className={`uk-width-1-1 uk-button uk-button-default`}
                   onClick={changePassword}>Изменить пароль
           </button>
