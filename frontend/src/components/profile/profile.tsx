@@ -1,5 +1,9 @@
-import React, { FC } from 'react';
-import { isUserRequestPendingSelector, userDataSelector, userPhotoUrlSelector } from '#src/js/redux/selectors';
+import React, { FC, useEffect } from 'react';
+import {
+  isUserRequestPendingSelector,
+  userDataSelector,
+  userPhotoUrlSelector,
+} from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
@@ -17,7 +21,7 @@ export const Profile: FC = () => {
   const dispatch = useAppDispatch();
   const userData = useSelector(userDataSelector);
   const userPhotoUrl = useSelector(userPhotoUrlSelector);
-  const isPending = useSelector(isUserRequestPendingSelector);
+  const isURPending = useSelector(isUserRequestPendingSelector);
 
   const {
     handleSubmit,
@@ -36,6 +40,13 @@ export const Profile: FC = () => {
   });
 
   useShowUserRequestError(isSubmitSuccessful);
+
+  useEffect(() => {
+    if (userData) {
+      reset({ ...userData });
+    }
+    // eslint-disable-next-line
+  }, [userData]);
 
   const onSubmit = handleSubmit((data) => {
     dispatch(Operations.editProfile(data));
@@ -106,13 +117,13 @@ export const Profile: FC = () => {
                   <a href={`#`} className={`uk-button uk-button-default`}
                      onClick={(e) => {
                        e.preventDefault();
-                       reset();
+                       reset({ ...userData });
                      }}>
                     Отменить
                   </a>
                   <button className={`uk-button uk-button-primary uk-margin-left`}
                           type={`submit`}
-                          disabled={!isDirty || isPending}
+                          disabled={!isDirty || isURPending}
                   >
                     Сохранить
                   </button>
