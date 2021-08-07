@@ -1,9 +1,20 @@
-import { Body, Controller, Get, Param, Put, Request } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Put,
+  Request,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { UsersService } from '#src/user/users.service';
 import { UserDto } from '#server/common/dto/user.dto';
 import { Public } from '#src/auth/decorators/public.decorator';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
+import { PhotoInterceptor } from '#src/auth/interceptors/photo-interceptor';
 
 @Controller(`user`)
 export class UsersController {
@@ -20,6 +31,17 @@ export class UsersController {
     @Body() body: EditProfileDto,
   ): Promise<JwtDto> {
     return await this.usersService.editProfile(req.user, body);
+  }
+
+  @Put(`set_photo`)
+  @UseInterceptors(PhotoInterceptor(`photo`))
+  async setPhoto(
+    @Request() req,
+    @UploadedFile() photo: Express.Multer.File,
+  ): Promise<JwtDto> {
+    if (!photo) throw new BadRequestException(`Нужно передать фотографию`);
+
+    return await this.usersService.setPhoto(req.user, photo.path);
   }
 
   @Public()

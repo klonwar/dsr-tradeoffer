@@ -80,4 +80,11 @@ export class UsersService {
 
     return user.toJwtDto(this.jwtService);
   }
+
+  async setPhoto(user: User, photoPath: string): Promise<JwtDto> {
+    user.profile.photo = photoPath;
+    await this.userRepository.save(user);
+
+    return user.toJwtDto(this.jwtService);
+  }
 }
