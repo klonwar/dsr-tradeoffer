@@ -4,12 +4,14 @@ import InputHint from '#components/input-hint/input-hint';
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
-import { userDataSelector } from '#src/js/redux/selectors';
+import { isUserRequestPendingSelector, userDataSelector } from '#src/js/redux/selectors';
 import { useSelector } from 'react-redux';
 
 export const ProfilePhotoForm: FC = () => {
   const dispatch = useAppDispatch();
   const userData = useSelector(userDataSelector);
+  const isPending = useSelector(isUserRequestPendingSelector);
+
   const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm<{ photo: FileList }>();
   const [isOpened, setIsOpened] = useState(false);
 
@@ -53,7 +55,10 @@ export const ProfilePhotoForm: FC = () => {
               isActive={!!errors.photo}
             />
           </div>
-          <button type={`submit`} className={`uk-button uk-button-default uk-padding-small uk-padding-remove-vertical`} uk-icon={`icon: check`} />
+          <button type={`submit`}
+                  className={`uk-button uk-button-default uk-padding-small uk-padding-remove-vertical`}
+                  uk-icon={`icon: check`}
+                  disabled={isPending} />
         </div>
       </div>
     </form>
