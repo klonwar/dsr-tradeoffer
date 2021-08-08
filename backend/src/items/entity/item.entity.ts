@@ -10,6 +10,7 @@ import {
 import { PhotoEntity } from '#src/photos/entity/photo.entity';
 import { CategoryEntity } from '#src/items/entity/category.entity';
 import { Type } from 'class-transformer';
+import { User } from '#src/user/entity/user.entity';
 
 @Entity({ name: `item` })
 export class ItemEntity {
@@ -31,6 +32,9 @@ export class ItemEntity {
   @Column()
   trade_category_id: number;
 
+  @Column()
+  user_id: number;
+
   // Relations
   @Type(() => PhotoEntity)
   @ManyToMany(() => PhotoEntity, { cascade: true })
@@ -50,4 +54,8 @@ export class ItemEntity {
   @ManyToOne(() => CategoryEntity, null, { cascade: true })
   @JoinColumn({ name: `trade_category_id` })
   trade_category: CategoryEntity;
+
+  @ManyToOne(() => User, null, { cascade: true })
+  @JoinColumn({ name: `user_id` })
+  user: User;
 }
