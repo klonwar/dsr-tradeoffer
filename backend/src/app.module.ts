@@ -8,6 +8,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from '#src/auth/guards/jwt-auth.guard';
 import { UploadsModule } from '#src/uploads/uploads.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ItemsModule } from './items/items.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
       }),
       global: true,
     },
+    ItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],

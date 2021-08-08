@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { PhotoEntity } from '#src/photos/entity/photo.entity';
 import { CategoryEntity } from '#src/items/entity/category.entity';
-import { Type } from 'class-transformer';
+import { Exclude, Transform, Type } from 'class-transformer';
 import { User } from '#src/user/entity/user.entity';
 
 @Entity({ name: `item` })
@@ -26,12 +26,15 @@ export class ItemEntity {
   @Column()
   geo: string;
 
+  @Exclude()
   @Column()
   item_category_id: number;
 
+  @Exclude()
   @Column()
   trade_category_id: number;
 
+  @Exclude()
   @Column()
   user_id: number;
 
@@ -46,11 +49,13 @@ export class ItemEntity {
   photos: PhotoEntity[];
 
   @Type(() => CategoryEntity)
+  @Transform(({ value }) => value.name)
   @ManyToOne(() => CategoryEntity, null, { cascade: true })
   @JoinColumn({ name: `item_category_id` })
   item_category: CategoryEntity;
 
   @Type(() => CategoryEntity)
+  @Transform(({ value }) => value.name)
   @ManyToOne(() => CategoryEntity, null, { cascade: true })
   @JoinColumn({ name: `trade_category_id` })
   trade_category: CategoryEntity;
