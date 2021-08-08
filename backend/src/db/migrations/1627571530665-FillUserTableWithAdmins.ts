@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { UserRole } from '../../user/entity/user.entity';
 import * as bcrypt from 'bcrypt';
+import { UserRole } from '#server/common/enums/user-role.enum';
 
 export class FillUserTableWithAdmins1627571530665 implements MigrationInterface {
 

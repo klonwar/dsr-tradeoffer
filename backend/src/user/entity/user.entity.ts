@@ -20,11 +20,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import * as chalk from 'chalk';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { JwtService } from '@nestjs/jwt';
-
-export enum UserRole {
-  ADMIN = `admin`,
-  USER = `user`,
-}
+import { UserRole } from '#server/common/enums/user-role.enum';
 
 @Entity()
 export class User {

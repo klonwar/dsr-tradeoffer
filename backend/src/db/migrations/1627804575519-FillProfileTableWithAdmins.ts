@@ -1,4 +1,4 @@
-import { UserRole } from '../../user/entity/user.entity';
+import { UserRole } from '#server/common/enums/user-role.enum';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 interface UserTextRow {
