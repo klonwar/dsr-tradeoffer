@@ -1,10 +1,16 @@
 import React, { FC } from 'react';
 import noPhoto from '#src/icons/no-photo.svg';
 import { ItemDto } from '#server/common/dto/item.dto';
+import { useSelector } from 'react-redux';
+import { isItemsRequestPendingSelector } from '#src/js/redux/selectors';
+import { useAppDispatch } from '#src/js/redux/store';
+import { Operations } from '#src/js/redux/operations/operations';
 
 interface ItemProps extends Partial<ItemDto> {}
 
 export const Item: FC<ItemProps> = (props) => {
+  const dispatch = useAppDispatch();
+  const isPending = useSelector(isItemsRequestPendingSelector);
   const { id, name, description, geo, item_category, trade_category, photos } = props;
 
   const photoPath = (photos?.[0]?.photoPath)
@@ -35,14 +41,14 @@ export const Item: FC<ItemProps> = (props) => {
               </span>
             </div>
             <div className={`Item-location`}>
-              <span uk-icon={`icon: location; ratio: 0.75`}/>
+              <span uk-icon={`icon: location; ratio: 0.75`} />
               <span>{geo}</span>
             </div>
           </div>
         </div>
       </div>
       <div className={`Item-actions`}>
-        <a href={`#`} uk-icon={`trash`} />
+        <a href={`#`} uk-icon={`trash`} onClick={() => dispatch(Operations.deleteItem({id}))} />
       </div>
     </div>
   );
