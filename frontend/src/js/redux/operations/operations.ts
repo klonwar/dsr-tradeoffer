@@ -4,6 +4,7 @@ import { registrationOperation } from '#src/js/redux/operations/slices/registrat
 import { editProfileOperation } from '#src/js/redux/operations/slices/edit-profile-operation';
 import { setPhotoOperation } from '#src/js/redux/operations/slices/set-photo-operation';
 import { changePasswordOperation } from '#src/js/redux/operations/slices/change-password-operation';
+import { getItemsListOperation } from '#src/js/redux/operations/slices/get-items-list-operation';
 
 export const Operations = {
   login: createAsyncThunk(
@@ -25,5 +26,9 @@ export const Operations = {
   changePassword: createAsyncThunk(
     `changePassword`,
     changePasswordOperation
+  ),
+  getItemsList: createAsyncThunk(
+    `getItemsList`,
+    getItemsListOperation
   )
 };

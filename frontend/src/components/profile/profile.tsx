@@ -104,8 +104,9 @@ export const Profile: FC = () => {
               register={register}
               errors={errors} />
 
-            <div className={`uk-margin-top`}>
-              {(isDirty) ? (
+
+            {(isDirty) ? (
+              <div className={`uk-margin-top`}>
                 <div className={`uk-flex uk-flex-right`}>
                   <a href={`#`} className={`uk-button uk-button-default`}
                      onClick={(e) => {
@@ -121,8 +122,8 @@ export const Profile: FC = () => {
                     Сохранить
                   </button>
                 </div>
-              ) : null}
-            </div>
+              </div>
+            ) : null}
           </form>
         </div>
 

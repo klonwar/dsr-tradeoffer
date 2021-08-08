@@ -3,6 +3,7 @@ import { RootState } from '#src/js/redux/reducers/root-reducer';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { UserDto } from '#server/common/dto/user.dto';
 import jwtDecode from 'jwt-decode';
+import { ItemsListDto } from '#server/common/dto/items-list.dto';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -28,3 +29,9 @@ export const userPhotoUrlSelector = createSelector<RootState, UserDto, string>(
     ? `${process.env[`SERVER_ORIGIN`]}/${userData.photoPath.replace(/\\/, `/`)}`
     : undefined,
 );
+
+export const isItemsRequestPendingSelector: AppSelector<boolean> = (state) => state.itemsReducer.pending;
+
+export const itemsListSelector: AppSelector<ItemsListDto> = (state) => state.itemsReducer.result;
+
+export const itemsErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemsReducer.error;
