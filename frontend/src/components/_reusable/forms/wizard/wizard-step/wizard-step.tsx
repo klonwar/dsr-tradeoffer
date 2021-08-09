@@ -4,7 +4,7 @@ import {
   WizardContextActions,
   WizardContextActionsInterface,
   WizardContextInterface,
-} from '#components/wizard/wizard';
+} from '#components/_reusable/forms/wizard/wizard';
 
 export interface WizardStepContextInterface {
   index: number;

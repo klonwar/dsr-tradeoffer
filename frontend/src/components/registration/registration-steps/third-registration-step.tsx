@@ -7,7 +7,7 @@ import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
-import { CreateUserDtoKeyWithPwdConfirmation, keyToLabelText } from '#components/registration/util/key-to-label-text';
+import { CreateUserDtoKeyWithPwdConfirmation, keyToLabelText } from '#src/js/util/key-to-label-text';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 
 export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {

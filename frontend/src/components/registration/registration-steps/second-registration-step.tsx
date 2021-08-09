@@ -2,9 +2,9 @@ import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { RegistrationContext } from '#components/registration/registration';
-import { RegistrationInput } from '#components/registration/registration-input';
-import { SecondStepData } from '#components/registration/dto/second-registration-step.dto';
-import { RegistrationPhotoInput } from '../registration-photo-input';
+import { RegistrationInput } from '#components/registration/registration-input/registration-input';
+import { SecondStepData } from '#src/js/dto/second-registration-step.dto';
+import { RegistrationPhotoInput } from '../registration-photo-input/registration-photo-input';
 
 export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> = ({ next, prev }) => {
   const { appendToState } = useContext(RegistrationContext);

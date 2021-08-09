@@ -1,7 +1,7 @@
 import React from 'react';
 import { FC } from 'react';
-import { keyToLabelText } from '#components/registration/util/key-to-label-text';
-import InputHint from '#components/input-hint/input-hint';
+import { keyToLabelText } from '#src/js/util/key-to-label-text';
+import InputHint from '#components/_reusable/forms/input-hint/input-hint';
 import { FieldErrors, FieldPath } from 'react-hook-form';
 import { CreateUserDto } from '#client/../backend/common/dto/create-user.dto';
 

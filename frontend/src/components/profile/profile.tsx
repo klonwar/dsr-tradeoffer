@@ -7,15 +7,15 @@ import {
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
-import { ProfileInput } from '#components/profile/profile-input';
+import { ProfileInput } from '#components/profile/profile-input/profile-input';
 import { useAppDispatch } from '#src/js/redux/store';
 import { Operations } from '#src/js/redux/operations/operations';
 import { useAuthorizedOnly } from '#src/js/hooks/use-authorized-only';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 import noPhoto from '#src/icons/no-photo.svg';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { ProfilePhotoForm } from '#components/profile/profile-photo-form';
-import { ProfilePasswordForm } from '#components/profile/profile-password-form';
+import { ProfilePhotoForm } from '#components/profile/profile-photo-form/profile-photo-form';
+import { ProfilePasswordForm } from '#components/profile/profile-password-form/profile-password-form';
 
 export const Profile: FC = () => {
   useAuthorizedOnly();

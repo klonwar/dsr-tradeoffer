@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Logo from '#components/logo/logo';
+import Logo from '#components/_reusable/ui/logo/logo';
 import { useSelector } from 'react-redux';
 import { isAuthorizedSelector, userPhotoUrlSelector, userDataSelector } from '#src/js/redux/selectors';
 

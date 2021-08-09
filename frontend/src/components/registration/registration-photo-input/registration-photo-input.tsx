@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { RegistrationContext } from '#components/registration/registration';
-import { keyToLabelText } from '#components/registration/util/key-to-label-text';
+import { keyToLabelText } from '#src/js/util/key-to-label-text';
 
 export const RegistrationPhotoInput: FC = () => {
   const { setPhoto } = useContext(RegistrationContext);

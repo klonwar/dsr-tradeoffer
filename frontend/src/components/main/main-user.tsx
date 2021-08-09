@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import trade from '#src/icons/trade.svg';
-import { ItemsList } from '#components/item/items-list';
+import { ItemsList } from '#components/_reusable/subcomponents/items-list/items-list';
 import { useSelector } from 'react-redux';
 import { userDataSelector } from '#src/js/redux/selectors';
 

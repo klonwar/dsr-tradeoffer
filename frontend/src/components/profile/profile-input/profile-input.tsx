@@ -1,8 +1,8 @@
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import React from 'react';
 import { FieldErrors, FieldPath } from 'react-hook-form';
-import InputHint from '#components/input-hint/input-hint';
-import { keyToLabelText } from '#components/registration/util/key-to-label-text';
+import InputHint from '#components/_reusable/forms/input-hint/input-hint';
+import { keyToLabelText } from '#src/js/util/key-to-label-text';
 
 interface ProfileInputPropsInterface<T> {
   name: FieldPath<EditProfileDto> | `passwordConfirmation`,
