@@ -1,11 +1,11 @@
 import React, { createContext, FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Wizard, WizardActionOverrideData } from '#components/_reusable/forms/wizard/wizard';
+import { Wizard, WizardActionOverrideData } from '#reusable/forms/wizard/wizard';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { FirstRegistrationStep } from './registration-steps/first-registration-step';
 import { SecondRegistrationStep } from './registration-steps/second-registration-step';
 import { ThirdRegistrationStep } from '#components/registration/registration-steps/third-registration-step';
-import { WizardStep } from '#components/_reusable/forms/wizard/wizard-step/wizard-step';
+import { WizardStep } from '#reusable/forms/wizard/wizard-step/wizard-step';
 import { useUnauthorizedOnly } from '#src/js/hooks/use-unauthorized-only';
 
 export const RegistrationContext = createContext<{

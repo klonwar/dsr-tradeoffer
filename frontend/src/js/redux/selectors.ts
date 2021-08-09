@@ -1,5 +1,5 @@
 import { createSelector, Selector } from 'reselect';
-import { RootState } from '#src/js/redux/reducers/root-reducer';
+import { RootState } from '#redux/reducers/root-reducer';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { UserDto } from '#server/common/dto/user.dto';
 import jwtDecode from 'jwt-decode';

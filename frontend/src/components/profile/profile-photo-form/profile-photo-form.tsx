@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import InputHint from '#components/_reusable/forms/input-hint/input-hint';
-import { useAppDispatch } from '#src/js/redux/store';
-import { Operations } from '#src/js/redux/operations/operations';
+import InputHint from '#reusable/forms/input-hint/input-hint';
+import { useAppDispatch } from '#redux/store';
+import { Operations } from '#redux/operations/operations';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
-import { isUserRequestPendingSelector, userDataSelector } from '#src/js/redux/selectors';
+import { isUserRequestPendingSelector, userDataSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 
 export const ProfilePhotoForm: FC = () => {

@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Operations } from '#src/js/redux/operations/operations';
-import { LoginOperationResult } from '#src/js/redux/operations/slices/login-operation';
+import { Operations } from '#redux/operations/operations';
+import { LoginOperationResult } from '#redux/operations/slices/login-operation';
 import {
   onError,
   onErrorSaveResult,
   onFulfilled,
   onPending,
   onPendingSaveResult,
-} from '#src/js/redux/reducers/util/operation-callback';
-import { PREState } from '#src/js/redux/reducers/util/pre-state';
+} from '#redux/reducers/util/operation-callback';
+import { PREState } from '#redux/reducers/util/pre-state';
 
 export const USER_SLICE_NAME = `user`;
 

@@ -1,4 +1,4 @@
-import { CreateUserDto } from '#client/../backend/common/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { FieldPath } from 'react-hook-form';
 
 export type CreateUserDtoKeyWithPwdConfirmation = FieldPath<CreateUserDto> | `passwordConfirmation`

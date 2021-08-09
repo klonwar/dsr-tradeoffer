@@ -1,14 +1,14 @@
-import { PREState } from '#src/js/redux/reducers/util/pre-state';
+import { PREState } from '#redux/reducers/util/pre-state';
 import { createSlice } from '@reduxjs/toolkit';
-import { GetItemsListOperationResult } from '#src/js/redux/operations/slices/get-items-list-operation';
-import { Operations } from '#src/js/redux/operations/operations';
+import { GetItemsListOperationResult } from '#redux/operations/slices/get-items-list-operation';
+import { Operations } from '#redux/operations/operations';
 import {
   onError,
   onErrorSaveResult,
   onFulfilled,
   onPending,
   onPendingSaveResult,
-} from '#src/js/redux/reducers/util/operation-callback';
+} from '#redux/reducers/util/operation-callback';
 
 const initialState: PREState<GetItemsListOperationResult> = {
   pending: false,

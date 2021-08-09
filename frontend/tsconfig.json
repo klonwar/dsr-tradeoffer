@@ -12,7 +12,9 @@
       "#components/*": ["src/components/*"],
       "#src/*": ["src/*"],
       "#client/*": ["*"],
-      "#server/*": ["../backend/*"]
+      "#server/*": ["../backend/*"],
+      "#reusable/*": ["src/components/_reusable/*"],
+      "#redux/*": ["src/js/redux/*"]
     },
     "jsx": "react",
     "allowSyntheticDefaultImports": true,

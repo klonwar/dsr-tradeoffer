@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import InputHint from '#components/_reusable/forms/input-hint/input-hint';
-import { useAppDispatch } from '#src/js/redux/store';
-import { Operations } from '#src/js/redux/operations/operations';
-import { isUserRequestPendingSelector } from '#src/js/redux/selectors';
+import InputHint from '#reusable/forms/input-hint/input-hint';
+import { useAppDispatch } from '#redux/store';
+import { Operations } from '#redux/operations/operations';
+import { isUserRequestPendingSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LoginUserDto } from '#server/common/dto/login-user.dto';

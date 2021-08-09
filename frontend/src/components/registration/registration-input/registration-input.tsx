@@ -1,9 +1,8 @@
 import React from 'react';
-import { FC } from 'react';
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
-import InputHint from '#components/_reusable/forms/input-hint/input-hint';
+import InputHint from '#reusable/forms/input-hint/input-hint';
 import { FieldErrors, FieldPath } from 'react-hook-form';
-import { CreateUserDto } from '#client/../backend/common/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
 
 interface RegistrationInputPropsInterface<T> {
   name: FieldPath<CreateUserDto> | `passwordConfirmation`,

@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import noPhoto from '#src/icons/no-photo.svg';
 import { ItemDto } from '#server/common/dto/item.dto';
 import { useSelector } from 'react-redux';
-import { isItemsRequestPendingSelector } from '#src/js/redux/selectors';
-import { useAppDispatch } from '#src/js/redux/store';
-import { Operations } from '#src/js/redux/operations/operations';
+import { isItemsRequestPendingSelector } from '#redux/selectors';
+import { useAppDispatch } from '#redux/store';
+import { Operations } from '#redux/operations/operations';
 
 interface ItemProps extends Partial<ItemDto> {}
 

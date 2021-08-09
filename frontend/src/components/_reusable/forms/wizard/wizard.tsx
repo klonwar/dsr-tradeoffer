@@ -7,7 +7,7 @@
  * */
 
 import React, { createContext, FC, useCallback, useEffect, useState } from 'react';
-import { WizardStepContext, WizardStepElement } from '#components/_reusable/forms/wizard/wizard-step/wizard-step';
+import { WizardStepContext, WizardStepElement } from '#reusable/forms/wizard/wizard-step/wizard-step';
 
 export interface WizardContextInterface {
   step: number;

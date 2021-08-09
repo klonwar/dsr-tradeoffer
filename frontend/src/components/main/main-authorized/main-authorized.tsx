@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { userDataSelector } from '#src/js/redux/selectors';
+import { userDataSelector } from '#redux/selectors';
 import { UserRole } from '#server/common/enums/user-role.enum';
 import { MainUser } from '#components/main/main-user';
 

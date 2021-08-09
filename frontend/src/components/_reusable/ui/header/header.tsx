@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Logo from '#components/_reusable/ui/logo/logo';
+import Logo from '#reusable/ui/logo/logo';
 import { useSelector } from 'react-redux';
-import { isAuthorizedSelector, userPhotoUrlSelector, userDataSelector } from '#src/js/redux/selectors';
+import { isAuthorizedSelector, userPhotoUrlSelector, userDataSelector } from '#redux/selectors';
 
 const Header: React.FC = () => {
   const activeClassName = `active uk-card-default`;

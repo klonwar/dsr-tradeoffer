@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { loginOperation } from '#src/js/redux/operations/slices/login-operation';
-import { registrationOperation } from '#src/js/redux/operations/slices/registration-operation';
-import { editProfileOperation } from '#src/js/redux/operations/slices/edit-profile-operation';
-import { setPhotoOperation } from '#src/js/redux/operations/slices/set-photo-operation';
-import { changePasswordOperation } from '#src/js/redux/operations/slices/change-password-operation';
-import { getItemsListOperation } from '#src/js/redux/operations/slices/get-items-list-operation';
-import { deleteItemOperation } from '#src/js/redux/operations/slices/delete-item-operation';
+import { loginOperation } from '#redux/operations/slices/login-operation';
+import { registrationOperation } from '#redux/operations/slices/registration-operation';
+import { editProfileOperation } from '#redux/operations/slices/edit-profile-operation';
+import { setPhotoOperation } from '#redux/operations/slices/set-photo-operation';
+import { changePasswordOperation } from '#redux/operations/slices/change-password-operation';
+import { getItemsListOperation } from '#redux/operations/slices/get-items-list-operation';
+import { deleteItemOperation } from '#redux/operations/slices/delete-item-operation';
 
 export const Operations = {
   login: createAsyncThunk(

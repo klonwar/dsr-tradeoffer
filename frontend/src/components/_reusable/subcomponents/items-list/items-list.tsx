@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react';
-import { Item } from '#components/_reusable/subcomponents/items-list/item/item';
+import { Item } from '#reusable/subcomponents/items-list/item/item';
 import { useSelector } from 'react-redux';
-import { isItemsRequestPendingSelector, itemsListSelector } from '#src/js/redux/selectors';
-import { useAppDispatch } from '#src/js/redux/store';
-import { Operations } from '#src/js/redux/operations/operations';
+import { isItemsRequestPendingSelector, itemsListSelector } from '#redux/selectors';
+import { useAppDispatch } from '#redux/store';
+import { Operations } from '#redux/operations/operations';
 import { useShowItemsRequestError } from '#src/js/hooks/use-show-items-request-error';
 
 export const ItemsList: FC = () => {
