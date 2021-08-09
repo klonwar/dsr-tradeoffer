@@ -5,6 +5,7 @@ import { RegistrationContext } from '#components/registration/registration';
 import { RegistrationInput } from '#components/registration/registration-input/registration-input';
 import { SecondStepData } from '#src/js/dto/second-registration-step.dto';
 import { RegistrationPhotoInput } from '../registration-photo-input/registration-photo-input';
+import { AppInput } from '#reusable/forms/app-input/app-input';
 
 export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> = ({ next, prev }) => {
   const { appendToState } = useContext(RegistrationContext);
@@ -24,39 +25,48 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
       <h1 className={`uk-card-title`}>Регистрация</h1>
       <div className={`uk-flex uk-flex-column uk-flex-middle`}>
         <form id={`user-info-form`} onSubmit={onSubmit}>
-          <RegistrationInput
+          <AppInput
             name={`firstName`}
-            placeholder={`Вася`}
-            icon={`user`}
-            isRequired={true}
-            register={register}
-            errors={errors}
+            inputProps={{
+              placeholder: `Вася`
+            }}
+            options={{
+              icon: `user`,
+              isRequired: true
+            }}
+            useForm={{register, errors}}
           />
 
-          <RegistrationInput
+          <AppInput
             name={`phone`}
-            type={`tel`}
-            placeholder={`8005553535`}
-            icon={`phone`}
-            isRequired={true}
-            register={register}
-            errors={errors}
+            inputProps={{
+              placeholder: `8005553535`,
+              type: `tel`
+            }}
+            options={{
+              icon: `phone`,
+              isRequired: true
+            }}
+            useForm={{register, errors}}
           />
 
-          <RegistrationInput
+          <AppInput
             name={`birthday`}
-            type={`date`}
-            placeholder={``}
-            icon={`lock`}
-            isRequired={true}
-            register={register}
-            errors={errors}
+            inputProps={{
+              placeholder: ``,
+              type: `date`
+            }}
+            options={{
+              icon: `calendar`,
+              isRequired: true
+            }}
+            useForm={{register, errors}}
           />
         </form>
 
         <RegistrationPhotoInput />
       </div>
-      <div className={`uk-child-width-expand uk-margin  uk-margin-remove-bottom`} uk-grid={``}>
+      <div className={`uk-child-width-expand uk-margin uk-margin-remove-bottom`} uk-grid={``}>
         <div>
           <a href={`#`} className={`uk-button uk-button-default uk-width-1-1`}
              onClick={(e) => {

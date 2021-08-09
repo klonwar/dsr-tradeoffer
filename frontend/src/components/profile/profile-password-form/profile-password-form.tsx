@@ -8,6 +8,8 @@ import { isUserRequestPendingSelector, userDataSelector } from '#redux/selectors
 import { useSelector } from 'react-redux';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
+import { AppInput } from '#reusable/forms/app-input/app-input';
+import { keyToLabelText } from '#src/js/util/key-to-label-text';
 
 export const ProfilePasswordForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +17,7 @@ export const ProfilePasswordForm: FC = () => {
   const isPending = useSelector(isUserRequestPendingSelector);
 
   const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm<ChangePasswordDto>({
-    resolver: classValidatorResolver(ChangePasswordDto)
+    resolver: classValidatorResolver(ChangePasswordDto),
   });
   const [isOpened, setIsOpened] = useState(false);
 
@@ -43,51 +45,48 @@ export const ProfilePasswordForm: FC = () => {
     <form onSubmit={onSubmit}>
       <div className={`uk-inline uk-width-expand `}>
         <div className={`uk-position-relative uk-flex uk-flex-column`}>
-          <div className={`uk-width-expand uk-inline uk-margin-small-bottom`}>
-            <span className={`uk-form-icon`} uk-icon={`icon: unlock`}/>
-            <input
-              {...register(`oldPassword`)}
-              type={`password`}
-              className={`uk-input`}
-              placeholder={`Старый пароль`}
-            />
-            <InputHint
-              text={errors.oldPassword?.message}
-              className={`uk-position-center-right-out`}
-              isActive={!!errors.oldPassword}
-            />
-          </div>
-          <div className={`uk-width-expand uk-inline uk-margin-small-bottom`}>
-            <span className={`uk-form-icon`} uk-icon={`icon: lock`}/>
-            <input
-              {...register(`newPassword`)}
-              type={`password`}
-              className={`uk-input`}
-              placeholder={`Новый пароль`}
-            />
-            <InputHint
-              text={errors.newPassword?.message}
-              className={`uk-position-center-right-out`}
-              isActive={!!errors.newPassword}
-            />
-          </div>
-          <div className={`uk-width-expand uk-inline uk-margin-small-bottom`}>
-            <span className={`uk-form-icon`} uk-icon={`icon: lock`}/>
-            <input
-              {...register(`newPasswordConfirmation`)}
-              type={`password`}
-              className={`uk-input`}
-              placeholder={`Подтверждение пароля`}
-            />
-            <InputHint
-              text={errors.newPasswordConfirmation?.message}
-              className={`uk-position-center-right-out`}
-              isActive={!!errors.newPasswordConfirmation}
-            />
-          </div>
+          <AppInput
+            name={`oldPassword`}
+            inputProps={{
+              type: `password`,
+              placeholder: keyToLabelText.get(`oldPassword`)
+            }}
+            options={{
+              withLabel: false,
+              icon: `unlock`
+            }}
+            useForm={{ register, errors }}
+          />
+
+          <AppInput
+            name={`newPassword`}
+            inputProps={{
+              type: `password`,
+              placeholder: keyToLabelText.get(`newPassword`)
+            }}
+            options={{
+              withLabel: false,
+              icon: `lock`
+            }}
+            useForm={{ register, errors }}
+          />
+
+          <AppInput
+            name={`newPasswordConfirmation`}
+            inputProps={{
+              type: `password`,
+              placeholder: keyToLabelText.get(`newPasswordConfirmation`)
+            }}
+            options={{
+              withLabel: false,
+              icon: `lock`
+            }}
+            useForm={{ register, errors }}
+          />
+
           <button type={`submit`}
                   className={`uk-button uk-button-primary`}
-                  disabled={isPending} >
+                  disabled={isPending}>
             Сохранить
           </button>
         </div>

@@ -4,6 +4,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { RegistrationContext } from '#components/registration/registration';
 import { RegistrationInput } from '#components/registration/registration-input/registration-input';
 import { FirstStepData } from '#src/js/dto/first-registration-step.dto';
+import { AppInput } from '#reusable/forms/app-input/app-input';
 
 export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
   const { appendToState } = useContext(RegistrationContext);
@@ -21,44 +22,51 @@ export const FirstRegistrationStep: FC<{ next: () => void }> = ({ next }) => {
     <form onSubmit={onSubmit}>
       <h1 className={`uk-card-title`}>Регистрация</h1>
       <div className={`uk-flex uk-flex-column uk-flex-middle`}>
-        <RegistrationInput
+        <AppInput
           name={`username`}
-          placeholder={`bradeazy`}
-          icon={`user`}
-          isRequired={true}
-          register={register}
-          errors={errors}
-        />
+          inputProps={{
+            placeholder: `bradeazy`
+          }}
+          options={{
+            icon: `user`,
+            isRequired: true
+          }}
+          useForm={{register, errors}}/>
 
-        <RegistrationInput
+        <AppInput
           name={`email`}
-          type={`email`}
-          placeholder={`your@gmail.com`}
-          icon={`mail`}
-          isRequired={true}
-          register={register}
-          errors={errors}
-        />
+          inputProps={{
+            placeholder: `your@gmail.com`
+          }}
+          options={{
+            icon: `mail`,
+            isRequired: true
+          }}
+          useForm={{register, errors}}/>
 
-        <RegistrationInput
+        <AppInput
           name={`password`}
-          type={`password`}
-          icon={`lock`}
-          placeholder={`12345678`}
-          isRequired={true}
-          register={register}
-          errors={errors}
-        />
+          inputProps={{
+            placeholder: `12345678`,
+            type: `password`
+          }}
+          options={{
+            icon: `lock`,
+            isRequired: true
+          }}
+          useForm={{register, errors}}/>
 
-        <RegistrationInput
+        <AppInput
           name={`passwordConfirmation`}
-          type={`password`}
-          icon={`lock`}
-          placeholder={`12345678`}
-          isRequired={true}
-          register={register}
-          errors={errors}
-        />
+          inputProps={{
+            placeholder: `12345678`,
+            type: `password`
+          }}
+          options={{
+            icon: `lock`,
+            isRequired: true
+          }}
+          useForm={{register, errors}}/>
       </div>
       <div className={`uk-child-width-expand uk-margin uk-margin-remove-bottom`} uk-grid={``}>
         <div>
