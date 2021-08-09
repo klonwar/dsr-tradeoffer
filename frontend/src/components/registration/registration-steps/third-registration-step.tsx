@@ -7,7 +7,7 @@ import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
-import { CreateUserDtoKeyWithPwdConfirmation, keyToLabelText } from '#src/js/util/key-to-label-text';
+import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 
 export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
@@ -40,7 +40,7 @@ export const ThirdRegistrationStep: FC<{ prev: () => void }> = ({ prev }) => {
           return (
             <div key={key} className={`uk-margin-small uk-margin-remove-bottom`}>
               <div className={`uk-flex`}>
-                <div>{keyToLabelText.get(key as CreateUserDtoKeyWithPwdConfirmation)}:</div>
+                <div>{keyToLabelText.get(key as FieldPath<CreateUserDto>)}:</div>
                 <div className={`uk-width-expand uk-text-right`}>{(() => {
                   if (key === `password`)
                     return registrationState[key]?.replaceAll(/[^\n]/g, `*`) ?? `Не введен`;
