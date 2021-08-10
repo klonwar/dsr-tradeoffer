@@ -18,11 +18,15 @@ export const MainAddItemForm: FC = () => {
     resolver: classValidatorResolver(CreateItemDto),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    dispatch(Operations.createItem({data, photos}));
+  const resetAll = () => {
     reset();
     setPhotos(null);
     setIsOpened(false);
+  };
+
+  const onSubmit = handleSubmit((data) => {
+    dispatch(Operations.createItem({ data, photos }));
+    resetAll();
   });
 
   return (
@@ -102,15 +106,26 @@ export const MainAddItemForm: FC = () => {
 
               <div className={`uk-child-width-1-1 uk-child-width-expand@s`} uk-grid={`margin: uk-margin-small`}>
                 <div>
-                  <MainCategorySelect name={`item_category_id`} useForm={{register, errors}} />
+                  <MainCategorySelect name={`item_category_id`} useForm={{ register, errors }} />
                 </div>
                 <div>
-                  <MainCategorySelect name={`trade_category_id`} useForm={{register, errors}}/>
+                  <MainCategorySelect name={`trade_category_id`} useForm={{ register, errors }} />
                 </div>
               </div>
 
-              <div className={`uk-child-width-expand uk-margin-top`} uk-grid={``}>
+              <div className={`uk-margin-top`} uk-grid={``}>
                 <div>
+                  <a href={`#`}
+                     onClick={(e) => {
+                    e.preventDefault();
+                    resetAll();
+                  }}
+                     className={`uk-button uk-button-default`}
+                  >
+                    Отмена
+                  </a>
+                </div>
+                <div className={`uk-width-expand`}>
                   <button className={`uk-button uk-button-primary uk-width-1-1`}>Создать</button>
                 </div>
               </div>
@@ -120,7 +135,7 @@ export const MainAddItemForm: FC = () => {
         : (
           <button className={`uk-button uk-button-default uk-flex uk-flex-middle`}
                   onClick={() => setIsOpened(true)}>
-            <span uk-icon={`icon: plus`} style={{lineHeight: `inherit`}}/>
+            <span uk-icon={`icon: plus`} style={{ lineHeight: `inherit` }} />
             <span className={`uk-margin-small-left uk-visible@s`}>Вещь</span>
           </button>
         )}
