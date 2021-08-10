@@ -5,3 +5,9 @@ export interface PREState<T> {
   result: T;
   error: SerializedAxiosError;
 }
+
+export const resetPreState = (state: PREState<any>): void => {
+  state.pending = false;
+  state.result = null;
+  state.error = null;
+};

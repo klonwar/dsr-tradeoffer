@@ -1,4 +1,4 @@
-import { PREState } from '#redux/reducers/util/pre-state';
+import { PREState, resetPreState } from '#redux/reducers/util/pre-state';
 import { createSlice } from '@reduxjs/toolkit';
 import { GetCategoriesListOperationResult } from '#redux/operations/slices/get-categories-list-operation';
 import { Operations } from '#redux/operations/operations';
@@ -13,7 +13,9 @@ const initialState: PREState<GetCategoriesListOperationResult> = {
 const categoriesSlice = createSlice({
   name: `categories`,
   initialState,
-  reducers: {},
+  reducers: {
+    reset: resetPreState
+  },
   extraReducers: (builder) => {
     builder
       .addCase(Operations.getCategoriesList.pending, onPending)

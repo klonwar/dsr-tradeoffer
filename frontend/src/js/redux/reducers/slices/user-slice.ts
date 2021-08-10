@@ -8,7 +8,7 @@ import {
   onPending,
   onPendingSaveResult,
 } from '#redux/reducers/util/operation-callback';
-import { PREState } from '#redux/reducers/util/pre-state';
+import { PREState, resetPreState } from '#redux/reducers/util/pre-state';
 
 export const USER_SLICE_NAME = `user`;
 
@@ -22,11 +22,7 @@ const userSlice = createSlice({
   name: USER_SLICE_NAME,
   initialState: initialState,
   reducers: {
-    logout: (state) => {
-      state.pending = false;
-      state.result = null;
-      state.error = null;
-    },
+    logout: resetPreState,
     stateFromStorage: () => {
       let stateFromStorage;
       try {
