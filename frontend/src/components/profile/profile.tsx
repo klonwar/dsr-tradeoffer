@@ -3,19 +3,19 @@ import {
   isUserRequestPendingSelector,
   userDataSelector,
   userPhotoUrlSelector,
-} from '#src/js/redux/selectors';
+} from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
-import { ProfileInput } from '#components/profile/profile-input';
-import { useAppDispatch } from '#src/js/redux/store';
-import { Operations } from '#src/js/redux/operations/operations';
+import { ProfileInput } from '#components/profile/profile-input/profile-input';
+import { useAppDispatch } from '#redux/store';
+import { Operations } from '#redux/operations/operations';
 import { useAuthorizedOnly } from '#src/js/hooks/use-authorized-only';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 import noPhoto from '#src/icons/no-photo.svg';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { ProfilePhotoForm } from '#components/profile/profile-photo-form';
-import { ProfilePasswordForm } from '#components/profile/profile-password-form';
+import { ProfilePhotoForm } from '#components/profile/profile-photo-form/profile-photo-form';
+import { ProfilePasswordForm } from '#components/profile/profile-password-form/profile-password-form';
 
 export const Profile: FC = () => {
   useAuthorizedOnly();
@@ -104,8 +104,9 @@ export const Profile: FC = () => {
               register={register}
               errors={errors} />
 
-            <div className={`uk-margin-top`}>
-              {(isDirty) ? (
+
+            {(isDirty) ? (
+              <div className={`uk-margin-top`}>
                 <div className={`uk-flex uk-flex-right`}>
                   <a href={`#`} className={`uk-button uk-button-default`}
                      onClick={(e) => {
@@ -121,8 +122,8 @@ export const Profile: FC = () => {
                     Сохранить
                   </button>
                 </div>
-              ) : null}
-            </div>
+              </div>
+            ) : null}
           </form>
         </div>
 

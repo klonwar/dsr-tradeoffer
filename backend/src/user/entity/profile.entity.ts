@@ -1,7 +1,15 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { User } from '#src/user/entity/user.entity';
-import { Exclude, Expose, Transform, Type } from 'class-transformer';
+import { Exclude, Transform, Type } from 'class-transformer';
 import * as moment from 'moment';
+import { PhotoEntity } from '#src/photos/entity/photo.entity';
 
 @Entity()
 export class Profile {
@@ -25,16 +33,21 @@ export class Profile {
   @Column({ type: `date` })
   birthday: Date;
 
-  @Transform(
-    ({ value }: { value: string }) => value?.replace(/\\/, `/`) ?? null,
-  )
-  @Expose({ name: `photoPath` })
-  @Column({ type: `text`, nullable: true })
-  photo: string;
+  @Exclude()
+  @Column({ nullable: true })
+  photo_id: number;
 
   // Relations
   @Exclude()
   @OneToOne(() => User, { primary: true, onDelete: `CASCADE` })
   @JoinColumn({ name: `user_id` })
   user: User;
+
+  @Type(() => PhotoEntity)
+  @ManyToOne(() => PhotoEntity, (photo) => photo.profiles, {
+    cascade: true,
+    onDelete: `SET NULL`,
+  })
+  @JoinColumn({ name: `photo_id` })
+  photo: PhotoEntity;
 }

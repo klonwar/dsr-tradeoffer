@@ -1,59 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Operations } from '#src/js/redux/operations/operations';
-import { LoginOperationResult } from '#src/js/redux/operations/slices/login-operation';
-import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
+import { Operations } from '#redux/operations/operations';
+import { LoginOperationResult } from '#redux/operations/slices/login-operation';
+import {
+  onError,
+  onErrorSaveResult,
+  onFulfilled,
+  onPending,
+  onPendingSaveResult,
+} from '#redux/reducers/util/operation-callback';
+import { PREState, resetPreState } from '#redux/reducers/util/pre-state';
 
 export const USER_SLICE_NAME = `user`;
 
-export interface UserState {
-  pending: boolean,
-  result: LoginOperationResult;
-  error: SerializedAxiosError;
-}
-
-const initialState: UserState = {
+const initialState: PREState<LoginOperationResult> = {
   pending: false,
   result: null,
   error: null,
-};
-
-const onPending = (state) => {
-  state.pending = true;
-  state.result = null;
-  state.error = null;
-};
-
-const onPendingSaveResult = (state) => {
-  state.pending = true;
-  state.error = null;
-};
-
-const onError = (state, action) => {
-  state.pending = false;
-  state.result = null;
-  state.error = action.payload;
-};
-
-const onErrorSaveResult = (state, action) => {
-  state.pending = false;
-  state.error = action.payload;
-};
-
-const onFulfilled = (state, action) => {
-  state.pending = false;
-  state.result = action.payload;
-  state.error = null;
 };
 
 const userSlice = createSlice({
   name: USER_SLICE_NAME,
   initialState: initialState,
   reducers: {
-    logout: (state) => {
-      state.pending = false;
-      state.result = null;
-      state.error = null;
-    },
+    logout: resetPreState,
     stateFromStorage: () => {
       let stateFromStorage;
       try {

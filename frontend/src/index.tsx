@@ -7,8 +7,8 @@ import ReactDOM from 'react-dom';
 import Icons from 'uikit/dist/js/uikit-icons';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '#src/js/redux/store';
-import { USER_SLICE_NAME, UserActions } from '#src/js/redux/reducers/slices/user-slice';
+import store from '#redux/store';
+import { USER_SLICE_NAME, UserActions } from '#redux/reducers/slices/user-slice';
 import axiosInstance from '#src/js/axios/axios-instance';
 
 (() => {

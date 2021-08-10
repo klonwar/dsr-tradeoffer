@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import InputHint from '#components/input-hint/input-hint';
-import { useAppDispatch } from '#src/js/redux/store';
-import { Operations } from '#src/js/redux/operations/operations';
-import { isUserRequestPendingSelector } from '#src/js/redux/selectors';
+import InputHint from '#reusable/forms/input-hint/input-hint';
+import { useAppDispatch } from '#redux/store';
+import { Operations } from '#redux/operations/operations';
+import { isUserRequestPendingSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LoginUserDto } from '#server/common/dto/login-user.dto';
 import { useUnauthorizedOnly } from '#src/js/hooks/use-unauthorized-only';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
+import App from '#components/app/app';
+import { AppInput } from '#reusable/forms/app-input/app-input';
 
 const Login: FC = () => {
   useUnauthorizedOnly();
@@ -32,33 +34,31 @@ const Login: FC = () => {
       <form onSubmit={onSubmit} className={`uk-card uk-card-default uk-card-body`}>
         <h1 className={`uk-card-title`}>Вход</h1>
         <div className={`uk-flex uk-flex-column uk-flex-middle`} uk-margin={``}>
-          <div className={`uk-inline`}>
-            <span className={`uk-form-icon`} uk-icon={`icon: user`} />
-            <input
-              className={`uk-input${(errors.username) ? ` uk-form-danger` : ``}`}
-              placeholder={`Логин`}
-              {...register(`username`)}
-            />
-            <InputHint
-              text={errors.username?.message}
-              className={`uk-position-center-right-out`}
-              isActive={!!errors.username}
-            />
-          </div>
-          <div className={`uk-inline`}>
-            <span className={`uk-form-icon`} uk-icon={`icon: lock`} />
-            <input
-              className={`uk-input${(errors.password) ? ` uk-form-danger` : ``}`}
-              type={`password`}
-              placeholder={`Пароль`}
-              {...register(`password`)}
-            />
-            <InputHint
-              text={errors.password?.message}
-              className={`uk-position-center-right-out`}
-              isActive={!!errors.password}
-            />
-          </div>
+          <AppInput
+            name={`username`}
+            inputProps={{
+              placeholder: `Логин`
+            }}
+            options={{
+              icon: `user`,
+              withLabel: false
+            }}
+            useForm={{register, errors}}
+          />
+
+          <AppInput
+            name={`password`}
+            inputProps={{
+              placeholder: `12345678`,
+              type: `password`
+            }}
+            options={{
+              icon: `lock`,
+              withLabel: false
+            }}
+            useForm={{register, errors}}
+          />
+
         </div>
         <button disabled={isPending}
                 className={`uk-button uk-button-primary uk-width-1-1 uk-margin uk-margin-remove-bottom`}

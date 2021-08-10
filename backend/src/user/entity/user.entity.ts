@@ -2,6 +2,7 @@ import {
   BeforeInsert,
   Column,
   Entity,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -20,11 +21,8 @@ import { InternalServerErrorException } from '@nestjs/common';
 import * as chalk from 'chalk';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { JwtService } from '@nestjs/jwt';
-
-export enum UserRole {
-  ADMIN = `admin`,
-  USER = `user`,
-}
+import { UserRole } from '#server/common/enums/user-role.enum';
+import { ItemEntity } from '#src/items/entity/item.entity';
 
 @Entity()
 export class User {
@@ -57,8 +55,10 @@ export class User {
     const plainUserDto = {
       ...plainThis,
       ...plainThis.profile,
+      ...plainThis.profile.photo,
     };
     delete plainUserDto.profile;
+    delete plainUserDto.photo;
 
     // Validate
     const userDto = plainToClass(UserDto, plainUserDto);
@@ -95,4 +95,7 @@ export class User {
   @Type(() => Profile)
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   profile: Profile;
+
+  @OneToMany(() => ItemEntity, (item) => item.user)
+  items: ItemEntity[];
 }
