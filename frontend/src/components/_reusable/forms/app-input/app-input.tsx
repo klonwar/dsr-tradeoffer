@@ -1,17 +1,15 @@
 import React from 'react';
 import { AvailableTranslations, keyToLabelText } from '#src/js/util/key-to-label-text';
 import InputHint from '#reusable/forms/input-hint/input-hint';
-import { FieldErrors } from 'react-hook-form';
-
-interface UseFormFunctions {
-  register: (...rest: any) => any,
-  errors: FieldErrors,
-}
+import { UseFormFunctions } from '#src/js/interfaces/use-form-functions';
 
 interface AppInputOptions {
   icon?: string,
   isRequired?: boolean,
   withLabel?: boolean,
+  hintPosition?: `top-left` | `top-center` | `top-right` |
+    `center-left` | `center` | `center-right`
+    | `botton-left` | `botton-center` | `botton-right`;
 }
 
 interface AppInputPropsInterface {
@@ -32,6 +30,7 @@ export const AppInput = (props: AppInputPropsInterface): JSX.Element => {
       icon,
       isRequired = false,
       withLabel = true,
+      hintPosition = `center-right`,
     } = {},
     useForm: {
       register,
@@ -57,7 +56,7 @@ export const AppInput = (props: AppInputPropsInterface): JSX.Element => {
         />
         <InputHint
           text={errors[name]?.message}
-          className={`uk-position-center-right-out`}
+          className={`uk-position-${hintPosition}-out`}
           isActive={!!errors[name]}
         />
       </div>

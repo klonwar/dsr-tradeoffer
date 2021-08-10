@@ -2,7 +2,6 @@ import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { RegistrationContext } from '#components/registration/registration';
-import { RegistrationInput } from '#components/registration/registration-input/registration-input';
 import { FirstStepData } from '#src/js/dto/first-registration-step.dto';
 import { AppInput } from '#reusable/forms/app-input/app-input';
 

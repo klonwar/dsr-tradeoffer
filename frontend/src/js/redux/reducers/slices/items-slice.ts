@@ -28,7 +28,11 @@ const itemsSlice = createSlice({
 
       .addCase(Operations.deleteItem.pending, onPendingSaveResult)
       .addCase(Operations.deleteItem.rejected, onErrorSaveResult)
-      .addCase(Operations.deleteItem.fulfilled, onFulfilled);
+      .addCase(Operations.deleteItem.fulfilled, onFulfilled)
+
+      .addCase(Operations.createItem.pending, onPendingSaveResult)
+      .addCase(Operations.createItem.rejected, onErrorSaveResult)
+      .addCase(Operations.createItem.fulfilled, onFulfilled);
   },
 });
 

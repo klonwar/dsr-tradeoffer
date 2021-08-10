@@ -7,6 +7,7 @@ import { changePasswordOperation } from '#redux/operations/slices/change-passwor
 import { getItemsListOperation } from '#redux/operations/slices/get-items-list-operation';
 import { deleteItemOperation } from '#redux/operations/slices/delete-item-operation';
 import { getCategoriesListOperation } from '#redux/operations/slices/get-categories-list-operation';
+import { createItemOperation } from '#redux/operations/slices/create-item-operation';
 
 export const Operations = {
   login: createAsyncThunk(
@@ -40,5 +41,9 @@ export const Operations = {
   getCategoriesList: createAsyncThunk(
     `getCategoriesList`,
     getCategoriesListOperation
+  ),
+  createItem: createAsyncThunk(
+    `createItem`,
+    createItemOperation
   )
 };
