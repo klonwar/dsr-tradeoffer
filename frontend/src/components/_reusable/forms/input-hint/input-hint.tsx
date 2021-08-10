@@ -11,7 +11,7 @@ const InputHint: React.FC<Props> = (props) => {
 
   return (
     (isActive && text)
-      ? (<div className={`uk-position-absolute uk-overlay uk-padding-small ${className}`}>
+      ? (<div className={`uk-position-absolute uk-overlay uk-padding-small ${className}`} style={{zIndex: 30}}>
         <div className={`uk-flex uk-flex-middle uk-height-1-1`}>
           <span className={`input-hint uk-active`}>
             {text}

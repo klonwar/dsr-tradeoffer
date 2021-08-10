@@ -19,9 +19,9 @@ export const ItemsList: FC = () => {
   useShowItemsRequestError(true);
 
   return (
-    <div className={`uk-flex uk-flex-between uk-width-1-1 uk-flex-wrap`} uk-margin={``}>
+    <div className={`uk-flex uk-flex-center uk-width-1-1 uk-flex-wrap`}>
       {itemsList?.map((item) => (
-        <div key={item.id}>
+        <div key={item.id} className={`uk-width-1-1 uk-width-1-2@m uk-padding-small`}>
           <Item {...item} />
         </div>
       )) ?? null}

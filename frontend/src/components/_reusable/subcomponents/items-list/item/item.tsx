@@ -18,14 +18,10 @@ export const Item: FC<ItemProps> = (props) => {
     : noPhoto;
 
   return (
-    <div className={`uk-card uk-card-default uk-card-body uk-card-small`} data-id={id}>
+    <div className={`uk-card uk-card-default uk-card-body uk-width-1-1`} data-id={id}>
       <div className={`Item`}>
         <div className={`Item-header`}>
-          <div className={`Item-picture`}>
-            <img src={photoPath}
-                 width={80}
-                 height={80}
-                 alt={name} />
+          <div className={`Item-picture`} style={{backgroundImage: `url(${photoPath})`}}>
           </div>
           <div className={`Item-info`}>
             <h4 className={`Item-title`}>
