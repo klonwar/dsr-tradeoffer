@@ -120,7 +120,7 @@ export const MainAddItemForm: FC = () => {
         : (
           <button className={`uk-button uk-button-default uk-flex uk-flex-middle`}
                   onClick={() => setIsOpened(true)}>
-            <span uk-icon={`icon: plus`} />
+            <span uk-icon={`icon: plus`} style={{lineHeight: `inherit`}}/>
             <span className={`uk-margin-small-left uk-visible@s`}>Вещь</span>
           </button>
         )}
