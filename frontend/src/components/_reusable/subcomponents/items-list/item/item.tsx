@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { isItemsRequestPendingSelector } from '#redux/selectors';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
+import { Link } from 'react-router-dom';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 
 interface ItemProps extends Partial<ItemDto> {}
@@ -22,12 +23,10 @@ export const Item: FC<ItemProps> = (props) => {
     <div className={`uk-card uk-card-default uk-card-body uk-width-1-1`} data-id={id}>
       <div className={`Item`}>
         <div className={`Item-header`}>
-          <div className={`Item-picture`} style={{backgroundImage: `url(${photoPath})`}}>
+          <div className={`Item-picture`} style={{ backgroundImage: `url(${photoPath})` }}>
           </div>
           <div className={`Item-info`}>
-            <h4 className={`Item-title`}>
-              {name}
-            </h4>
+            <Link className={`Item-title uk-h4 uk-link-heading`} to={`/item/${id}`}>{name}</Link>
             <div className={`Item-category`}>
               <span>
                 {item_category}
@@ -45,7 +44,10 @@ export const Item: FC<ItemProps> = (props) => {
         </div>
       </div>
       <div className={`Item-actions`}>
-        <a href={`#`} uk-icon={`trash`} onClick={() => dispatch(Operations.deleteItem({id}))} />
+        <a href={`#`} uk-icon={`trash`} onClick={(e) => {
+          e.preventDefault();
+          dispatch(Operations.deleteItem({ id }));
+        }} />
       </div>
     </div>
   );

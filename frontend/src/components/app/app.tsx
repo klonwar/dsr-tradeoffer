@@ -6,10 +6,17 @@ import Login from '#components/login/login';
 import Logout from '#components/login/logout/logout';
 import Registration from '#components/registration/registration';
 import { Profile } from '#components/profile/profile';
+import { ItemPage } from '#components/item-page/item-page';
 
 const App: FC = () => {
   return (
     <Switch>
+      <Route path={`/item/:itemId`}>
+        <HeaderWrapper>
+          <ItemPage />
+        </HeaderWrapper>
+      </Route>
+
       <Route path={`/profile`}>
         <HeaderWrapper>
           <Profile />

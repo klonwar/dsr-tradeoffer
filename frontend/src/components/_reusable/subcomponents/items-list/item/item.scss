@@ -19,10 +19,12 @@
 
   &-info {
     display: grid;
+    width: 100%;
   }
 
   &-title {
     margin: 0;
+    width: 100%;
   }
 
   &-category, &-location {
@@ -39,5 +41,14 @@
     margin-top: $margin-margin;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+
+    & > a:not(:first-child){
+      margin-left: $margin-small-margin;
+    }
+  }
+
+  &-body {
+    margin-top: $margin-margin;
   }
 }
