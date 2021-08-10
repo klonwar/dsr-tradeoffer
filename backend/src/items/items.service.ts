@@ -61,4 +61,8 @@ export class ItemsService {
 
     return await this.getAllUserItems(user);
   }
+
+  async getCategories(): Promise<Array<CategoryEntity>> {
+    return await this.categoryRepository.find();
+  }
 }

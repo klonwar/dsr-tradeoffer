@@ -4,6 +4,7 @@ import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { UserDto } from '#server/common/dto/user.dto';
 import jwtDecode from 'jwt-decode';
 import { ItemsListDto } from '#server/common/dto/items-list.dto';
+import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -35,3 +36,9 @@ export const isItemsRequestPendingSelector: AppSelector<boolean> = (state) => st
 export const itemsListSelector: AppSelector<ItemsListDto> = (state) => state.itemsReducer.result;
 
 export const itemsErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemsReducer.error;
+
+export const isCategoriesRequestPendingSelector: AppSelector<boolean> = (state) => state.categoriesReducer.pending;
+
+export const categoriesListSelector: AppSelector<CategoriesListDto> = (state) => state.categoriesReducer.result;
+
+export const categoriesErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.categoriesReducer.error;

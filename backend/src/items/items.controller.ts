@@ -42,4 +42,10 @@ export class ItemsController {
   async deleteItem(@Request() req, @Body() { id }: DeleteItemDto) {
     return await this.itemsService.removeItem(req.user, id);
   }
+
+  @Get(`categories`)
+  @UseInterceptors(ClassSerializerInterceptor)
+  async getCategories() {
+    return await this.itemsService.getCategories();
+  }
 }

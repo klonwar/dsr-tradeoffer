@@ -5,6 +5,7 @@ import { itemsReducer } from '#redux/reducers/slices/items-slice';
 const rootReducer = combineReducers({
   userReducer,
   itemsReducer
+  categoriesReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
