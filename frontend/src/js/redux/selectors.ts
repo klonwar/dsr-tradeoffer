@@ -5,6 +5,7 @@ import { UserDto } from '#server/common/dto/user.dto';
 import jwtDecode from 'jwt-decode';
 import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
+import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -27,7 +28,7 @@ export const userDataSelector = createSelector<RootState, string, UserDto>(
 export const userPhotoUrlSelector = createSelector<RootState, UserDto, string>(
   userDataSelector,
   (userData) => (userData?.photoPath)
-    ? `${process.env[`SERVER_ORIGIN`]}/${userData.photoPath.replace(/\\/, `/`)}`
+    ? srcFromPhotoPath(userData.photoPath)
     : undefined,
 );
 

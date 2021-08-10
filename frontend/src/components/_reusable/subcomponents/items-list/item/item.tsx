@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { isItemsRequestPendingSelector } from '#redux/selectors';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
+import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 
 interface ItemProps extends Partial<ItemDto> {}
 
@@ -14,7 +15,7 @@ export const Item: FC<ItemProps> = (props) => {
   const { id, name, description, geo, item_category, trade_category, photos } = props;
 
   const photoPath = (photos?.[0]?.photoPath)
-    ? `${process.env[`SERVER_ORIGIN`]}/${photos[0].photoPath}`
+    ? srcFromPhotoPath(photos[0].photoPath)
     : noPhoto;
 
   return (
