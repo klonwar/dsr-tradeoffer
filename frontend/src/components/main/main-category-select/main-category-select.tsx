@@ -1,26 +1,20 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { categoriesErrorSelector, categoriesListSelector, isCategoriesRequestPendingSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import InputHint from '#reusable/forms/input-hint/input-hint';
 import { UseFormFunctions } from '#src/js/interfaces/use-form-functions';
-import { useAppDispatch } from '#redux/store';
-import { Operations } from '#redux/operations/operations';
+import { useLoadCategoriesList } from '#src/js/hooks/use-load-categories-list';
 
 export const MainCategorySelect: FC<{
   name: `item_category_id` | `trade_category_id`,
   useForm: UseFormFunctions
 }> = ({ name, useForm: { register, errors } }) => {
-  const dispatch = useAppDispatch();
   const isPending = useSelector(isCategoriesRequestPendingSelector);
   const categories = useSelector(categoriesListSelector);
   const error = useSelector(categoriesErrorSelector);
 
-  useEffect(() => {
-    if (!isPending && !categories) {
-      dispatch(Operations.getCategoriesList());
-    }
-  }, [isPending, categories, dispatch]);
+  useLoadCategoriesList();
 
   return (
     <div className={`uk-inline uk-width-expand uk-margin-small uk-margin-remove-top`}>
