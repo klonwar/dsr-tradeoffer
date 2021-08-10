@@ -3,7 +3,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryColumn,
 } from 'typeorm';
@@ -45,7 +44,10 @@ export class Profile {
   user: User;
 
   @Type(() => PhotoEntity)
-  @ManyToOne(() => PhotoEntity, null, { cascade: true })
+  @ManyToOne(() => PhotoEntity, (photo) => photo.profiles, {
+    cascade: true,
+    onDelete: `SET NULL`,
+  })
   @JoinColumn({ name: `photo_id` })
   photo: PhotoEntity;
 }

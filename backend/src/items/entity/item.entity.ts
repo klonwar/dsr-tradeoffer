@@ -40,7 +40,7 @@ export class ItemEntity {
 
   // Relations
   @Type(() => PhotoEntity)
-  @ManyToMany(() => PhotoEntity, { cascade: true })
+  @ManyToMany(() => PhotoEntity, (photo) => photo.items, { cascade: true })
   @JoinTable({
     name: `items_to_photos`,
     joinColumn: { name: `item_id` },
@@ -50,17 +50,28 @@ export class ItemEntity {
 
   @Type(() => CategoryEntity)
   @Transform(({ value }) => value.name)
-  @ManyToOne(() => CategoryEntity, null, { cascade: true })
+  @ManyToOne(
+    () => CategoryEntity,
+    (category) => category.items_with_item_category,
+    { cascade: true, onDelete: `CASCADE` },
+  )
   @JoinColumn({ name: `item_category_id` })
   item_category: CategoryEntity;
 
   @Type(() => CategoryEntity)
   @Transform(({ value }) => value.name)
-  @ManyToOne(() => CategoryEntity, null, { cascade: true })
+  @ManyToOne(
+    () => CategoryEntity,
+    (category) => category.items_with_trade_category,
+    { cascade: true, onDelete: `CASCADE` },
+  )
   @JoinColumn({ name: `trade_category_id` })
   trade_category: CategoryEntity;
 
-  @ManyToOne(() => User, null, { cascade: true })
+  @ManyToOne(() => User, (user) => user.items, {
+    cascade: true,
+    onDelete: `CASCADE`,
+  })
   @JoinColumn({ name: `user_id` })
   user: User;
 }

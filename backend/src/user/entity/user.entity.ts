@@ -2,6 +2,7 @@ import {
   BeforeInsert,
   Column,
   Entity,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -21,6 +22,7 @@ import * as chalk from 'chalk';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserRole } from '#server/common/enums/user-role.enum';
+import { ItemEntity } from '#src/items/entity/item.entity';
 
 @Entity()
 export class User {
@@ -93,4 +95,7 @@ export class User {
   @Type(() => Profile)
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   profile: Profile;
+
+  @OneToMany(() => ItemEntity, (item) => item.user)
+  items: ItemEntity[];
 }

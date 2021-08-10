@@ -47,8 +47,6 @@ export class ItemsService {
 
     const savedItem = await this.itemRepository.save(newItem);
 
-    console.log(savedItem);
-
     return await this.getAllUserItems(user);
   }
 
