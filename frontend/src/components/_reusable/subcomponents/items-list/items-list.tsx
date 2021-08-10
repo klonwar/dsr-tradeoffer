@@ -18,13 +18,21 @@ export const ItemsList: FC = () => {
 
   useShowItemsRequestError(true);
 
+  if (itemsList?.length === 0) {
+    return (
+      <div className={`uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-text-center uk-padding-small`}>
+        <h2 className={`uk-text-muted`}>Здесь будет список ваших вещей</h2>
+      </div>
+    );
+  }
+
   return (
     <div className={`uk-flex uk-flex-center uk-width-1-1 uk-flex-wrap`}>
       {itemsList?.map((item) => (
         <div key={item.id} className={`uk-width-1-1 uk-width-1-2@m uk-padding-small`}>
           <Item {...item} />
         </div>
-      )) ?? null}
+      )) ?? null }
     </div>
   );
 };
