@@ -6,7 +6,6 @@ import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { ProfileInput } from '#domains/profile/components/profile-input/profile-input';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
-import { useAuthorizedOnly } from '#src/js/hooks/use-authorized-only';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 import noPhoto from '#src/icons/no-photo.svg';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
@@ -14,8 +13,6 @@ import { ProfilePhotoForm } from '#domains/profile/components/profile-photo-form
 import { ProfilePasswordForm } from '#domains/profile/components/profile-password-form/profile-password-form';
 
 export const Profile: FC = () => {
-  useAuthorizedOnly();
-
   const dispatch = useAppDispatch();
   const userData = useSelector(userDataSelector);
   const userPhotoUrl = useSelector(userPhotoUrlSelector);

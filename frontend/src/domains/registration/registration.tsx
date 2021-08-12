@@ -6,7 +6,6 @@ import { FirstRegistrationStep } from './components/registration-steps/first-reg
 import { SecondRegistrationStep } from './components/registration-steps/second-registration-step';
 import { ThirdRegistrationStep } from '#domains/registration/components/registration-steps/third-registration-step';
 import { WizardStep } from '#components/wizard/wizard-step/wizard-step';
-import { useUnauthorizedOnly } from '#src/js/hooks/use-unauthorized-only';
 
 export const RegistrationContext = createContext<{
   registrationState: Partial<CreateUserDto>;
@@ -16,8 +15,6 @@ export const RegistrationContext = createContext<{
 }>(null);
 
 const Registration: FC = () => {
-  useUnauthorizedOnly();
-
   const [registrationState, setRegistrationState] = useState<Partial<CreateUserDto>>({});
   const [photo, setPhoto] = useState<File>(null);
   const [progress, setProgress] = useState<number>(0);

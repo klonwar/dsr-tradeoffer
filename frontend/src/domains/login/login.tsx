@@ -1,21 +1,16 @@
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import InputHint from '#components/input-hint/input-hint';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
 import { isUserRequestPendingSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LoginUserDto } from '#server/common/dto/login-user.dto';
-import { useUnauthorizedOnly } from '#src/js/hooks/use-unauthorized-only';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
-import App from '#domains/../../components/app/app';
 import { AppInput } from '#components/app-input/app-input';
 
 const Login: FC = () => {
-  useUnauthorizedOnly();
-
   const dispatch = useAppDispatch();
   const isPending = useSelector(isUserRequestPendingSelector);
 
@@ -37,26 +32,26 @@ const Login: FC = () => {
           <AppInput
             name={`username`}
             inputProps={{
-              placeholder: `Логин`
+              placeholder: `Логин`,
             }}
             options={{
               icon: `user`,
-              withLabel: false
+              withLabel: false,
             }}
-            useForm={{register, errors}}
+            useForm={{ register, errors }}
           />
 
           <AppInput
             name={`password`}
             inputProps={{
               placeholder: `12345678`,
-              type: `password`
+              type: `password`,
             }}
             options={{
               icon: `lock`,
-              withLabel: false
+              withLabel: false,
             }}
-            useForm={{register, errors}}
+            useForm={{ register, errors }}
           />
 
         </div>

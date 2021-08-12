@@ -7,37 +7,40 @@ import Logout from '#domains/logout/logout';
 import Registration from '#domains/registration/registration';
 import { Profile } from '#domains/profile/profile';
 import { ItemPage } from '#domains/item/item-page';
+import { UnauthorizedRoute } from '#components/app/components/role-routes/unauthorized-route';
+import { AuthorizedRoute } from '#components/app/components/role-routes/authorized-route';
+import { UserRoute } from '#components/app/components/role-routes/user-route';
 
 const App: FC = () => {
   return (
     <Switch>
-      <Route path={`/item/:itemId`}>
+      <UserRoute path={`/item/:itemId`}>
         <HeaderWrapper>
           <ItemPage />
         </HeaderWrapper>
-      </Route>
+      </UserRoute>
 
-      <Route path={`/profile`}>
+      <AuthorizedRoute path={`/profile`}>
         <HeaderWrapper>
           <Profile />
         </HeaderWrapper>
-      </Route>
+      </AuthorizedRoute>
 
-      <Route path={`/registration`}>
+      <AuthorizedRoute path={`/logout`}>
+        <Logout />
+      </AuthorizedRoute>
+
+      <UnauthorizedRoute path={`/registration`}>
         <HeaderWrapper>
           <Registration />
         </HeaderWrapper>
-      </Route>
+      </UnauthorizedRoute>
 
-      <Route path={`/login`}>
+      <UnauthorizedRoute path={`/login`}>
         <HeaderWrapper>
           <Login />
         </HeaderWrapper>
-      </Route>
-
-      <Route path={`/logout`}>
-        <Logout />
-      </Route>
+      </UnauthorizedRoute>
 
       <Route exact path={`/`}>
         <HeaderWrapper>
