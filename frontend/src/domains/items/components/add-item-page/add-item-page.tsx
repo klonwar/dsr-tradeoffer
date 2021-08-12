@@ -42,7 +42,7 @@ export const AddItemPage: FC = () => {
     <div className={`uk-flex uk-flex-column uk-margin-auto-vertical uk-flex-middle uk-width-1-1`}>
       <div className={`uk-card uk-card-default uk-card-body uk-width-5-6 uk-width-1-2@m`}>
         <h1 className={`uk-card-title`}>Добавление вещи</h1>
-        <MainPhotoInput setPhotos={setPhotos} />
+        <MainPhotoInput photos={photos} setPhotos={setPhotos} />
 
         <form className={``}
               onSubmit={onSubmit}>
