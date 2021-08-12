@@ -33,10 +33,9 @@ export const MainPhotoInput: FC<Props> = ({ setPhotos }) => {
           }} />
           <input
             type={`text`}
-            className={`uk-width-expand uk-input`}
+            className={`uk-width-expand uk-input uk-margin-small-right`}
             placeholder={`Выбрать файл`}
             disabled={true}
-            style={{ marginRight: `5px` }}
           />
           <InputHint
             text={errors}

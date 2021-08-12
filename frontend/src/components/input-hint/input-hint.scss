@@ -1,22 +1,26 @@
-.input-hint {
-  opacity: .75;
-  display: none;
-  position: absolute;
+.InputHint {
   z-index: $tooltip-z-index;
-  top: 0;
-  box-sizing: border-box;
-  width: max-content;
-  max-width: $tooltip-max-width;
-  padding: $tooltip-padding-vertical $tooltip-padding-horizontal;
-  background: $tooltip-background;
-  border-radius: $tooltip-border-radius;
-  color: $tooltip-color;
-  font-size: $tooltip-font-size;
 
-  @if(mixin-exists(hook-tooltip)) {@include hook-tooltip();}
-
-  &.uk-active {
+  &-span {
     opacity: .75;
-    display: block;
+    display: none;
+    position: absolute;
+    z-index: $tooltip-z-index;
+    top: 0;
+    box-sizing: border-box;
+    width: max-content;
+    max-width: $tooltip-max-width;
+    padding: $tooltip-padding-vertical $tooltip-padding-horizontal;
+    background: $tooltip-background;
+    border-radius: $tooltip-border-radius;
+    color: $tooltip-color;
+    font-size: $tooltip-font-size;
+
+    @if(mixin-exists(hook-tooltip)) {@include hook-tooltip();}
+
+    &.uk-active {
+      opacity: .75;
+      display: block;
+    }
   }
 }

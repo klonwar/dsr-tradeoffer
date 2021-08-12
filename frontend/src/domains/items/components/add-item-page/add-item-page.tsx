@@ -64,8 +64,7 @@ export const AddItemPage: FC = () => {
             </div>
             <div className={`uk-position-relative`}>
                 <textarea
-                  className={`uk-textarea${(errors[`description`]) ? ` uk-form-danger` : ``}`}
-                  style={{ resize: `vertical` }}
+                  className={`AppTextarea uk-textarea${(errors[`description`]) ? ` uk-form-danger` : ``}`}
                   placeholder={`Не стирана, не крашена. 100%.`}
                   {...register(`description`)}
                 />

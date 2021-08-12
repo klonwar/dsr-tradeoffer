@@ -53,10 +53,9 @@ export const ProfilePhotoForm: FC = () => {
                    type={`file`} />
             <input
               type={`text`}
-              className={`uk-input`}
+              className={`uk-input uk-margin-small-right`}
               placeholder={`Выбрать файл`}
               disabled={true}
-              style={{ marginRight: `5px` }}
             />
             <InputHint
               text={errors.photo?.message}

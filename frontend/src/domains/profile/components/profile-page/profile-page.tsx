@@ -118,8 +118,7 @@ export const ProfilePage: FC = () => {
         </div>
 
         {(!isDirty) ? (
-          <div className={`uk-text-muted uk-margin-top uk-text-center`}
-               style={{ userSelect: `none` }}>
+          <div className={`NoSelect uk-text-muted uk-margin-top uk-text-center`}>
             Нажмите на любое поле для редактирования
           </div>
         ) : null}
