@@ -9,11 +9,11 @@
     ],
     "allowJs": true,
     "paths": {
-      "#components/*": ["src/components/*"],
+      "#domains/*": ["src/domains/*"],
       "#src/*": ["src/*"],
       "#client/*": ["*"],
       "#server/*": ["../backend/*"],
-      "#reusable/*": ["src/components/_reusable/*"],
+      "#components/*": ["src/components/*"],
       "#redux/*": ["src/js/redux/*"]
     },
     "jsx": "react",

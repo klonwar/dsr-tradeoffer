@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Main from '#components/main/main';
-import HeaderWrapper from '#reusable/ui/header/header-wrapper';
-import Login from '#components/login/login';
-import Logout from '#components/login/logout/logout';
-import Registration from '#components/registration/registration';
-import { Profile } from '#components/profile/profile';
-import { ItemPage } from '#components/item-page/item-page';
+import Main from '#domains/main/main';
+import HeaderWrapper from '#components/header-wrapper/header-wrapper';
+import Login from '#domains/login/login';
+import Logout from '#domains/logout/logout';
+import Registration from '#domains/registration/registration';
+import { Profile } from '#domains/profile/profile';
+import { ItemPage } from '#domains/item/item-page';
 
 const App: FC = () => {
   return (
