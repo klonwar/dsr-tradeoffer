@@ -1,13 +1,22 @@
 import React, { FC } from 'react';
-import { ItemsList } from '#domains/item/components/items-list/items-list';
-import { MainAddItemForm } from '#domains/main/components/main-add-item/main-add-item-form';
+import { userDataSelector } from '#redux/selectors';
+import { useSelector } from 'react-redux';
 
 export const MainUser: FC = () => {
+  const userData = useSelector(userDataSelector);
+
   return (
     <div className={`MainWrapper`}>
-      <div className={`MainWrapper-content MainWrapper-content--noPadding`}>
-        <MainAddItemForm />
-        <ItemsList />
+      <div className={`MainWrapper-content`}>
+        <div>
+          <h1>Здравствуйте, {userData.firstName}</h1>
+          <h4>Вы успешно вошли в свой аккаунт и можете пользоваться сайтом! Вот, что вы можете сделать:</h4>
+          <ul>
+            <li>Добавить новую вещь для обмена</li>
+            <li>Посмотреть на свои выложенные вещи</li>
+            <li>Обменяться с другим пользователем <span className={`uk-text-muted`}>(Пока в разработке)</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -2,8 +2,8 @@ import React, { createContext, FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Wizard, WizardActionOverrideData } from '#components/wizard/wizard';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
-import { FirstRegistrationStep } from './components/registration-steps/first-registration-step';
-import { SecondRegistrationStep } from './components/registration-steps/second-registration-step';
+import { FirstRegistrationStep } from '../registration-steps/first-registration-step';
+import { SecondRegistrationStep } from '../registration-steps/second-registration-step';
 import { ThirdRegistrationStep } from '#domains/registration/components/registration-steps/third-registration-step';
 import { WizardStep } from '#components/wizard/wizard-step/wizard-step';
 
@@ -14,7 +14,7 @@ export const RegistrationContext = createContext<{
   setPhoto: (file: File) => void
 }>(null);
 
-const Registration: FC = () => {
+const RegistrationPage: FC = () => {
   const [registrationState, setRegistrationState] = useState<Partial<CreateUserDto>>({});
   const [photo, setPhoto] = useState<File>(null);
   const [progress, setProgress] = useState<number>(0);
@@ -74,4 +74,4 @@ const Registration: FC = () => {
   );
 };
 
-export default Registration;
+export default RegistrationPage;

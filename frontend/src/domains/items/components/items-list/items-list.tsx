@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ItemCard } from '#domains/item/components/item-card/item-card';
+import { ItemCard } from '#domains/items/components/item-card/item-card';
 import { useSelector } from 'react-redux';
 import { itemsListSelector } from '#redux/selectors';
 import { useShowItemsRequestError } from '#src/js/hooks/use-show-items-request-error';

@@ -12,7 +12,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { ProfilePhotoForm } from '#domains/profile/components/profile-photo-form/profile-photo-form';
 import { ProfilePasswordForm } from '#domains/profile/components/profile-password-form/profile-password-form';
 
-export const Profile: FC = () => {
+export const ProfilePage: FC = () => {
   const dispatch = useAppDispatch();
   const userData = useSelector(userDataSelector);
   const userPhotoUrl = useSelector(userPhotoUrlSelector);

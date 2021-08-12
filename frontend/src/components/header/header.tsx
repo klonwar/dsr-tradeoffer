@@ -2,15 +2,17 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Logo from '#components/logo/logo';
 import { useSelector } from 'react-redux';
-import { isAuthorizedSelector, userPhotoUrlSelector } from '#redux/selectors';
+import { isAdminSelector, isAuthorizedSelector, isUserSelector, userPhotoUrlSelector } from '#redux/selectors';
 
 const Header: React.FC = () => {
   const activeClassName = `active uk-card-default`;
   const isAuthorized = useSelector(isAuthorizedSelector);
+  const isAdmin = useSelector(isAdminSelector);
+  const isUser = useSelector(isUserSelector);
   const userPhotoUrl = useSelector(userPhotoUrlSelector);
 
   return (
-    <div className={`uk-width-auto uk-flex uk-flex-center uk-padding-small`}>
+    <div className={`uk-width-auto uk-flex uk-flex-center uk-padding-small uk-flex-wrap`}>
       {/* Левая часть хедера */}
       <div className={`uk-width-1-5 uk-width-1-4@m uk-flex uk-flex-left`}>
         <Logo />
@@ -18,8 +20,12 @@ const Header: React.FC = () => {
 
       {/* Середина */}
       <div className={`uk-width-expand uk-flex uk-flex-center`}>
-        <NavLink activeClassName={activeClassName} exact to={`/`} className={`Header-link`}
+        <NavLink activeClassName={activeClassName} exact to={(isAdmin) ? `/admin` : `/`} className={`Header-link`}
                  uk-icon={`icon: home`} />
+        {(isUser) ? (
+          <NavLink activeClassName={activeClassName} to={`/items`} className={`Header-link`}
+                   uk-icon={`icon: list`} />
+        ) : null}
       </div>
 
       {/* Правая часть хедера */}

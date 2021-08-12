@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
+import { UserRole } from '#server/common/enums/user-role.enum';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -23,6 +24,16 @@ export const isAuthorizedSelector = createSelector<RootState, string, boolean>(
 export const userDataSelector = createSelector<RootState, string, UserDto>(
   jwtTokenSelector,
   (jwtToken) => (jwtToken) ? jwtDecode(jwtToken) as UserDto : undefined,
+);
+
+export const isAdminSelector = createSelector<RootState, UserDto, boolean>(
+  userDataSelector,
+  (userData) => userData?.role && userData.role === UserRole.ADMIN
+);
+
+export const isUserSelector = createSelector<RootState, UserDto, boolean>(
+  userDataSelector,
+  (userData) => userData?.role && userData.role === UserRole.USER
 );
 
 export const userPhotoUrlSelector = createSelector<RootState, UserDto, string>(

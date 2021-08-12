@@ -1,40 +1,75 @@
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Main from '#domains/main/main';
 import HeaderWrapper from '#components/header-wrapper/header-wrapper';
-import Login from '#domains/login/login';
-import Logout from '#domains/logout/logout';
-import Registration from '#domains/registration/registration';
-import { Profile } from '#domains/profile/profile';
-import { ItemPage } from '#domains/item/item-page';
-import { UnauthorizedRoute } from '#components/app/components/role-routes/unauthorized-route';
-import { AuthorizedRoute } from '#components/app/components/role-routes/authorized-route';
+import { AdminRoute } from '#components/app/components/role-routes/admin-route';
 import { UserRoute } from '#components/app/components/role-routes/user-route';
+import { ShowItem } from '#domains/items/components/show-item/show-item';
+import { ItemsPage } from '#domains/items/components/items-page/items-page';
+import Login from '#domains/login/components/login/login';
+import { UnauthorizedRoute } from '#components/app/components/role-routes/unauthorized-route';
+import Logout from '#domains/logout/components/logout/logout';
+import { AuthorizedRoute } from '#components/app/components/role-routes/authorized-route';
+import MainPage from '#domains/main/components/main-page/main-page';
+import { ProfilePage } from '#domains/profile/components/profile-page/profile-page';
+import RegistrationPage from '#domains/registration/components/registration-page/registration-page';
 
 const App: FC = () => {
   return (
     <Switch>
+      {/* AdminRoutes */}
+
+      <AdminRoute exact path={`/admin`}>
+        <HeaderWrapper>
+          <div className={`uk-flex uk-flex-center uk-flex-middle uk-height-1-1`}>
+            Вы админ, но вы ничего не можете :c
+          </div>
+        </HeaderWrapper>
+      </AdminRoute>
+
+      {/* ItemsRoutes */}
+
       <UserRoute path={`/item/:itemId`}>
         <HeaderWrapper>
-          <ItemPage />
+          {/* itemId будет получен через хук */}
+          <ShowItem />
         </HeaderWrapper>
       </UserRoute>
 
+      <UserRoute path={`/items/add`}>
+        <HeaderWrapper>
+          <ItemsPage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      <UserRoute path={`/items`}>
+        <HeaderWrapper>
+          <ItemsPage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      {/* ProfileRoutes */}
+
       <AuthorizedRoute path={`/profile`}>
         <HeaderWrapper>
-          <Profile />
+          <ProfilePage />
         </HeaderWrapper>
       </AuthorizedRoute>
+
+      {/* RegistrationRoutes */}
+
+      <UnauthorizedRoute path={`/registration`}>
+        <HeaderWrapper>
+          <RegistrationPage />
+        </HeaderWrapper>
+      </UnauthorizedRoute>
+
+      {/* LogoutRoutes */}
 
       <AuthorizedRoute path={`/logout`}>
         <Logout />
       </AuthorizedRoute>
 
-      <UnauthorizedRoute path={`/registration`}>
-        <HeaderWrapper>
-          <Registration />
-        </HeaderWrapper>
-      </UnauthorizedRoute>
+      {/* LoginRoutes */}
 
       <UnauthorizedRoute path={`/login`}>
         <HeaderWrapper>
@@ -42,9 +77,11 @@ const App: FC = () => {
         </HeaderWrapper>
       </UnauthorizedRoute>
 
+      {/* MainRoutes */}
+
       <Route exact path={`/`}>
         <HeaderWrapper>
-          <Main />
+          <MainPage />
         </HeaderWrapper>
       </Route>
 
