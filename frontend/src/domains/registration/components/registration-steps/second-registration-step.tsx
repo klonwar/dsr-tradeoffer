@@ -10,7 +10,7 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
   const { appendToState } = useContext(RegistrationContext);
   const { register, formState: { errors }, handleSubmit } = useForm<SecondStepData>({
     resolver: classValidatorResolver(SecondStepData),
-    mode: `onTouched`,
+    mode: `onSubmit`,
   });
 
   const onSubmit = handleSubmit((data) => {
