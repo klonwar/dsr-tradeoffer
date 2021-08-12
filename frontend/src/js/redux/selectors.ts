@@ -47,7 +47,7 @@ export const isItemsRequestPendingSelector: AppSelector<boolean> = (state) => st
 
 export const itemsListSelector: AppSelector<ItemsListDto> = (state) => state.itemsReducer.result;
 
-export const itemsErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemsReducer.error;
+export const itemsRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemsReducer.error;
 
 export const isCategoriesRequestPendingSelector: AppSelector<boolean> = (state) => state.categoriesReducer.pending;
 

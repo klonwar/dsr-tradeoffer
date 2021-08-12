@@ -13,7 +13,7 @@ interface ItemProps extends Partial<ItemDto> {}
 export const ItemCard: FC<ItemProps> = (props) => {
   const dispatch = useAppDispatch();
   const isPending = useSelector(isItemsRequestPendingSelector);
-  const { id, name, description, geo, item_category, trade_category, photos } = props;
+  const { id, name, geo, item_category, trade_category, photos } = props;
 
   const photoPath = (photos?.[0]?.photoPath)
     ? srcFromPhotoPath(photos[0].photoPath)
@@ -26,7 +26,7 @@ export const ItemCard: FC<ItemProps> = (props) => {
           <div className={`Item-picture`} style={{ backgroundImage: `url(${photoPath})` }}>
           </div>
           <div className={`Item-info`}>
-            <Link className={`Item-title uk-h4 uk-link-heading`} to={`/item/${id}`}>{name}</Link>
+            <Link className={`Item-title uk-h4 uk-link-heading`} to={`/items/${id}`}>{name}</Link>
             <div className={`Item-category`}>
               <span>
                 {item_category}

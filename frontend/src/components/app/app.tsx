@@ -12,6 +12,7 @@ import { AuthorizedRoute } from '#components/app/components/role-routes/authoriz
 import MainPage from '#domains/main/components/main-page/main-page';
 import { ProfilePage } from '#domains/profile/components/profile-page/profile-page';
 import RegistrationPage from '#domains/registration/components/registration-page/registration-page';
+import { AddItemPage } from '#domains/items/components/add-item-page/add-item-page';
 
 const App: FC = () => {
   return (
@@ -28,16 +29,16 @@ const App: FC = () => {
 
       {/* ItemsRoutes */}
 
-      <UserRoute path={`/item/:itemId`}>
+      <UserRoute path={`/items/add`}>
         <HeaderWrapper>
-          {/* itemId будет получен через хук */}
-          <ShowItem />
+          <AddItemPage />
         </HeaderWrapper>
       </UserRoute>
 
-      <UserRoute path={`/items/add`}>
+      <UserRoute path={`/items/:itemId`}>
         <HeaderWrapper>
-          <ItemsPage />
+          {/* itemId будет получен через хук */}
+          <ShowItem />
         </HeaderWrapper>
       </UserRoute>
 
