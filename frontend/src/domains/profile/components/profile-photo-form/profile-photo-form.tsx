@@ -6,6 +6,7 @@ import { Operations } from '#redux/operations/operations';
 import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 import { isUserRequestPendingSelector, userDataSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
+import { isPhotoFilename } from '#server/common/util/is-photo-filename';
 
 export const ProfilePhotoForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +42,15 @@ export const ProfilePhotoForm: FC = () => {
       <div className={`uk-inline uk-width-expand `}>
         <div className={`uk-position-relative uk-flex`}>
           <div className={`uk-width-expand uk-margin-small-right`} uk-form-custom={`target: true`}>
-            <input {...register(`photo`, { required: `Выберите фотографию` })} type={`file`} />
+            <input accept={`.png,.jpg`}
+                   {...register(
+                     `photo`,
+                     {
+                       required: `Выберите фотографию`,
+                       validate: (fileList: FileList) => isPhotoFilename(fileList[0].name),
+                     },
+                   )}
+                   type={`file`} />
             <input
               type={`text`}
               className={`uk-input`}

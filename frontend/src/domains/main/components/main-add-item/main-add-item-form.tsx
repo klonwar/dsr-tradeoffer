@@ -9,6 +9,7 @@ import { AddItemFormDto } from '#domains/main/dto/add-item-form-dto';
 import { MainCategorySelect } from '#domains/main/components/main-category-select/main-category-select';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
+import { MainPhotoInput } from '#domains/main/components/main-photo-input/main-photo-input';
 
 export const MainAddItemForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -34,31 +35,7 @@ export const MainAddItemForm: FC = () => {
       {(isOpened)
         ? (
           <div className={`uk-card uk-card-default uk-card-body uk-card-small uk-width-xlarge@m`}>
-            <div className={`uk-inline uk-width-expand uk-margin-small uk-margin-remove-top`}>
-              <div className='uk-flex uk-form-label'>
-                <span>{keyToLabelText.get(`photosPaths`)}</span>
-              </div>
-              <div className={`uk-position-relative`}>
-                <div className={`uk-flex`} uk-form-custom={`target: true`}>
-                  <input type={`file`} multiple={true} onChange={(e) => {
-                    if (e.target?.files) {
-                      if (e.target.files.length === 0)
-                        setPhotos(undefined);
-                      else
-                        setPhotos(e.target.files);
-                    }
-                  }} />
-                  <input
-                    type={`text`}
-                    className={`uk-width-expand uk-input`}
-                    placeholder={`Выбрать файл`}
-                    disabled={true}
-                    style={{ marginRight: `5px` }}
-                  />
-                  <a href={`#`} className={`uk-button uk-button-default`}>Загрузить</a>
-                </div>
-              </div>
-            </div>
+            <MainPhotoInput setPhotos={setPhotos} />
 
             <form className={``}
                   onSubmit={onSubmit}>
@@ -117,9 +94,9 @@ export const MainAddItemForm: FC = () => {
                 <div>
                   <a href={`#`}
                      onClick={(e) => {
-                    e.preventDefault();
-                    resetAll();
-                  }}
+                       e.preventDefault();
+                       resetAll();
+                     }}
                      className={`uk-button uk-button-default`}
                   >
                     Отмена
