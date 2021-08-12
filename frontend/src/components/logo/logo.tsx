@@ -1,11 +1,12 @@
 import React from 'react';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 const Logo: FC = () => {
   return (
-    <a href={`#`} className={`Logo uk-link-reset`}>
+    <Link to={`/`} className={`Logo uk-link-reset`}>
       <span className={`uk-visible@s`}>TradeOffer</span>
-    </a>
+    </Link>
   );
 };
 

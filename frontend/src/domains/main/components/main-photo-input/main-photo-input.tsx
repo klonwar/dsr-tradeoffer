@@ -43,7 +43,7 @@ export const MainPhotoInput: FC<Props> = ({ setPhotos }) => {
             className={`uk-position-center-right-out`}
             isActive={!!errors}
           />
-          <a href={`#`} className={`uk-button uk-button-default`}>Загрузить</a>
+          <button type={`button`} className={`uk-button uk-button-default`}>Загрузить</button>
         </div>
       </div>
     </div>

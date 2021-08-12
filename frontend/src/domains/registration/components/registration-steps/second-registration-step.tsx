@@ -67,13 +67,10 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
       </div>
       <div className={`uk-child-width-expand uk-margin uk-margin-remove-bottom`} uk-grid={``}>
         <div>
-          <a href={`#`} className={`uk-button uk-button-default uk-width-1-1`}
-             onClick={(e) => {
-               e.preventDefault();
-               prev();
-             }}>
+          <button type={`button`} className={`uk-button uk-button-default uk-width-1-1`}
+             onClick={prev}>
             &lt; Назад
-          </a>
+          </button>
         </div>
         <div>
           <button form={`user-info-form`} className={`uk-button uk-button-primary uk-width-1-1`}

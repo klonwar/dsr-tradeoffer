@@ -104,13 +104,10 @@ export const Profile: FC = () => {
             {(isDirty) ? (
               <div className={`uk-margin-top`}>
                 <div className={`uk-flex uk-flex-right`}>
-                  <a href={`#`} className={`uk-button uk-button-default`}
-                     onClick={(e) => {
-                       e.preventDefault();
-                       reset({ ...userData });
-                     }}>
+                  <button type={`button`} className={`uk-button uk-button-default`}
+                          onClick={() => reset({ ...userData })}>
                     Отменить
-                  </a>
+                  </button>
                   <button className={`uk-button uk-button-primary uk-margin-left`}
                           type={`submit`}
                           disabled={!isDirty || isURPending}

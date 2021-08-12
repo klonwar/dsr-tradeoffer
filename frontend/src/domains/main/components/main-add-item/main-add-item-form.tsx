@@ -92,15 +92,13 @@ export const MainAddItemForm: FC = () => {
 
               <div className={`uk-margin-top`} uk-grid={``}>
                 <div>
-                  <a href={`#`}
-                     onClick={(e) => {
-                       e.preventDefault();
-                       resetAll();
-                     }}
-                     className={`uk-button uk-button-default`}
+                  <button
+                    type={`button`}
+                    onClick={resetAll}
+                    className={`uk-button uk-button-default`}
                   >
                     Отмена
-                  </a>
+                  </button>
                 </div>
                 <div className={`uk-width-expand`}>
                   <button className={`uk-button uk-button-primary uk-width-1-1`}>Создать</button>

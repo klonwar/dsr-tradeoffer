@@ -44,10 +44,11 @@ export const ItemCard: FC<ItemProps> = (props) => {
         </div>
       </div>
       <div className={`Item-actions`}>
-        <a href={`#`} uk-icon={`trash`} onClick={(e) => {
-          e.preventDefault();
-          dispatch(Operations.deleteItem({ id }));
-        }} />
+        <button
+          className={`uk-link`}
+          uk-icon={`trash`}
+          onClick={() => dispatch(Operations.deleteItem({ id }))}
+        />
       </div>
     </div>
   );

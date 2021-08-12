@@ -64,11 +64,16 @@ export const ItemPage: FC = () => {
                 <li key={photoPath}><img src={srcFromPhotoPath(photoPath)} alt={``} uk-cover={``} /></li>
               ))}
             </ul>
-            <a className={`uk-position-center-left uk-position-small uk-hidden-hover`} href={`#`}
-               uk-slidenav-previous={``}
-               uk-slideshow-item={`previous`} />
-            <a className={`uk-position-center-right uk-position-small uk-hidden-hover`} href={`#`} uk-slidenav-next={``}
-               uk-slideshow-item={`next`} />
+            <button
+              className={`uk-position-center-left uk-position-small uk-hidden-hover uk-link`}
+              uk-slidenav-previous={``}
+              uk-slideshow-item={`previous`}
+            />
+            <button
+              className={`uk-position-center-right uk-position-small uk-hidden-hover uk-link`}
+              uk-slidenav-next={``}
+              uk-slideshow-item={`next`}
+            />
           </div>
         </div>
       </div>
