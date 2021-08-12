@@ -11,7 +11,10 @@ export const PhotoInterceptor = (name = `photo`) =>
     storage: diskStorage({
       destination: `./uploads/`,
       filename(req, file, callback) {
-        callback(null, `${uuidv4()}${extname(file.originalname)}`);
+        callback(
+          null,
+          `${uuidv4()}${extname(file.originalname.toLowerCase())}`,
+        );
       },
     }),
     fileFilter(req, file, callback) {
@@ -37,14 +40,16 @@ export const PhotosInterceptor = (name = `photos`) =>
     storage: diskStorage({
       destination: `./uploads/`,
       filename(req, file, callback) {
-        callback(null, `${uuidv4()}${extname(file.originalname)}`);
+        callback(
+          null,
+          `${uuidv4()}${extname(file.originalname.toLowerCase())}`,
+        );
       },
     }),
     fileFilter(req, file, callback) {
       const isImage =
         [`image/jpeg`, `image/png`].includes(file.mimetype) &&
-        (file.originalname.endsWith(`.jpg`) ||
-          file.originalname.endsWith(`.png`));
+        isPhotoFilename(file.originalname);
       if (isImage) {
         callback(null, true);
         return;
