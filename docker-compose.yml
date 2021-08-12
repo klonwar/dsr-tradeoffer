@@ -14,7 +14,9 @@ services:
       - mysql_db
 
   frontend:
-    build: frontend/
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
     command: npm run start
     environment:
       SERVER_ORIGIN: "http://localhost:3001"

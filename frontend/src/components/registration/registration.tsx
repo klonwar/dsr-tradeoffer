@@ -1,22 +1,25 @@
-import React, { createContext, FC, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { isAuthorizedSelector } from '#src/js/redux/selectors';
-import { Link, useHistory } from 'react-router-dom';
-import { Wizard, WizardActionOverrideData, WizardStep } from '#components/wizard/wizard';
-import { CreateUserDto } from '#src/js/dto/create-user.dto';
-import { FirstRegistrationStep } from './steps/first-registration-step';
-import { SecondRegistrationStep } from './steps/second-registration-step';
-import { ThirdRegistrationStep } from '#components/registration/steps/third-registration-step';
+import React, { createContext, FC, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Wizard, WizardActionOverrideData } from '#reusable/forms/wizard/wizard';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
+import { FirstRegistrationStep } from './registration-steps/first-registration-step';
+import { SecondRegistrationStep } from './registration-steps/second-registration-step';
+import { ThirdRegistrationStep } from '#components/registration/registration-steps/third-registration-step';
+import { WizardStep } from '#reusable/forms/wizard/wizard-step/wizard-step';
+import { useUnauthorizedOnly } from '#src/js/hooks/use-unauthorized-only';
 
 export const RegistrationContext = createContext<{
   registrationState: Partial<CreateUserDto>;
   appendToState: (data: Partial<CreateUserDto>) => void;
+  photo: File;
+  setPhoto: (file: File) => void
 }>(null);
 
 const Registration: FC = () => {
+  useUnauthorizedOnly();
+
   const [registrationState, setRegistrationState] = useState<Partial<CreateUserDto>>({});
-  const history = useHistory();
-  const isAuthorized = useSelector(isAuthorizedSelector);
+  const [photo, setPhoto] = useState<File>(null);
   const [progress, setProgress] = useState<number>(0);
   const [maxProgress, setMaxProgress] = useState<number>(3);
 
@@ -28,14 +31,8 @@ const Registration: FC = () => {
   const appendToState = (data: Partial<CreateUserDto>) =>
     setRegistrationState({ ...registrationState, ...data });
 
-  useEffect(() => {
-    if (isAuthorized) {
-      history.replace(`/`);
-    }
-  }, [history, isAuthorized]);
-
   return (
-    <RegistrationContext.Provider value={{ registrationState, appendToState }}>
+    <RegistrationContext.Provider value={{ registrationState, appendToState, photo, setPhoto }}>
       <div className={`uk-flex uk-flex-column uk-margin-auto-vertical uk-flex-middle uk-width-1-1`}>
         <h4 className={`uk-margin-remove`}>
           {Math.min(progress + 1, maxProgress)} / {maxProgress}

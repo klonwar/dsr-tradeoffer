@@ -1,8 +1,18 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Request,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from '#src/auth/auth.service';
 import { Public } from '#src/auth/decorators/public.decorator';
-import { CreateUserDto } from '#src/user/dto/create-user.dto';
+import { CreateUserDto } from '#server/common/dto/create-user.dto';
+import { JwtDto } from '#server/common/dto/jwt.dto';
+import { PhotoInterceptor } from '#src/auth/interceptors/photo-interceptor';
 
 @Controller(`auth`)
 export class AuthController {
@@ -11,13 +21,20 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post(`login`)
-  async login(@Request() req) {
+  async login(@Request() req): Promise<JwtDto> {
     return this.authService.login(req.user);
   }
 
   @Public()
   @Post(`register`)
-  async register(@Body() createUserDto: CreateUserDto) {
-    return this.authService.register(createUserDto);
+  @UseInterceptors(PhotoInterceptor(`photo`))
+  async register(
+    @UploadedFile() photo: Express.Multer.File,
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<JwtDto> {
+    return this.authService.register({
+      ...createUserDto,
+      photoPath: photo?.path,
+    });
   }
 }

@@ -11,7 +11,7 @@ module.exports = {
   logging: true,
   logger: `file`,
   migrationsTableName: `migrations_typeorm`,
-  migrations: [`dist/db/migrations/*{.ts,.js}`],
+  migrations: [`dist/src/db/migrations/*{.ts,.js}`],
   cli: {
     migrationsDir: `src/db/migrations`,
   },

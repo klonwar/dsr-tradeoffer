@@ -1,31 +1,45 @@
 import { createSelector, Selector } from 'reselect';
-import { RootState } from '#src/js/redux/reducers/root-reducer';
-import { LoginOperationResult } from '#src/js/redux/operations/slices/login-operation';
+import { RootState } from '#redux/reducers/root-reducer';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
+import { UserDto } from '#server/common/dto/user.dto';
+import jwtDecode from 'jwt-decode';
+import { ItemsListDto } from '#server/common/dto/items-list.dto';
+import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
+import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
 export const isUserRequestPendingSelector: AppSelector<boolean> = (state) => state.userReducer.pending;
 
-export const userDataSelector: AppSelector<LoginOperationResult> = (state) => state.userReducer.result;
+export const jwtTokenSelector: AppSelector<string> = (state) => state.userReducer.result?.access_token;
 
 export const userRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userReducer.error;
 
-export const isLoginSuccessfulSelector = createSelector<RootState, LoginOperationResult, SerializedAxiosError, boolean | undefined>(
-  userDataSelector,
-  userRequestErrorSelector,
-  (loginResult, loginError) => {
-    if (loginResult)
-      return true;
-
-    if (loginError)
-      return false;
-
-    return undefined;
-  },
-);
-
-export const isAuthorizedSelector = createSelector<RootState, LoginOperationResult, boolean>(
-  userDataSelector,
+export const isAuthorizedSelector = createSelector<RootState, string, boolean>(
+  jwtTokenSelector,
   (res) => !!res,
 );
+
+export const userDataSelector = createSelector<RootState, string, UserDto>(
+  jwtTokenSelector,
+  (jwtToken) => (jwtToken) ? jwtDecode(jwtToken) as UserDto : undefined,
+);
+
+export const userPhotoUrlSelector = createSelector<RootState, UserDto, string>(
+  userDataSelector,
+  (userData) => (userData?.photoPath)
+    ? srcFromPhotoPath(userData.photoPath)
+    : undefined,
+);
+
+export const isItemsRequestPendingSelector: AppSelector<boolean> = (state) => state.itemsReducer.pending;
+
+export const itemsListSelector: AppSelector<ItemsListDto> = (state) => state.itemsReducer.result;
+
+export const itemsErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemsReducer.error;
+
+export const isCategoriesRequestPendingSelector: AppSelector<boolean> = (state) => state.categoriesReducer.pending;
+
+export const categoriesListSelector: AppSelector<CategoriesListDto> = (state) => state.categoriesReducer.result;
+
+export const categoriesErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.categoriesReducer.error;

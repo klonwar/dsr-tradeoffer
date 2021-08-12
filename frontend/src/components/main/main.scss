@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
 
-
   &-content {
     display: flex;
     flex-direction: column;
@@ -26,6 +25,10 @@
     & h4 {
       max-width: 600px;
     }
+
+    &--noPadding {
+      padding-top: 0;
+    }
   }
 
   &-buttons {
@@ -37,6 +40,12 @@
 
     & > a:first-child {
       margin-right: $margin-small-margin;
+    }
+  }
+
+  &-actions {
+    & > button:not(:first-child) {
+      margin-left: $margin-small-margin;
     }
   }
 }
