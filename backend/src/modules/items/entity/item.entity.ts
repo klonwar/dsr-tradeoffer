@@ -7,10 +7,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PhotoEntity } from '#src/photos/entity/photo.entity';
-import { CategoryEntity } from '#src/items/entity/category.entity';
+import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
+import { CategoryEntity } from '#src/modules/items/entity/category.entity';
 import { Exclude, Transform, Type } from 'class-transformer';
-import { User } from '#src/user/entity/user.entity';
+import { User } from '#src/modules/user/entity/user.entity';
 
 @Entity({ name: `item` })
 export class ItemEntity {

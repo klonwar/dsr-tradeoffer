@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import * as fs from 'fs';
 import { createReadStream } from 'fs';
-import { GetImageParamsDto } from '#src/uploads/dto/get-image-params.dto';
-import { Public } from '#src/auth/decorators/public.decorator';
+import { GetImageParamsDto } from '#src/modules/uploads/dto/get-image-params.dto';
+import { Public } from '#src/modules/auth/decorators/public.decorator';
 import * as path from 'path';
 
 @Controller(`uploads`)

@@ -8,10 +8,10 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { ItemsService } from '#src/items/items.service';
-import { ItemEntity } from '#src/items/entity/item.entity';
+import { ItemsService } from '#src/modules/items/items.service';
+import { ItemEntity } from '#src/modules/items/entity/item.entity';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
-import { PhotosInterceptor } from '#src/auth/interceptors/photo-interceptor';
+import { PhotosInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
 import { DeleteItemDto } from '#server/common/dto/delete-item.dto';
 
 @Controller(`items`)

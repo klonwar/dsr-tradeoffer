@@ -8,11 +8,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { AuthService } from '#src/auth/auth.service';
-import { Public } from '#src/auth/decorators/public.decorator';
+import { AuthService } from '#src/modules/auth/auth.service';
+import { Public } from '#src/modules/auth/decorators/public.decorator';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
-import { PhotoInterceptor } from '#src/auth/interceptors/photo-interceptor';
+import { PhotoInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
 
 @Controller(`auth`)
 export class AuthController {

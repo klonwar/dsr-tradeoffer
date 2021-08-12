@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '#src/user/entity/user.entity';
+import { User } from '#src/modules/user/entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ItemEntity } from '#src/items/entity/item.entity';
+import { ItemEntity } from '#src/modules/items/entity/item.entity';
 import { Repository } from 'typeorm';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
-import { PhotoEntity } from '#src/photos/entity/photo.entity';
-import { CategoryEntity } from '#src/items/entity/category.entity';
+import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
+import { CategoryEntity } from '#src/modules/items/entity/category.entity';
 
 @Injectable()
 export class ItemsService {
@@ -29,15 +29,12 @@ export class ItemsService {
     user: User,
     body: CreateItemDto,
   ): Promise<Array<ItemEntity>> {
-    const photos: PhotoEntity[] = [];
-
-    body.photosPaths?.map((photo_path) => {
-      photos.push(
+    const photos: PhotoEntity[] =
+      body.photosPaths?.map((photo_path) =>
         this.photoRepository.create({
           photo_path,
         }),
-      );
-    });
+      ) ?? [];
 
     const newItem = this.itemRepository.create({
       ...body,
@@ -45,7 +42,7 @@ export class ItemsService {
       photos,
     });
 
-    const savedItem = await this.itemRepository.save(newItem);
+    await this.itemRepository.save(newItem);
 
     return await this.getAllUserItems(user);
   }

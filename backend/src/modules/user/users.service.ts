@@ -4,9 +4,9 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '#src/user/entity/user.entity';
+import { User } from '#src/modules/user/entity/user.entity';
 import { Repository } from 'typeorm';
-import { Profile } from '#src/user/entity/profile.entity';
+import { Profile } from '#src/modules/user/entity/profile.entity';
 import { UserDto } from '#server/common/dto/user.dto';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
@@ -14,7 +14,7 @@ import { JwtDto } from '#server/common/dto/jwt.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
 import * as bcrypt from 'bcrypt';
-import { PhotoEntity } from '#src/photos/entity/photo.entity';
+import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 
 @Injectable()
 export class UsersService {

@@ -6,9 +6,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude, Expose, Transform } from 'class-transformer';
-import { Profile } from '#src/user/entity/profile.entity';
-import { User } from '#src/user/entity/user.entity';
-import { ItemEntity } from '#src/items/entity/item.entity';
+import { Profile } from '#src/modules/user/entity/profile.entity';
+import { User } from '#src/modules/user/entity/user.entity';
+import { ItemEntity } from '#src/modules/items/entity/item.entity';
 
 @Entity({ name: `photo` })
 export class PhotoEntity {

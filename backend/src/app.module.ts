@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './user/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/user/users.module';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from '#src/auth/guards/jwt-auth.guard';
-import { UploadsModule } from '#src/uploads/uploads.module';
+import { JwtAuthGuard } from '#src/modules/auth/guards/jwt-auth.guard';
+import { UploadsModule } from '#src/modules/uploads/uploads.module';
 import { JwtModule } from '@nestjs/jwt';
-import { ItemsModule } from './items/items.module';
+import { ItemsModule } from './modules/items/items.module';
 
 @Module({
   imports: [

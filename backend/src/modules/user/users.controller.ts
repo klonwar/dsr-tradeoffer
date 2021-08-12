@@ -10,12 +10,12 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { UsersService } from '#src/user/users.service';
+import { UsersService } from '#src/modules/user/users.service';
 import { UserDto } from '#server/common/dto/user.dto';
-import { Public } from '#src/auth/decorators/public.decorator';
+import { Public } from '#src/modules/auth/decorators/public.decorator';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
-import { PhotoInterceptor } from '#src/auth/interceptors/photo-interceptor';
+import { PhotoInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
 
 @Controller(`user`)

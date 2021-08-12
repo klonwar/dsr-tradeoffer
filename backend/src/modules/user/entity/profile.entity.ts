@@ -6,10 +6,10 @@ import {
   OneToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { User } from '#src/user/entity/user.entity';
+import { User } from '#src/modules/user/entity/user.entity';
 import { Exclude, Transform, Type } from 'class-transformer';
 import * as moment from 'moment';
-import { PhotoEntity } from '#src/photos/entity/photo.entity';
+import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 
 @Entity()
 export class Profile {
