@@ -18,8 +18,8 @@ export const ItemCard: FC<ItemProps> = (props) => {
     <div className={`uk-card uk-card-default uk-card-body uk-width-1-1`} data-id={id}>
       <div className={`ItemCard`}>
         <div className={`ItemCard-header`}>
-          <div className={`ItemCard-picture`} style={{ backgroundImage: `url(${photoPath})` }}>
-          </div>
+          <Link to={`/items/${id}`} className={`ItemCard-picture`} style={{ backgroundImage: `url(${photoPath})` }}>
+          </Link>
           <div className={`ItemCard-info`}>
             <Link className={`ItemCard-title uk-h4 uk-link-heading`} to={`/items/${id}`}>{name}</Link>
             <div className={`ItemCard-category`}>
