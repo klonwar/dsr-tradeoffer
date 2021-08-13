@@ -7,6 +7,7 @@ import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-err
 import { isUserRequestPendingSelector, userDataSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { isPhotoFilename } from '#server/common/util/is-photo-filename';
+import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 
 export const ProfilePhotoForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -37,6 +38,8 @@ export const ProfilePhotoForm: FC = () => {
     );
   }
 
+  console.log(errors);
+
   return (
     <form onSubmit={onSubmit}>
       <div className={`uk-inline uk-width-expand `}>
@@ -47,7 +50,7 @@ export const ProfilePhotoForm: FC = () => {
                      `photo`,
                      {
                        required: `Выберите фотографию`,
-                       validate: (fileList: FileList) => isPhotoFilename(fileList[0].name),
+                       validate: (fileList: FileList) => isPhotoFilename(fileList[0].name) || ErrorMessagesEnum.WRONG_PHOTO_TYPE,
                      },
                    )}
                    type={`file`} />

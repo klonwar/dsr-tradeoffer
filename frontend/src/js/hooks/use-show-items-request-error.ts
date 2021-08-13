@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import UIkit from 'uikit';
 import { useSelector } from 'react-redux';
-import { itemsRequestErrorSelector, userRequestErrorSelector } from '#redux/selectors';
+import { itemsRequestErrorSelector } from '#redux/selectors';
 
 export const useShowItemsRequestError = (isSubmitSuccessful: boolean): void => {
   const itemsRequestError = useSelector(itemsRequestErrorSelector);

@@ -20,7 +20,7 @@ const itemsSlice = createSlice({
   name: `items`,
   initialState,
   reducers: {
-    reset: resetPreState
+    reset: resetPreState,
   },
   extraReducers: (builder) => {
     builder
@@ -34,7 +34,15 @@ const itemsSlice = createSlice({
 
       .addCase(Operations.createItem.pending, onPendingSaveResult)
       .addCase(Operations.createItem.rejected, onErrorSaveResult)
-      .addCase(Operations.createItem.fulfilled, onFulfilled);
+      .addCase(Operations.createItem.fulfilled, onFulfilled)
+
+      .addCase(Operations.editItem.pending, onPendingSaveResult)
+      .addCase(Operations.editItem.rejected, onErrorSaveResult)
+      .addCase(Operations.editItem.fulfilled, onFulfilled)
+
+      .addCase(Operations.setItemPhotos.pending, onPendingSaveResult)
+      .addCase(Operations.setItemPhotos.rejected, onErrorSaveResult)
+      .addCase(Operations.setItemPhotos.fulfilled, onFulfilled);
   },
 });
 

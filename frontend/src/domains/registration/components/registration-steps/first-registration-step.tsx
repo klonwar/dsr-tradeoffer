@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { RegistrationContext } from '#domains/registration/components/registration-page/registration-page';
+import { RegistrationContext } from '#domains/registration/pages/registration-page/registration-page';
 import { FirstStepData } from '#domains/registration/dto/first-registration-step.dto';
 import { AppInput } from '#components/app-input/app-input';
 

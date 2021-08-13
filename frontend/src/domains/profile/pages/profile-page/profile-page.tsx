@@ -46,9 +46,6 @@ export const ProfilePage: FC = () => {
     dispatch(Operations.editProfile(data));
   });
 
-  const changePassword = () => {
-    console.log(`Not implemented`);
-  };
 
   return (
     <div className={`uk-padding-small uk-flex-center`} uk-grid={``}>

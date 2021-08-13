@@ -3,16 +3,17 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import HeaderWrapper from '#components/header-wrapper/header-wrapper';
 import { AdminRoute } from '#components/app/components/role-routes/admin-route';
 import { UserRoute } from '#components/app/components/role-routes/user-route';
-import { ShowItem } from '#domains/items/components/show-item/show-item';
-import { ItemsPage } from '#domains/items/components/items-page/items-page';
-import Login from '#domains/login/components/login/login';
+import { ShowItemPage } from '#domains/items/pages/show-item-page/show-item-page';
+import { ItemsPage } from '#domains/items/pages/items-page/items-page';
+import Login from '#domains/login/pages/login/login';
 import { UnauthorizedRoute } from '#components/app/components/role-routes/unauthorized-route';
-import Logout from '#domains/logout/components/logout/logout';
+import Logout from '#domains/logout/pages/logout/logout';
 import { AuthorizedRoute } from '#components/app/components/role-routes/authorized-route';
-import MainPage from '#domains/main/components/main-page/main-page';
-import { ProfilePage } from '#domains/profile/components/profile-page/profile-page';
-import RegistrationPage from '#domains/registration/components/registration-page/registration-page';
-import { AddItemPage } from '#domains/items/components/add-item-page/add-item-page';
+import MainPage from '#domains/main/pages/main-page/main-page';
+import { ProfilePage } from '#domains/profile/pages/profile-page/profile-page';
+import RegistrationPage from '#domains/registration/pages/registration-page/registration-page';
+import { AddItemPage } from '#domains/items/pages/add-item-page/add-item-page';
+import { EditItemPage } from '#domains/items/pages/edit-item-page/edit-item-page';
 
 const App: FC = () => {
   return (
@@ -35,10 +36,16 @@ const App: FC = () => {
         </HeaderWrapper>
       </UserRoute>
 
-      <UserRoute path={`/items/:itemId`}>
+      <UserRoute path={`/items/:itemId/edit`}>
+        <HeaderWrapper>
+          <EditItemPage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      <UserRoute exact path={`/items/:itemId`}>
         <HeaderWrapper>
           {/* itemId будет получен через хук */}
-          <ShowItem />
+          <ShowItemPage />
         </HeaderWrapper>
       </UserRoute>
 

@@ -4,7 +4,6 @@ import {
   Controller,
   Get,
   Param,
-  Post,
   Put,
   Request,
   UploadedFile,

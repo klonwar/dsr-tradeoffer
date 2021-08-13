@@ -14,6 +14,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { isItemsRequestPendingSelector, itemsRequestErrorSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { useShowItemsRequestError } from '#src/js/hooks/use-show-items-request-error';
+import { AppTextarea } from '#components/app-textarea/app-textarea';
 
 export const AddItemPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -58,23 +59,13 @@ export const AddItemPage: FC = () => {
             useForm={{ register, errors }}
           />
 
-          <div className={`uk-inline uk-width-expand uk-margin-small uk-margin-remove-top`}>
-            <div className='uk-flex uk-form-label'>
-              <span>{keyToLabelText.get(`description`)}</span>
-            </div>
-            <div className={`uk-position-relative`}>
-                <textarea
-                  className={`AppTextarea uk-textarea${(errors[`description`]) ? ` uk-form-danger` : ``}`}
-                  placeholder={`Не стирана, не крашена. 100%.`}
-                  {...register(`description`)}
-                />
-              <InputHint
-                text={errors[`description`]?.message}
-                className={`uk-position-center-right-out`}
-                isActive={!!errors[`description`]}
-              />
-            </div>
-          </div>
+          <AppTextarea
+            name={`description`}
+            textareaProps={{
+              placeholder: `Не стирана, не крашена. 100%.`
+            }}
+            useForm={{ register, errors }}
+          />
 
           <AppInput
             name={`geo`}
