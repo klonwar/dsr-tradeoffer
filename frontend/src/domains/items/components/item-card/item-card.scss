@@ -1,5 +1,5 @@
 
-.Item {
+.ItemCard {
   max-width: $width-large-width;
 
   &-header {
@@ -25,6 +25,8 @@
   &-title {
     margin: 0;
     width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &-category, &-location {

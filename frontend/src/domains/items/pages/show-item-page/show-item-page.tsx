@@ -39,7 +39,27 @@ export const ShowItemPage: FC = () => {
   }
 
   return (
-    <div className={`uk-flex uk-flex-center uk-flex-middle uk-height-1-1 uk-padding-small`}>
+    <div className={`uk-flex uk-flex-column uk-flex-middle uk-flex-middle uk-height-1-1 uk-padding-small`}>
+      {(item.photos && item.photos.length !== 0) ? (
+        <div className={`ItemPhotos uk-width-xlarge uk-position-relative uk-margin-bottom`} uk-slideshow={``}>
+          <ul className={`uk-slideshow-items`}>
+            {item.photos?.map(({ photoPath }) => (
+              <li key={photoPath}><img src={srcFromPhotoPath(photoPath)} alt={``} uk-cover={``} /></li>
+            ))}
+          </ul>
+          <button
+            className={`uk-position-center-left uk-position-small uk-hidden-hover uk-link`}
+            uk-slidenav-previous={``}
+            uk-slideshow-item={`previous`}
+          />
+          <button
+            className={`uk-position-center-right uk-position-small uk-hidden-hover uk-link`}
+            uk-slidenav-next={``}
+            uk-slideshow-item={`next`}
+          />
+        </div>
+      ) : null}
+
       <div className={`uk-card uk-card-body uk-card-default uk-width-xlarge`}>
         <h1 className={`uk-card-title`}>{item.name}</h1>
         <p>{item.description}</p>
@@ -57,23 +77,6 @@ export const ShowItemPage: FC = () => {
               <span>Хочу: </span>
               <span className={`uk-margin-small-left`}>{item.trade_category}</span>
             </div>
-          </div>
-          <div className={`uk-width-1-1 uk-width-1-2@m uk-position-relative`} uk-slideshow={``}>
-            <ul className={`uk-slideshow-items`}>
-              {item.photos?.map(({ photoPath }) => (
-                <li key={photoPath}><img src={srcFromPhotoPath(photoPath)} alt={``} uk-cover={``} /></li>
-              ))}
-            </ul>
-            <button
-              className={`uk-position-center-left uk-position-small uk-hidden-hover uk-link`}
-              uk-slidenav-previous={``}
-              uk-slideshow-item={`previous`}
-            />
-            <button
-              className={`uk-position-center-right uk-position-small uk-hidden-hover uk-link`}
-              uk-slidenav-next={``}
-              uk-slideshow-item={`next`}
-            />
           </div>
         </div>
       </div>

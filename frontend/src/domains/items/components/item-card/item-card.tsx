@@ -21,13 +21,13 @@ export const ItemCard: FC<ItemProps> = (props) => {
 
   return (
     <div className={`uk-card uk-card-default uk-card-body uk-width-1-1`} data-id={id}>
-      <div className={`Item`}>
-        <div className={`Item-header`}>
-          <div className={`Item-picture`} style={{ backgroundImage: `url(${photoPath})` }}>
+      <div className={`ItemCard`}>
+        <div className={`ItemCard-header`}>
+          <div className={`ItemCard-picture`} style={{ backgroundImage: `url(${photoPath})` }}>
           </div>
-          <div className={`Item-info`}>
-            <Link className={`Item-title uk-h4 uk-link-heading`} to={`/items/${id}`}>{name}</Link>
-            <div className={`Item-category`}>
+          <div className={`ItemCard-info`}>
+            <Link className={`ItemCard-title uk-h4 uk-link-heading`} to={`/items/${id}`}>{name}</Link>
+            <div className={`ItemCard-category`}>
               <span>
                 {item_category}
               </span>
@@ -36,14 +36,14 @@ export const ItemCard: FC<ItemProps> = (props) => {
                 {trade_category}
               </span>
             </div>
-            <div className={`Item-location`}>
+            <div className={`ItemCard-location`}>
               <span uk-icon={`icon: location; ratio: 0.75`} />
               <span>{geo}</span>
             </div>
           </div>
         </div>
       </div>
-      <div className={`Item-actions`}>
+      <div className={`ItemCard-actions`}>
         <Link
           className={`uk-link`}
           to={`/items/${id}/edit`}
