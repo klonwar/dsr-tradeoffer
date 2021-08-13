@@ -4,6 +4,7 @@ import InputHint from '#components/input-hint/input-hint';
 import { isPhotoFilename } from '#server/common/util/is-photo-filename';
 import { MAX_ITEM_PHOTOS } from '#server/common/constants/constants';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
+import { ItemPhotosUl } from '#domains/items/components/item-photos-ul/item-photos-ul';
 
 interface Props {
   photos: FileList,
@@ -58,15 +59,7 @@ export const MainPhotoInput: FC<Props> = ({ photos, setPhotos }) => {
             <button type={`button`} className={`uk-button uk-button-default`}>Загрузить</button>
           </div>
         </div>
-        {(photos?.length && photos.length !== 0) ? (
-          <ul className={`uk-margin-left uk-margin-top`}>
-            {Array.from(photos).map((photo) => (
-              <li className={`uk-form-label`} key={photo.name}>
-                {photo.name}
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <ItemPhotosUl photos={photos}/>
       </div>
 
     </>

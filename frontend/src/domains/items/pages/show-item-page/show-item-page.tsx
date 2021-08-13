@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import { useLoadItemsList } from '#src/js/hooks/use-load-items-list';
 import { categoriesListSelector, isItemsRequestPendingSelector, itemsListSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
-import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { useLoadCategoriesList } from '#src/js/hooks/use-load-categories-list';
+import { PhotosSlideshow } from '#domains/items/components/photos-slideshow/photos-slideshow';
+import { ItemActions } from '#domains/items/components/item-actions/item-actions';
 
 export const ShowItemPage: FC = () => {
   const { itemId } = useParams<{ itemId: string }>();
@@ -39,30 +40,13 @@ export const ShowItemPage: FC = () => {
   }
 
   return (
-    <div className={`uk-flex uk-flex-column uk-flex-middle uk-flex-middle uk-height-1-1 uk-padding-small`}>
-      {(item.photos && item.photos.length !== 0) ? (
-        <div className={`ItemPhotos uk-width-xlarge uk-position-relative uk-margin-bottom`} uk-slideshow={``}>
-          <ul className={`uk-slideshow-items`}>
-            {item.photos?.map(({ photoPath }) => (
-              <li key={photoPath}><img src={srcFromPhotoPath(photoPath)} alt={``} uk-cover={``} /></li>
-            ))}
-          </ul>
-          <button
-            className={`uk-position-center-left uk-position-small uk-hidden-hover uk-link`}
-            uk-slidenav-previous={``}
-            uk-slideshow-item={`previous`}
-          />
-          <button
-            className={`uk-position-center-right uk-position-small uk-hidden-hover uk-link`}
-            uk-slidenav-next={``}
-            uk-slideshow-item={`next`}
-          />
-        </div>
-      ) : null}
-
+    <div className={`uk-flex uk-flex-center uk-flex-wrap uk-padding-small`}>
+      <div className={`uk-flex uk-flex-column uk-width-1-1 uk-width-xlarge@s`}>
+        <PhotosSlideshow item={item} />
+      </div>
       <div className={`uk-card uk-card-body uk-card-default uk-width-xlarge`}>
-        <h1 className={`uk-card-title`}>{item.name}</h1>
-        <p>{item.description}</p>
+        <h1 className={`TextEllipsis uk-card-title`}>{item.name}</h1>
+        <p className={`TextEllipsis`}>{item.description}</p>
         <div className={`uk-flex uk-flex-wrap`} uk-margin={``}>
           <div className={`uk-width-1-1 uk-width-1-2@m`}>
             <div className={`uk-flex uk-flex-middle`}>
@@ -79,6 +63,7 @@ export const ShowItemPage: FC = () => {
             </div>
           </div>
         </div>
+        <ItemActions id={item.id} />
       </div>
     </div>
   );

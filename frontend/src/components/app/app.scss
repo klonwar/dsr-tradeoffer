@@ -20,3 +20,8 @@ html, body, #root {
 .NoSelect {
   user-select: none;
 }
+
+.TextEllipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

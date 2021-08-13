@@ -1,0 +1,8 @@
+.ItemPhotos {
+  max-width: 100%;
+
+  margin-bottom: $margin-margin;
+  @media (min-width: $breakpoint-small) {
+    padding: 0 $padding-large-padding-l;
+  }
+}

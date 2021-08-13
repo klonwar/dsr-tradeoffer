@@ -34,7 +34,11 @@ const itemsSlice = createSlice({
 
       .addCase(Operations.createItem.pending, onPendingSaveResult)
       .addCase(Operations.createItem.rejected, onErrorSaveResult)
-      .addCase(Operations.createItem.fulfilled, onFulfilled);
+      .addCase(Operations.createItem.fulfilled, onFulfilled)
+
+      .addCase(Operations.editItem.pending, onPendingSaveResult)
+      .addCase(Operations.editItem.rejected, onErrorSaveResult)
+      .addCase(Operations.editItem.fulfilled, onFulfilled);
   },
 });
 

@@ -1,18 +1,13 @@
 import React, { FC } from 'react';
 import noPhoto from '#src/icons/no-photo.svg';
 import { ItemDto } from '#server/common/dto/item.dto';
-import { useSelector } from 'react-redux';
-import { isItemsRequestPendingSelector } from '#redux/selectors';
-import { useAppDispatch } from '#redux/store';
-import { Operations } from '#redux/operations/operations';
 import { Link } from 'react-router-dom';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
+import { ItemActions } from '#domains/items/components/item-actions/item-actions';
 
 interface ItemProps extends Partial<ItemDto> {}
 
 export const ItemCard: FC<ItemProps> = (props) => {
-  const dispatch = useAppDispatch();
-  const isPending = useSelector(isItemsRequestPendingSelector);
   const { id, name, geo, item_category, trade_category, photos } = props;
 
   const photoPath = (photos?.[0]?.photoPath)
@@ -43,18 +38,7 @@ export const ItemCard: FC<ItemProps> = (props) => {
           </div>
         </div>
       </div>
-      <div className={`ItemCard-actions`}>
-        <Link
-          className={`uk-link`}
-          to={`/items/${id}/edit`}
-          uk-icon={`icon: pencil`}
-        />
-        <button
-          className={`uk-link`}
-          uk-icon={`trash`}
-          onClick={() => dispatch(Operations.deleteItem({ id }))}
-        />
-      </div>
+      <ItemActions id={id} />
     </div>
   );
 };

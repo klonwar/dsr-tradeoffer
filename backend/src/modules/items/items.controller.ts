@@ -53,6 +53,7 @@ export class ItemsController {
   }
 
   @Put(`edit`)
+  @UseInterceptors(ClassSerializerInterceptor)
   async editItem(
     @Request() req,
     @Body() body: EditItemDto,
