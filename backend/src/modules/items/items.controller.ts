@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Request,
   UploadedFiles,
   UseInterceptors,
@@ -13,6 +14,8 @@ import { ItemEntity } from '#src/modules/items/entity/item.entity';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotosInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
 import { DeleteItemDto } from '#server/common/dto/delete-item.dto';
+import { JwtDto } from '#server/common/dto/jwt.dto';
+import { EditItemDto } from '#server/common/dto/edit-item.dto';
 
 @Controller(`items`)
 export class ItemsController {
@@ -47,5 +50,13 @@ export class ItemsController {
   @UseInterceptors(ClassSerializerInterceptor)
   async getCategories() {
     return await this.itemsService.getCategories();
+  }
+
+  @Put(`edit`)
+  async editItem(
+    @Request() req,
+    @Body() body: EditItemDto,
+  ): Promise<Array<ItemEntity>> {
+    return await this.itemsService.editItem(req.user, body);
   }
 }

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User } from '#src/modules/user/entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ItemEntity } from '#src/modules/items/entity/item.entity';
@@ -7,6 +11,7 @@ import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 import { CategoryEntity } from '#src/modules/items/entity/category.entity';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
+import { EditItemDto } from '#server/common/dto/edit-item.dto';
 
 @Injectable()
 export class ItemsService {
@@ -68,5 +73,40 @@ export class ItemsService {
 
   async getCategories(): Promise<Array<CategoryEntity>> {
     return await this.categoryRepository.find();
+  }
+
+  async editItem(
+    user: User,
+    plainEditItemDto: EditItemDto,
+  ): Promise<Array<ItemEntity>> {
+    const { id, name, geo, description, item_category_id, trade_category_id } =
+      plainEditItemDto;
+
+    const item = await this.itemRepository.findOne(id, { relations: [`user`] });
+
+    if (!item) throw new BadRequestException(ErrorMessagesEnum.NO_SUCH_ITEM);
+
+    if (item.user.id !== user.id)
+      throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_ITEM);
+
+    if (name) item.name = name;
+    if (description) item.description = description;
+    if (geo) item.geo = geo;
+
+    if (item_category_id) {
+      if (await this.categoryRepository.findOne(item_category_id))
+        item.item_category_id = item_category_id;
+      else throw new BadRequestException(ErrorMessagesEnum.NO_SUCH_CATEGORY);
+    }
+
+    if (trade_category_id) {
+      if (await this.categoryRepository.findOne(trade_category_id))
+        item.trade_category_id = trade_category_id;
+      else throw new BadRequestException(ErrorMessagesEnum.NO_SUCH_CATEGORY);
+    }
+
+    await this.itemRepository.save(item);
+
+    return await this.getAllUserItems(user);
   }
 }
