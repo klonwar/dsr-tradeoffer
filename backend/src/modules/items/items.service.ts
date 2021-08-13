@@ -124,7 +124,7 @@ export class ItemsService {
     if (item.user.id !== user.id)
       throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_ITEM);
 
-    await this.itemRepository.delete(item.photos.map((photo) => photo.id));
+    await this.photoRepository.remove(item.photos);
 
     const photoEntities: PhotoEntity[] = photos.map((photo) =>
       this.photoRepository.create({
