@@ -5,6 +5,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
+import { isPhotoFilename } from '#server/common/util/is-photo-filename';
 
 export const IsPhotoPath = <T>(validationOptions?: ValidationOptions) => {
   return (object: any, propertyName: string) => {
@@ -21,7 +22,7 @@ export const IsPhotoPath = <T>(validationOptions?: ValidationOptions) => {
 @ValidatorConstraint({ name: `IsPhotoPath` })
 export class IsPhotoPathConstraint implements ValidatorConstraintInterface {
   validate(value: string, args: ValidationArguments) {
-    return value.endsWith(`.jpg`) || value.endsWith(`.png`);
+    return isPhotoFilename(value);
   }
 
   defaultMessage(args: ValidationArguments) {

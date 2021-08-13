@@ -17,6 +17,7 @@ import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { PhotoInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
+import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 
 @Controller(`user`)
 export class UsersController {
@@ -41,7 +42,8 @@ export class UsersController {
     @Request() req,
     @UploadedFile() photo: Express.Multer.File,
   ): Promise<JwtDto> {
-    if (!photo) throw new BadRequestException(`Нужно передать фотографию`);
+    if (!photo)
+      throw new BadRequestException(ErrorMessagesEnum.PHOTO_IS_REQUIRED);
 
     return await this.usersService.setPhoto(req.user, photo.path);
   }

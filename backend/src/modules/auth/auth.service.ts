@@ -6,6 +6,7 @@ import { JwtDto } from '#server/common/dto/jwt.dto';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import * as fs from 'fs';
 import { User } from '#src/modules/user/entity/user.entity';
+import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 
 @Injectable()
 export class AuthService {
@@ -32,14 +33,10 @@ export class AuthService {
       const { username, email } = createUserDto;
 
       if (await this.usersService.findOneByUsername(username))
-        throw new ConflictException(
-          `Пользователь с таким логином уже существует`,
-        );
+        throw new ConflictException(ErrorMessagesEnum.USERNAME_CONFLICT);
 
       if (await this.usersService.findOneByEmail(email))
-        throw new ConflictException(
-          `Пользователь с такой почтой уже существует`,
-        );
+        throw new ConflictException(ErrorMessagesEnum.EMAIL_CONFLICT);
 
       const newUser = await this.usersService.createUser(createUserDto);
       return newUser.toJwtDto(this.jwtService);

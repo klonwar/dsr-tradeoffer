@@ -5,11 +5,13 @@ import { BadRequestException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { MAX_ITEM_PHOTOS } from '#server/common/constants/constants';
 import { isPhotoFilename } from '#server/common/util/is-photo-filename';
+import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
+import { UPLOAD_PATH } from '#src/constants/backend-constants';
 
 export const PhotoInterceptor = (name = `photo`) =>
   FileInterceptor(name, {
     storage: diskStorage({
-      destination: `./uploads/`,
+      destination: UPLOAD_PATH,
       filename(req, file, callback) {
         callback(
           null,
@@ -27,9 +29,7 @@ export const PhotoInterceptor = (name = `photo`) =>
       }
 
       callback(
-        new BadRequestException(
-          `Фотография должна быть картинкой в .jpg или .png`,
-        ),
+        new BadRequestException(ErrorMessagesEnum.WRONG_PHOTO_TYPE),
         false,
       );
     },
@@ -38,7 +38,7 @@ export const PhotoInterceptor = (name = `photo`) =>
 export const PhotosInterceptor = (name = `photos`) =>
   FilesInterceptor(name, MAX_ITEM_PHOTOS, {
     storage: diskStorage({
-      destination: `./uploads/`,
+      destination: UPLOAD_PATH,
       filename(req, file, callback) {
         callback(
           null,
@@ -56,9 +56,7 @@ export const PhotosInterceptor = (name = `photos`) =>
       }
 
       callback(
-        new BadRequestException(
-          `Фотография должна быть картинкой в .jpg или .png`,
-        ),
+        new BadRequestException(ErrorMessagesEnum.WRONG_PHOTO_TYPE),
         false,
       );
     },

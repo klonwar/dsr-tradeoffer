@@ -3,6 +3,7 @@ import { RegistrationContext } from '#domains/registration/components/registrati
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import InputHint from '#components/input-hint/input-hint';
 import { isPhotoFilename } from '#server/common/util/is-photo-filename';
+import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 
 export const RegistrationPhotoInput: FC = () => {
   const [errors, setErrors] = useState<string>(null);
@@ -18,7 +19,7 @@ export const RegistrationPhotoInput: FC = () => {
           <input accept={`.png,.jpg`} type={`file`} onChange={(e) => {
             if (e.target?.files?.length !== 0) {
               if (!isPhotoFilename(e.target.files[0].name)) {
-                setErrors(`Фотография должна быть в формате .png или .jpg`);
+                setErrors(ErrorMessagesEnum.WRONG_PHOTO_TYPE);
                 return;
               }
 

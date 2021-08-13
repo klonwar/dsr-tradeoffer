@@ -15,6 +15,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
 import * as bcrypt from 'bcrypt';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
+import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 
 @Injectable()
 export class UsersService {
@@ -86,9 +87,7 @@ export class UsersService {
 
     if (user.profile.email !== email)
       if (await this.findOneByEmail(email))
-        throw new ConflictException(
-          `Пользователь с такой почтой уже существует`,
-        );
+        throw new ConflictException(ErrorMessagesEnum.EMAIL_CONFLICT);
 
     if (firstName) user.profile.firstName = firstName;
     if (email) user.profile.email = email;
@@ -118,7 +117,7 @@ export class UsersService {
     changePasswordDto: ChangePasswordDto,
   ): Promise<JwtDto> {
     if (!(await bcrypt.compare(changePasswordDto.oldPassword, user.password)))
-      throw new BadRequestException(`Старый пароль указан неверно`);
+      throw new BadRequestException(ErrorMessagesEnum.WRONG_OLD_PASSWORD);
 
     user.password = await bcrypt.hash(changePasswordDto.newPassword, 10);
 

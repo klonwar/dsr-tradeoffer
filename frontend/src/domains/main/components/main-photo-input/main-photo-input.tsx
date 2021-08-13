@@ -3,6 +3,7 @@ import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import InputHint from '#components/input-hint/input-hint';
 import { isPhotoFilename } from '#server/common/util/is-photo-filename';
 import { MAX_ITEM_PHOTOS } from '#server/common/constants/constants';
+import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 
 interface Props {
   photos: FileList,
@@ -26,13 +27,13 @@ export const MainPhotoInput: FC<Props> = ({ photos, setPhotos }) => {
                   setPhotos(null);
                 } else {
                   if (Array.from(e.target.files).find((file) => !isPhotoFilename(file.name))) {
-                    setErrors(`Фотографии должны быть в формате .png или .jpg`);
+                    setErrors(ErrorMessagesEnum.WRONG_PHOTO_TYPE);
                     setPhotos(null);
                     return;
                   }
 
                   if (e.target.files.length > MAX_ITEM_PHOTOS) {
-                    setErrors(`Вы можете загрузить максимум 5 фотографий`);
+                    setErrors(ErrorMessagesEnum.PHOTO_LIMIT);
                     setPhotos(null);
                     return;
                   }
