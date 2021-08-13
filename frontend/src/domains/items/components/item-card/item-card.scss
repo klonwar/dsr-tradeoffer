@@ -43,7 +43,7 @@
     justify-content: flex-end;
     align-items: center;
 
-    & > a:not(:first-child){
+    & > :not(:first-child){
       margin-left: $margin-small-margin;
     }
   }

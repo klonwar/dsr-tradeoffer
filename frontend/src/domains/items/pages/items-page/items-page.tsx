@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { ItemsList } from '../items-list/items-list';
+import { ItemsList } from '../../components/items-list/items-list';
 
 export const ItemsPage: FC = () => {
   return (

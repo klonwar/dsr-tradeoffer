@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { useLoadCategoriesList } from '#src/js/hooks/use-load-categories-list';
 
-export const ShowItem: FC = () => {
+export const EditItemPage: FC = () => {
   const { itemId } = useParams<{ itemId: string }>();
   const isPending = useSelector(isItemsRequestPendingSelector);
   const itemsList = useSelector(itemsListSelector);

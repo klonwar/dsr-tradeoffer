@@ -44,6 +44,11 @@ export const ItemCard: FC<ItemProps> = (props) => {
         </div>
       </div>
       <div className={`Item-actions`}>
+        <Link
+          className={`uk-link`}
+          to={`/items/${id}/edit`}
+          uk-icon={`icon: pencil`}
+        />
         <button
           className={`uk-link`}
           uk-icon={`trash`}
