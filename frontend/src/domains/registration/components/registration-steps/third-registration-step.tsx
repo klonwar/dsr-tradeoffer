@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect } from 'react';
-import { RegistrationContext } from '#domains/registration/components/registration-page/registration-page';
+import { RegistrationContext } from '#domains/registration/pages/registration-page/registration-page';
 import { FieldPath, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { isUserRequestPendingSelector } from '#redux/selectors';

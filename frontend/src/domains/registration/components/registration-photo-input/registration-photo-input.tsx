@@ -1,5 +1,5 @@
 import React, { FC, useContext, useState } from 'react';
-import { RegistrationContext } from '#domains/registration/components/registration-page/registration-page';
+import { RegistrationContext } from '#domains/registration/pages/registration-page/registration-page';
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import InputHint from '#components/input-hint/input-hint';
 import { isPhotoFilename } from '#server/common/util/is-photo-filename';

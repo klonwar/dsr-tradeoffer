@@ -5,13 +5,13 @@ import { AdminRoute } from '#components/app/components/role-routes/admin-route';
 import { UserRoute } from '#components/app/components/role-routes/user-route';
 import { ShowItemPage } from '#domains/items/pages/show-item-page/show-item-page';
 import { ItemsPage } from '#domains/items/pages/items-page/items-page';
-import Login from '#domains/login/components/login/login';
+import Login from '#domains/login/pages/login/login';
 import { UnauthorizedRoute } from '#components/app/components/role-routes/unauthorized-route';
-import Logout from '#domains/logout/components/logout/logout';
+import Logout from '#domains/logout/pages/logout/logout';
 import { AuthorizedRoute } from '#components/app/components/role-routes/authorized-route';
-import MainPage from '#domains/main/components/main-page/main-page';
+import MainPage from '#domains/main/pages/main-page/main-page';
 import { ProfilePage } from '#domains/profile/pages/profile-page/profile-page';
-import RegistrationPage from '#domains/registration/components/registration-page/registration-page';
+import RegistrationPage from '#domains/registration/pages/registration-page/registration-page';
 import { AddItemPage } from '#domains/items/pages/add-item-page/add-item-page';
 import { EditItemPage } from '#domains/items/pages/edit-item-page/edit-item-page';
 
