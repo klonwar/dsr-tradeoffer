@@ -16,6 +16,7 @@ import { PhotosInterceptor } from '#src/modules/auth/interceptors/photo-intercep
 import { DeleteItemDto } from '#server/common/dto/delete-item.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
+import { SetItemPhotosDto } from '#server/common/dto/set-item-photos.dto';
 
 @Controller(`items`)
 export class ItemsController {
@@ -59,5 +60,15 @@ export class ItemsController {
     @Body() body: EditItemDto,
   ): Promise<Array<ItemEntity>> {
     return await this.itemsService.editItem(req.user, body);
+  }
+
+  @Put(`set_photos`)
+  @UseInterceptors(ClassSerializerInterceptor, PhotosInterceptor())
+  async setItemPhotos(
+    @UploadedFiles() photos: Array<Express.Multer.File>,
+    @Request() req,
+    @Body() body: SetItemPhotosDto,
+  ): Promise<Array<ItemEntity>> {
+    return await this.itemsService.setItemPhotos(req.user, photos, body.id);
   }
 }

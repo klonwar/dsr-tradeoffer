@@ -9,6 +9,7 @@ import { deleteItemOperation } from '#redux/operations/slices/delete-item-operat
 import { getCategoriesListOperation } from '#redux/operations/slices/get-categories-list-operation';
 import { createItemOperation } from '#redux/operations/slices/create-item-operation';
 import { editItemOperation } from '#redux/operations/slices/edit-item-operation';
+import { setItemPhotosOperation } from '#redux/operations/slices/set-item-photos-operation';
 
 export const Operations = {
   login: createAsyncThunk(
@@ -50,5 +51,9 @@ export const Operations = {
   editItem: createAsyncThunk(
     `editItem`,
     editItemOperation
+  ),
+  setItemPhotos: createAsyncThunk(
+    `setItemPhotos`,
+    setItemPhotosOperation
   )
 };

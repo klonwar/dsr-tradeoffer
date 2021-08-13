@@ -3,7 +3,6 @@ import { useAppDispatch } from '#redux/store';
 import { useSelector } from 'react-redux';
 import { isItemsRequestPendingSelector, itemsRequestErrorSelector } from '#redux/selectors';
 import { useForm } from 'react-hook-form';
-import { useShowUserRequestError } from '#src/js/hooks/use-show-user-request-error';
 import { isPhotoFilename } from '#server/common/util/is-photo-filename';
 import InputHint from '#components/input-hint/input-hint';
 import { ItemDto } from '#server/common/dto/item.dto';
@@ -11,6 +10,9 @@ import { useHistory } from 'react-router-dom';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 import { ItemPhotosUl } from '#domains/items/components/item-photos-ul/item-photos-ul';
 import { MAX_ITEM_PHOTOS } from '#server/common/constants/constants';
+import { Operations } from '#redux/operations/operations';
+import { useShowItemsRequestError } from '#src/js/hooks/use-show-items-request-error';
+import { SetItemPhotosOperationPayload } from '#redux/operations/slices/set-item-photos-operation';
 
 interface Props {
   item: ItemDto;
@@ -26,23 +28,25 @@ export const ItemEditPhotoForm: FC<Props> = ({ item }) => {
     handleSubmit,
     watch,
     formState: { errors, isSubmitSuccessful },
-  } = useForm<{ photos: FileList }>({
+  } = useForm<SetItemPhotosOperationPayload>({
     mode: `onChange`,
+    defaultValues: {
+      id: item.id
+    }
   });
   const [isOpened, setIsOpened] = useState(false);
 
   const onSubmit = handleSubmit((data) => {
-    //dispatch(Operations.setItemPhotos(data.photos));
-    console.log(data);
+    dispatch(Operations.setItemPhotos(data));
   });
 
   const watchPhotos = watch(`photos`);
 
-  useShowUserRequestError(isSubmitSuccessful);
+  useShowItemsRequestError(isSubmitSuccessful);
 
   useEffect(() => {
     if (isSubmitSuccessful && !isPending && !itemsRequestError) {
-      history.push(`/items/${item?.id}`);
+      setIsOpened(false);
     }
   }, [isSubmitSuccessful, isPending, itemsRequestError, history, item]);
 
@@ -56,6 +60,7 @@ export const ItemEditPhotoForm: FC<Props> = ({ item }) => {
 
   return (
     <form onSubmit={onSubmit}>
+      <input className={`uk-hidden`} {...register(`id`)}/>
       <div className={`uk-inline uk-width-expand `}>
         <div className={`uk-position-relative uk-flex`}>
           <div className={`uk-width-expand uk-margin-small-right`} uk-form-custom={`target: true`}>

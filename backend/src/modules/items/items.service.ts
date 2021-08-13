@@ -109,4 +109,33 @@ export class ItemsService {
 
     return await this.getAllUserItems(user);
   }
+
+  async setItemPhotos(
+    user: User,
+    photos: Array<Express.Multer.File>,
+    id: number,
+  ): Promise<Array<ItemEntity>> {
+    const item = await this.itemRepository.findOne(id, {
+      relations: [`photos`, `user`],
+    });
+
+    if (!item) throw new BadRequestException(ErrorMessagesEnum.NO_SUCH_ITEM);
+
+    if (item.user.id !== user.id)
+      throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_ITEM);
+
+    await this.itemRepository.delete(item.photos.map((photo) => photo.id));
+
+    const photoEntities: PhotoEntity[] = photos.map((photo) =>
+      this.photoRepository.create({
+        photo_path: photo.path,
+      }),
+    );
+
+    item.photos = photoEntities;
+
+    await this.itemRepository.save(item);
+
+    return await this.getAllUserItems(user);
+  }
 }
