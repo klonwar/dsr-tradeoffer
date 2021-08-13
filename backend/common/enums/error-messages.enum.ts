@@ -7,4 +7,5 @@ export enum ErrorMessagesEnum {
   WRONG_CREDENTIALS = `Неверный логин или пароль`,
   PHOTO_IS_REQUIRED = `Нужно передать фотографию`,
   WRONG_OLD_PASSWORD = `Старый пароль указан неверно`,
+  NO_SUCH_CATEGORY = `Указана несуществующая категория`,
 }

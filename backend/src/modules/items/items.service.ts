@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from '#src/modules/user/entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ItemEntity } from '#src/modules/items/entity/item.entity';
@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 import { CategoryEntity } from '#src/modules/items/entity/category.entity';
+import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 
 @Injectable()
 export class ItemsService {
@@ -29,6 +30,14 @@ export class ItemsService {
     user: User,
     body: CreateItemDto,
   ): Promise<Array<ItemEntity>> {
+    const { item_category_id, trade_category_id } = body;
+
+    if (
+      !(await this.categoryRepository.findOne(item_category_id)) ||
+      !(await this.categoryRepository.findOne(trade_category_id))
+    )
+      throw new BadRequestException(ErrorMessagesEnum.NO_SUCH_CATEGORY);
+
     const photos: PhotoEntity[] =
       body.photosPaths?.map((photo_path) =>
         this.photoRepository.create({
