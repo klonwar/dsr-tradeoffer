@@ -1,4 +1,19 @@
 .ItemsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &-content {
+    max-width: $breakpoint-large - 200px;
+  }
+
+  &-actions {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: $padding-small-padding;
+  }
+
   &-actionIcon {
     line-height: inherit;
   }
