@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { categoriesErrorSelector, categoriesListSelector, isCategoriesRequestPendingSelector } from '#redux/selectors';
+import { categoriesRequestErrorSelector, categoriesListSelector, isCategoriesRequestPendingSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import InputHint from '#components/input-hint/input-hint';
@@ -12,7 +12,7 @@ export const MainCategorySelect: FC<{
 }> = ({ name, useForm: { register, errors } }) => {
   const isPending = useSelector(isCategoriesRequestPendingSelector);
   const categories = useSelector(categoriesListSelector);
-  const error = useSelector(categoriesErrorSelector);
+  const error = useSelector(categoriesRequestErrorSelector);
 
   useLoadCategoriesList();
 

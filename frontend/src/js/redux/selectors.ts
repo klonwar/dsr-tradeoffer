@@ -54,7 +54,7 @@ export const isCategoriesRequestPendingSelector: AppSelector<boolean> = (state) 
 
 export const categoriesListSelector: AppSelector<CategoriesListDto> = (state) => state.categoriesReducer.result;
 
-export const categoriesErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.categoriesReducer.error;
+export const categoriesRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.categoriesReducer.error;
 
 export const isAccountsRequestPendingSelector: AppSelector<boolean> = (state) => state.accountsReducer.pending;
 

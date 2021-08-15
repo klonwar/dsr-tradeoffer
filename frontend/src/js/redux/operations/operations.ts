@@ -12,6 +12,8 @@ import { editItemOperation } from '#redux/operations/slices/edit-item-operation'
 import { setItemPhotosOperation } from '#redux/operations/slices/set-item-photos-operation';
 import { getAccountsListOperation } from '#redux/operations/slices/get-accounts-list-operation';
 import { deleteAccountOperation } from '#redux/operations/slices/delete-account-operation';
+import { deleteCategoryOperation } from '#redux/operations/slices/delete-category-operation';
+import { createCategoryOperation } from '#redux/operations/slices/create-category-operation';
 
 export const Operations = {
   login: createAsyncThunk(
@@ -65,5 +67,13 @@ export const Operations = {
   deleteAccount: createAsyncThunk(
     `deleteAccount`,
     deleteAccountOperation,
+  ),
+  deleteCategory: createAsyncThunk(
+    `deleteCategory`,
+    deleteCategoryOperation,
+  ),
+  createCategory: createAsyncThunk(
+    `createCategory`,
+    createCategoryOperation,
   ),
 };

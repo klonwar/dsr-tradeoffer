@@ -56,15 +56,6 @@ export class ItemsController {
     return await this.itemsService.removeItem(req.user, id);
   }
 
-  @Get(`categories`)
-  @Roles(UserRole.USER, UserRole.ADMIN)
-  @UseInterceptors(ClassSerializerInterceptor)
-  async getCategories() {
-    return await this.itemsService.getCategories();
-  }
-
-  // todo добавление категории админом
-
   @Put(`edit`)
   @Roles(UserRole.USER)
   @UseInterceptors(ClassSerializerInterceptor)

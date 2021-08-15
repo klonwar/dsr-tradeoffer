@@ -16,11 +16,25 @@ import { AddItemPage } from '#domains/items/pages/add-item-page/add-item-page';
 import { EditItemPage } from '#domains/items/pages/edit-item-page/edit-item-page';
 import { AdminPage } from '#domains/admin/pages/admin-page/admin-page';
 import { AccountsListPage } from '#domains/admin/pages/accounts-list-page/accounts-list-page';
+import { CategoriesListPage } from '#domains/admin/pages/categories-list-page/categories-list-page';
+import { AddCategoryPage } from '#domains/admin/pages/add-category-page/add-category-page';
 
 const App: FC = () => {
   return (
     <Switch>
       {/* AdminRoutes */}
+
+      <AdminRoute path={`/admin/categories/add`}>
+        <HeaderWrapper>
+          <AddCategoryPage />
+        </HeaderWrapper>
+      </AdminRoute>
+
+      <AdminRoute exact path={`/admin/categories`}>
+        <HeaderWrapper>
+          <CategoriesListPage />
+        </HeaderWrapper>
+      </AdminRoute>
 
       <AdminRoute path={`/admin/users`}>
         <HeaderWrapper>

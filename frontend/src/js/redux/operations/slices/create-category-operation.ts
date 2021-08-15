@@ -4,14 +4,15 @@ import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
 import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
+import { CreateCategoryDto } from '#server/common/dto/create-category.dto';
 
-export class GetCategoriesListOperationResult extends CategoriesListDto {
+export class CreateCategoryOperationResult extends CategoriesListDto {
 }
 
-export const getCategoriesListOperation: AsyncThunkPayloadCreator<GetCategoriesListOperationResult, null, { rejectValue: SerializedAxiosError }> =
-  async (_, { rejectWithValue }) => {
+export const createCategoryOperation: AsyncThunkPayloadCreator<CreateCategoryOperationResult, CreateCategoryDto, { rejectValue: SerializedAxiosError }> =
+  async (payload, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.get<GetCategoriesListOperationResult>(`categories`);
+      const res = await axiosInstance.post<CreateCategoryOperationResult>(`categories`, payload);
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

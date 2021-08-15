@@ -10,7 +10,7 @@ import { ItemEntity } from '#src/modules/items/entity/item.entity';
 import { Repository } from 'typeorm';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
-import { CategoryEntity } from '#src/modules/items/entity/category.entity';
+import { CategoryEntity } from '#src/categories/entity/category.entity';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
 import { UserRole } from '#server/common/enums/user-role.enum';
@@ -86,10 +86,6 @@ export class ItemsService {
     await this.itemRepository.delete(id);
 
     return await this.getItemsList(user);
-  }
-
-  async getCategories(): Promise<Array<CategoryEntity>> {
-    return await this.categoryRepository.find();
   }
 
   async editItem(

@@ -5,13 +5,13 @@ import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
 import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
 
-export class GetCategoriesListOperationResult extends CategoriesListDto {
+export class DeleteCategoryOperationResult extends CategoriesListDto {
 }
 
-export const getCategoriesListOperation: AsyncThunkPayloadCreator<GetCategoriesListOperationResult, null, { rejectValue: SerializedAxiosError }> =
-  async (_, { rejectWithValue }) => {
+export const deleteCategoryOperation: AsyncThunkPayloadCreator<DeleteCategoryOperationResult, number, { rejectValue: SerializedAxiosError }> =
+  async (id, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.get<GetCategoriesListOperationResult>(`categories`);
+      const res = await axiosInstance.delete<DeleteCategoryOperationResult>(`categories/${id}`);
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {
