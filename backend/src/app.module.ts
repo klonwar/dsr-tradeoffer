@@ -11,6 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ItemsModule } from './modules/items/items.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { CategoriesModule } from './categories/categories.module';
+import { MockModule } from './mock/mock.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CategoriesModule } from './categories/categories.module';
     ItemsModule,
     AccountsModule,
     CategoriesModule,
+    MockModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
