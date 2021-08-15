@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom';
 import Logo from '#components/logo/logo';
 import { useSelector } from 'react-redux';
 import { isAdminSelector, isAuthorizedSelector, isUserSelector, userPhotoUrlSelector } from '#redux/selectors';
+import userBox from '#src/icons/user-box.svg';
+import boxList from '#src/icons/box-list.svg';
 
 const Header: React.FC = () => {
   const activeClassName = `active uk-card-default`;
@@ -23,8 +25,16 @@ const Header: React.FC = () => {
         <NavLink activeClassName={activeClassName} exact to={(isAdmin) ? `/admin` : `/`} className={`Header-link`}
                  uk-icon={`icon: home`} />
         {(isUser) ? (
-          <NavLink activeClassName={activeClassName} to={`/items`} className={`Header-link`}
-                   uk-icon={`icon: list`} />
+          <>
+            <NavLink activeClassName={activeClassName} to={`/items`}
+                     className={`Header-link uk-icon`}>
+              <img className={`uk-icon-image`} src={userBox} alt={``} uk-svg={``} />
+            </NavLink>
+            <NavLink activeClassName={activeClassName} to={`/catalogue`}
+                     className={`Header-link uk-icon`}>
+              <img className={`uk-icon-image`} src={boxList} alt={``} uk-svg={``} />
+            </NavLink>
+          </>
         ) : null}
 
         {(isAdmin) ? (
