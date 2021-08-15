@@ -1,19 +1,24 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
 import { itemsListSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import { PhotosSlideshow } from '#domains/items/components/photos-slideshow/photos-slideshow';
+import { useShowItemsRequestError } from '#src/js/hooks/use-show-items-request-error';
 
 export const AdminPage: FC = () => {
+  const [isDispatched, setIsDispatched] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const itemsList = useSelector(itemsListSelector);
 
   useEffect(() => {
     dispatch(Operations.getItemsList());
+    setIsDispatched(true);
     // eslint-disable-next-line
   }, []);
+
+  useShowItemsRequestError(isDispatched);
 
   if (!itemsList || itemsList.length === 0)
     return (
@@ -52,7 +57,7 @@ export const AdminPage: FC = () => {
             <td>{item.item_category}</td>
             <td>{item.trade_category}</td>
             <td className={`uk-table-shrink uk-text-right`}>
-              <button className={`uk-link`} onClick={() => dispatch(Operations.deleteItem({id: item.id}))} uk-icon={`trash`}/>
+              <button className={`uk-link`} onClick={() => dispatch(Operations.deleteItem(item.id))} uk-icon={`trash`}/>
             </td>
           </tr>
         )) : null}

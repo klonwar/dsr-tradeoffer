@@ -78,7 +78,7 @@ export class ItemsService {
     }
 
     if (user.role !== UserRole.ADMIN) {
-      if (user.id !== targetItem.id) {
+      if (user.id !== targetItem.user.id) {
         throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_ITEM);
       }
     }

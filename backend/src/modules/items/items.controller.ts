@@ -2,7 +2,10 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   Put,
   Request,
@@ -14,7 +17,6 @@ import { ItemsService } from '#src/modules/items/items.service';
 import { ItemEntity } from '#src/modules/items/entity/item.entity';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotosInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
-import { DeleteItemDto } from '#server/common/dto/delete-item.dto';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
 import { SetItemPhotosDto } from '#server/common/dto/set-item-photos.dto';
 import { RolesGuard } from '#src/modules/auth/guards/roles.guard';
@@ -47,10 +49,10 @@ export class ItemsController {
     });
   }
 
-  @Post(`delete`)
+  @Delete(`/:id`)
   @Roles(UserRole.USER, UserRole.ADMIN)
   @UseInterceptors(ClassSerializerInterceptor)
-  async deleteItem(@Request() req, @Body() { id }: DeleteItemDto) {
+  async deleteItem(@Request() req, @Param(`id`, ParseIntPipe) id: number) {
     return await this.itemsService.removeItem(req.user, id);
   }
 
