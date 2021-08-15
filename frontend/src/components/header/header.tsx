@@ -26,6 +26,15 @@ const Header: React.FC = () => {
           <NavLink activeClassName={activeClassName} to={`/items`} className={`Header-link`}
                    uk-icon={`icon: list`} />
         ) : null}
+
+        {(isAdmin) ? (
+          <>
+            <NavLink activeClassName={activeClassName} to={`/admin/users`} className={`Header-link`}
+                     uk-icon={`icon: users`} />
+            <NavLink activeClassName={activeClassName} to={`/admin/categories`} className={`Header-link`}
+                     uk-icon={`icon: hashtag`} />
+          </>
+        ) : null}
       </div>
 
       {/* Правая часть хедера */}
