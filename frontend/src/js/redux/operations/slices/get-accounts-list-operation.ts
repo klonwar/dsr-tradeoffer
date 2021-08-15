@@ -3,17 +3,15 @@ import axios from 'axios';
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
-import { ItemsListDto } from '#server/common/dto/items-list.dto';
-import { DeleteItemDto } from '#server/common/dto/delete-item.dto';
+import { AccountsListDto } from '#server/common/dto/accounts-list.dto';
 
-export class DeleteItemOperationResult extends ItemsListDto {
+export class GetAccountsListOperationResult extends AccountsListDto {
 }
 
-export const deleteItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationResult, DeleteItemDto, { rejectValue: SerializedAxiosError }> =
-  async (payload, { rejectWithValue }) => {
+export const getAccountsListOperation: AsyncThunkPayloadCreator<GetAccountsListOperationResult, null, { rejectValue: SerializedAxiosError }> =
+  async (_, { rejectWithValue }) => {
     try {
-      // todo make "delete"
-      const res = await axiosInstance.post<DeleteItemOperationResult>(`items/delete`, payload);
+      const res = await axiosInstance.get<GetAccountsListOperationResult>(`accounts`);
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

@@ -14,12 +14,19 @@ import { ProfilePage } from '#domains/profile/pages/profile-page/profile-page';
 import RegistrationPage from '#domains/registration/pages/registration-page/registration-page';
 import { AddItemPage } from '#domains/items/pages/add-item-page/add-item-page';
 import { EditItemPage } from '#domains/items/pages/edit-item-page/edit-item-page';
-import { AdminPage } from '#domains/admin/pages/admin-page';
+import { AdminPage } from '#domains/admin/pages/admin-page/admin-page';
+import { AccountsListPage } from '#domains/admin/pages/accounts-list-page/accounts-list-page';
 
 const App: FC = () => {
   return (
     <Switch>
       {/* AdminRoutes */}
+
+      <AdminRoute path={`/admin/users`}>
+        <HeaderWrapper>
+          <AccountsListPage />
+        </HeaderWrapper>
+      </AdminRoute>
 
       <AdminRoute exact path={`/admin`}>
         <HeaderWrapper>

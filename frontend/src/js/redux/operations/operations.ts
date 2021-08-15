@@ -10,50 +10,60 @@ import { getCategoriesListOperation } from '#redux/operations/slices/get-categor
 import { createItemOperation } from '#redux/operations/slices/create-item-operation';
 import { editItemOperation } from '#redux/operations/slices/edit-item-operation';
 import { setItemPhotosOperation } from '#redux/operations/slices/set-item-photos-operation';
+import { getAccountsListOperation } from '#redux/operations/slices/get-accounts-list-operation';
+import { deleteAccountOperation } from '#redux/operations/slices/delete-account-operation';
 
 export const Operations = {
   login: createAsyncThunk(
     `login`,
-    loginOperation
+    loginOperation,
   ),
   registration: createAsyncThunk(
     `registration`,
-    registrationOperation
+    registrationOperation,
   ),
   editProfile: createAsyncThunk(
     `editProfile`,
-    editProfileOperation
+    editProfileOperation,
   ),
   setPhoto: createAsyncThunk(
     `setPhoto`,
-    setPhotoOperation
+    setPhotoOperation,
   ),
   changePassword: createAsyncThunk(
     `changePassword`,
-    changePasswordOperation
+    changePasswordOperation,
   ),
   getItemsList: createAsyncThunk(
     `getItemsList`,
-    getItemsListOperation
+    getItemsListOperation,
   ),
   deleteItem: createAsyncThunk(
     `deleteItem`,
-    deleteItemOperation
+    deleteItemOperation,
   ),
   getCategoriesList: createAsyncThunk(
     `getCategoriesList`,
-    getCategoriesListOperation
+    getCategoriesListOperation,
   ),
   createItem: createAsyncThunk(
     `createItem`,
-    createItemOperation
+    createItemOperation,
   ),
   editItem: createAsyncThunk(
     `editItem`,
-    editItemOperation
+    editItemOperation,
   ),
   setItemPhotos: createAsyncThunk(
     `setItemPhotos`,
-    setItemPhotosOperation
-  )
+    setItemPhotosOperation,
+  ),
+  getAccountsList: createAsyncThunk(
+    `getAccountsList`,
+    getAccountsListOperation,
+  ),
+  deleteAccount: createAsyncThunk(
+    `deleteAccount`,
+    deleteAccountOperation,
+  ),
 };

@@ -29,14 +29,6 @@ export class UsersService {
     private jwtService: JwtService,
   ) {}
 
-  // Выгрузка информации о всех пользователях с добавлением данных из Profile
-  async findAll(): Promise<UserDto[]> {
-    const users = await this.userRepository.find({
-      relations: [`profile`, `profile.photo`],
-    });
-    return users.map((user) => user.toDto());
-  }
-
   findOneByUsername(username: string): Promise<User | undefined> {
     return this.userRepository.findOne({
       where: { login: username },

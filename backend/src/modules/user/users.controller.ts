@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Put,
@@ -26,12 +27,6 @@ import { RolesGuard } from '#src/modules/auth/guards/roles.guard';
 @Controller(`user`)
 export class UsersController {
   constructor(private usersService: UsersService) {}
-
-  @Get()
-  @Roles(UserRole.ADMIN)
-  async findAll(): Promise<UserDto[]> {
-    return await this.usersService.findAll();
-  }
 
   @Put(`edit_profile`)
   @Roles(UserRole.USER, UserRole.ADMIN)
