@@ -11,7 +11,7 @@ import noPhoto from '#src/icons/no-photo.svg';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { ProfilePhotoForm } from '#domains/profile/components/profile-photo-form/profile-photo-form';
 import { ProfilePasswordForm } from '#domains/profile/components/profile-password-form/profile-password-form';
-import { UserPhoto } from '#components/user-photo/user-photo';
+import { ThisUserPhoto } from '#components/user-photo/this-user-photo';
 
 export const ProfilePage: FC = () => {
   const dispatch = useAppDispatch();
@@ -51,7 +51,7 @@ export const ProfilePage: FC = () => {
     <div className={`uk-padding-small uk-flex-center`} uk-grid={``}>
       <div className={`uk-width-medium uk-width-1-3@s uk-width-1-4@m`}>
         <div className={`uk-card uk-card-default uk-card-body`}>
-          <UserPhoto className={`uk-width-1-1`} />
+          <ThisUserPhoto className={`uk-width-1-1`} />
         </div>
         <div className={`uk-margin-top`} uk-margin={``}>
           <ProfilePhotoForm />

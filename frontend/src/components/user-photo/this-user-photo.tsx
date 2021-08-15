@@ -7,7 +7,7 @@ interface Props {
   className?: string;
 }
 
-export const UserPhoto: FC<Props> = ({className = ``}) => {
+export const ThisUserPhoto: FC<Props> = ({className = ``}) => {
   const userPhotoUrl = useSelector(userPhotoUrlSelector);
 
   return (

@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 import { accountsListSelector } from '#redux/selectors';
 import { Operations } from '#redux/operations/operations';
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
-import { UserPhoto } from '#components/user-photo/user-photo';
+import { ThisUserPhoto } from '#components/user-photo/this-user-photo';
 import { UserRole } from '#server/common/enums/user-role.enum';
 import { useShowAccountsRequestError } from '#src/js/hooks/use-show-accounts-request-error';
+import { AnyUserPhoto } from '#components/user-photo/any-user-photo';
 
 export const AccountsListPage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
@@ -51,7 +52,7 @@ export const AccountsListPage: FC = () => {
             <tr key={user.id} className={(isAdmin) ? `GoldenRow` : ``}>
               <td className={`uk-table-shrink`}>{user.id}</td>
               <td className={`uk-width-small`}>
-                <UserPhoto />
+                <AnyUserPhoto user={user} />
               </td>
               <td>
                 {(isAdmin) ? (
