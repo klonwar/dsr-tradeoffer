@@ -9,9 +9,12 @@ export type AvailableTranslations =
   FieldPath<EditProfileDto> |
   FieldPath<ChangePasswordDto> |
   FieldPath<CreateItemDto> |
-  `passwordConfirmation`;
+  `passwordConfirmation` |
+  `id`;
 
 export const keyToLabelText = new Map<AvailableTranslations, string>();
+
+keyToLabelText.set(`id`, `Id`);
 
 keyToLabelText.set(`username`, `Имя пользователя`);
 keyToLabelText.set(`email`, `Почта`);

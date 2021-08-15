@@ -14,6 +14,7 @@ import { ProfilePage } from '#domains/profile/pages/profile-page/profile-page';
 import RegistrationPage from '#domains/registration/pages/registration-page/registration-page';
 import { AddItemPage } from '#domains/items/pages/add-item-page/add-item-page';
 import { EditItemPage } from '#domains/items/pages/edit-item-page/edit-item-page';
+import { AdminPage } from '#domains/admin/pages/admin-page';
 
 const App: FC = () => {
   return (
@@ -22,9 +23,7 @@ const App: FC = () => {
 
       <AdminRoute exact path={`/admin`}>
         <HeaderWrapper>
-          <div className={`uk-flex uk-flex-center uk-flex-middle uk-height-1-1`}>
-            Вы админ, но вы ничего не можете :c
-          </div>
+          <AdminPage />
         </HeaderWrapper>
       </AdminRoute>
 

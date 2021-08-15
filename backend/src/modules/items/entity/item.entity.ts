@@ -68,6 +68,8 @@ export class ItemEntity {
   @JoinColumn({ name: `trade_category_id` })
   trade_category: CategoryEntity;
 
+  @Type(() => User)
+  @Transform(({ value }) => value.login)
   @ManyToOne(() => User, (user) => user.items, {
     cascade: true,
     onDelete: `CASCADE`,

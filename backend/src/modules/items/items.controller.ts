@@ -27,10 +27,10 @@ export class ItemsController {
   constructor(private itemsService: ItemsService) {}
 
   @Get()
-  @Roles(UserRole.USER)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseInterceptors(ClassSerializerInterceptor)
-  async getThisUserItems(@Request() req): Promise<Array<ItemEntity>> {
-    return await this.itemsService.getAllUserItems(req.user);
+  async getItemsList(@Request() req): Promise<Array<ItemEntity>> {
+    return await this.itemsService.getItemsList(req.user);
   }
 
   @Post(`create`)

@@ -4,15 +4,17 @@ import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 
 interface Props {
   item: ItemDto;
+  width?: `small` | `medium` | `large` | `xlarge` | `1-1`;
+  padding?: boolean;
 }
 
-export const PhotosSlideshow: FC<Props> = ({ item }) => {
+export const PhotosSlideshow: FC<Props> = ({ item, width = `xlarge`, padding = true }) => {
   if (!(item?.photos && item.photos.length !== 0)) {
     return null;
   }
 
   return (
-    <div className={`ItemPhotos uk-width-xlarge uk-position-relative uk-margin-bottom`} uk-slideshow={``}>
+    <div className={`ItemPhotos ${(padding) ? `ItemPhotos--padding@m` : ``} uk-width-${width} uk-position-relative uk-margin-bottom`} uk-slideshow={``}>
       <ul className={`uk-slideshow-items`}>
         {item.photos?.map(({ photoPath }) => (
           <li key={photoPath}><img src={srcFromPhotoPath(photoPath)} alt={``} uk-cover={``} /></li>

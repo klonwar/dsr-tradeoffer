@@ -26,10 +26,15 @@ export class ItemsService {
     private categoryRepository: Repository<CategoryEntity>,
   ) {}
 
-  async getAllUserItems(user: User): Promise<Array<ItemEntity>> {
+  async getItemsList(user: User): Promise<Array<ItemEntity>> {
+    if (user.role === UserRole.ADMIN)
+      return await this.itemRepository.find({
+        relations: [`photos`, `item_category`, `trade_category`, `user`],
+      });
+
     return await this.itemRepository.find({
       where: { user },
-      relations: [`photos`, `item_category`, `trade_category`],
+      relations: [`photos`, `item_category`, `trade_category`, `user`],
     });
   }
 
@@ -60,7 +65,7 @@ export class ItemsService {
 
     await this.itemRepository.save(newItem);
 
-    return await this.getAllUserItems(user);
+    return await this.getItemsList(user);
   }
 
   async removeItem(user: User, id: number): Promise<Array<ItemEntity>> {
@@ -80,7 +85,7 @@ export class ItemsService {
 
     await this.itemRepository.delete(id);
 
-    return await this.getAllUserItems(user);
+    return await this.getItemsList(user);
   }
 
   async getCategories(): Promise<Array<CategoryEntity>> {
@@ -119,7 +124,7 @@ export class ItemsService {
 
     await this.itemRepository.save(item);
 
-    return await this.getAllUserItems(user);
+    return await this.getItemsList(user);
   }
 
   async setItemPhotos(
@@ -148,6 +153,6 @@ export class ItemsService {
 
     await this.itemRepository.save(item);
 
-    return await this.getAllUserItems(user);
+    return await this.getItemsList(user);
   }
 }
