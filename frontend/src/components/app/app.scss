@@ -25,3 +25,7 @@ html, body, #root {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.WithScrollbar {
+  @extend %custom-scrollbar;
+}

@@ -30,7 +30,7 @@ export const CategoriesListPage: FC = () => {
     );
 
   return (
-    <div className={`uk-flex uk-flex-center uk-flex-wrap uk-padding-small uk-padding-remove-top`}>
+    <div className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-center uk-flex-wrap uk-padding-small uk-padding-remove-top`}>
       <div className={`uk-width-1-1 uk-width-1-2@m`}>
         <Actions>
           <Link to={`/admin/categories/add`} className={`uk-button uk-button-default uk-flex uk-flex-middle`}>

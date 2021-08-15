@@ -31,7 +31,7 @@ export const AccountsListPage: FC = () => {
     );
 
   return (
-    <div className={`uk-flex uk-flex-center uk-flex-wrap uk-padding-small`}>
+    <div className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small`}>
       <table className={`uk-table uk-table-divider uk-table-responsive`}>
         <thead>
         <tr>
