@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { User } from '#src/modules/user/entity/user.entity';
@@ -12,6 +13,7 @@ import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 import { CategoryEntity } from '#src/modules/items/entity/category.entity';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
+import { UserRole } from '#server/common/enums/user-role.enum';
 
 @Injectable()
 export class ItemsService {
@@ -62,11 +64,21 @@ export class ItemsService {
   }
 
   async removeItem(user: User, id: number): Promise<Array<ItemEntity>> {
-    const targetItem = await this.itemRepository.find({ where: { user, id } });
+    const targetItem = await this.itemRepository.findOne(id, {
+      relations: [`user`],
+    });
 
-    if (targetItem) {
-      await this.itemRepository.delete(id);
+    if (!targetItem) {
+      throw new NotFoundException(ErrorMessagesEnum.NO_SUCH_ITEM);
     }
+
+    if (user.role !== UserRole.ADMIN) {
+      if (user.id !== targetItem.id) {
+        throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_ITEM);
+      }
+    }
+
+    await this.itemRepository.delete(id);
 
     return await this.getAllUserItems(user);
   }
