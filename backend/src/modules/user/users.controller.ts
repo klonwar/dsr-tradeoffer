@@ -7,6 +7,7 @@ import {
   Put,
   Request,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from '#src/modules/user/users.service';
@@ -17,17 +18,23 @@ import { JwtDto } from '#server/common/dto/jwt.dto';
 import { PhotoInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
+import { Roles } from '#src/modules/auth/decorators/roles.decorator';
+import { UserRole } from '#server/common/enums/user-role.enum';
+import { RolesGuard } from '#src/modules/auth/guards/roles.guard';
 
+@UseGuards(RolesGuard)
 @Controller(`user`)
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
+  @Roles(UserRole.ADMIN)
   async findAll(): Promise<UserDto[]> {
     return await this.usersService.findAll();
   }
 
   @Put(`edit_profile`)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   async editProfile(
     @Request() req,
     @Body() body: EditProfileDto,
@@ -36,6 +43,7 @@ export class UsersController {
   }
 
   @Put(`set_photo`)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseInterceptors(PhotoInterceptor(`photo`))
   async setPhoto(
     @Request() req,
@@ -48,6 +56,7 @@ export class UsersController {
   }
 
   @Put(`change_password`)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   async changePassword(
     @Request() req,
     @Body() body: ChangePasswordDto,

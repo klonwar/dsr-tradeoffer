@@ -9,5 +9,5 @@ export enum ErrorMessagesEnum {
   WRONG_OLD_PASSWORD = `Старый пароль указан неверно`,
   NO_SUCH_CATEGORY = `Указана несуществующая категория`,
   NO_SUCH_ITEM = `Такой вещи нет`,
-  NOT_YOUR_ITEM = `Вы не можете редактировать чужую карточку`,
+  NOT_YOUR_ITEM = `Это не ваша вещь`,
 }
