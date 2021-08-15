@@ -2,33 +2,41 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   Put,
   Request,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ItemsService } from '#src/modules/items/items.service';
 import { ItemEntity } from '#src/modules/items/entity/item.entity';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotosInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
-import { DeleteItemDto } from '#server/common/dto/delete-item.dto';
-import { JwtDto } from '#server/common/dto/jwt.dto';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
 import { SetItemPhotosDto } from '#server/common/dto/set-item-photos.dto';
+import { RolesGuard } from '#src/modules/auth/guards/roles.guard';
+import { Roles } from '#src/modules/auth/decorators/roles.decorator';
+import { UserRole } from '#server/common/enums/user-role.enum';
 
+@UseGuards(RolesGuard)
 @Controller(`items`)
 export class ItemsController {
   constructor(private itemsService: ItemsService) {}
 
   @Get()
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseInterceptors(ClassSerializerInterceptor)
-  async getAllUserItems(@Request() req): Promise<Array<ItemEntity>> {
-    return await this.itemsService.getAllUserItems(req.user);
+  async getItemsList(@Request() req): Promise<Array<ItemEntity>> {
+    return await this.itemsService.getItemsList(req.user);
   }
 
   @Post(`create`)
+  @Roles(UserRole.USER)
   @UseInterceptors(ClassSerializerInterceptor, PhotosInterceptor(`photos`))
   async createItem(
     @UploadedFiles() photos: Array<Express.Multer.File>,
@@ -41,19 +49,15 @@ export class ItemsController {
     });
   }
 
-  @Post(`delete`)
+  @Delete(`/:id`)
+  @Roles(UserRole.USER, UserRole.ADMIN)
   @UseInterceptors(ClassSerializerInterceptor)
-  async deleteItem(@Request() req, @Body() { id }: DeleteItemDto) {
+  async deleteItem(@Request() req, @Param(`id`, ParseIntPipe) id: number) {
     return await this.itemsService.removeItem(req.user, id);
   }
 
-  @Get(`categories`)
-  @UseInterceptors(ClassSerializerInterceptor)
-  async getCategories() {
-    return await this.itemsService.getCategories();
-  }
-
   @Put(`edit`)
+  @Roles(UserRole.USER)
   @UseInterceptors(ClassSerializerInterceptor)
   async editItem(
     @Request() req,
@@ -63,6 +67,7 @@ export class ItemsController {
   }
 
   @Put(`set_photos`)
+  @Roles(UserRole.USER)
   @UseInterceptors(ClassSerializerInterceptor, PhotosInterceptor())
   async setItemPhotos(
     @UploadedFiles() photos: Array<Express.Multer.File>,

@@ -11,7 +11,7 @@ export class GetCategoriesListOperationResult extends CategoriesListDto {
 export const getCategoriesListOperation: AsyncThunkPayloadCreator<GetCategoriesListOperationResult, null, { rejectValue: SerializedAxiosError }> =
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.get<GetCategoriesListOperationResult>(`items/categories`);
+      const res = await axiosInstance.get<GetCategoriesListOperationResult>(`categories`);
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

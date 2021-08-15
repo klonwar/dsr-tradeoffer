@@ -6,4 +6,5 @@ export class ItemDto {
   photos: Array<{ photoPath: string }>;
   item_category: string;
   trade_category: string;
+  user: string;
 }

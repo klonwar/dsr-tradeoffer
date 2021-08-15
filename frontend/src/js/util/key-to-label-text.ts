@@ -3,15 +3,20 @@ import { FieldPath } from 'react-hook-form';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
+import { UserDto } from '#server/common/dto/user.dto';
 
 export type AvailableTranslations =
   FieldPath<CreateUserDto> |
   FieldPath<EditProfileDto> |
   FieldPath<ChangePasswordDto> |
   FieldPath<CreateItemDto> |
+  FieldPath<UserDto> |
   `passwordConfirmation`;
 
 export const keyToLabelText = new Map<AvailableTranslations, string>();
+
+keyToLabelText.set(`id`, `Id`);
+keyToLabelText.set(`role`, `Роль`);
 
 keyToLabelText.set(`username`, `Имя пользователя`);
 keyToLabelText.set(`email`, `Почта`);

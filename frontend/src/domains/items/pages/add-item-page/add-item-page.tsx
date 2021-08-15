@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { MainPhotoInput } from '#domains/main/components/main-photo-input/main-photo-input';
 import { AppInput } from '#components/app-input/app-input';
-import { keyToLabelText } from '#src/js/util/key-to-label-text';
-import InputHint from '#components/input-hint/input-hint';
 import { MainCategorySelect } from '#domains/main/components/main-category-select/main-category-select';
 import { Operations } from '#redux/operations/operations';
 import { useAppDispatch } from '#redux/store';
@@ -62,7 +60,7 @@ export const AddItemPage: FC = () => {
           <AppTextarea
             name={`description`}
             textareaProps={{
-              placeholder: `Не стирана, не крашена. 100%.`
+              placeholder: `Не стирана, не крашена. 100%.`,
             }}
             useForm={{ register, errors }}
           />
@@ -97,7 +95,7 @@ export const AddItemPage: FC = () => {
               </Link>
             </div>
             <div className={`uk-width-expand`}>
-              <button className={`uk-button uk-button-primary uk-width-1-1`}>Создать</button>
+              <button disabled={isPending} className={`uk-button uk-button-primary uk-width-1-1`}>Создать</button>
             </div>
           </div>
         </form>

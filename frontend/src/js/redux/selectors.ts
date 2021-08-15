@@ -7,6 +7,7 @@ import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { UserRole } from '#server/common/enums/user-role.enum';
+import { AccountsListDto } from '#server/common/dto/accounts-list.dto';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -53,4 +54,11 @@ export const isCategoriesRequestPendingSelector: AppSelector<boolean> = (state) 
 
 export const categoriesListSelector: AppSelector<CategoriesListDto> = (state) => state.categoriesReducer.result;
 
-export const categoriesErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.categoriesReducer.error;
+export const categoriesRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.categoriesReducer.error;
+
+export const isAccountsRequestPendingSelector: AppSelector<boolean> = (state) => state.accountsReducer.pending;
+
+export const accountsListSelector: AppSelector<AccountsListDto> = (state) => state.accountsReducer.result;
+
+export const accountsRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.accountsReducer.error;
+

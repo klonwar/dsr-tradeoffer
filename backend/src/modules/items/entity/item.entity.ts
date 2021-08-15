@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
-import { CategoryEntity } from '#src/modules/items/entity/category.entity';
+import { CategoryEntity } from '#src/categories/entity/category.entity';
 import { Exclude, Transform, Type } from 'class-transformer';
 import { User } from '#src/modules/user/entity/user.entity';
 
@@ -68,6 +68,8 @@ export class ItemEntity {
   @JoinColumn({ name: `trade_category_id` })
   trade_category: CategoryEntity;
 
+  @Type(() => User)
+  @Transform(({ value }) => value.login)
   @ManyToOne(() => User, (user) => user.items, {
     cascade: true,
     onDelete: `CASCADE`,

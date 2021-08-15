@@ -11,11 +11,11 @@ import noPhoto from '#src/icons/no-photo.svg';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { ProfilePhotoForm } from '#domains/profile/components/profile-photo-form/profile-photo-form';
 import { ProfilePasswordForm } from '#domains/profile/components/profile-password-form/profile-password-form';
+import { UserPhoto } from '#components/user-photo/user-photo';
 
 export const ProfilePage: FC = () => {
   const dispatch = useAppDispatch();
   const userData = useSelector(userDataSelector);
-  const userPhotoUrl = useSelector(userPhotoUrlSelector);
   const isURPending = useSelector(isUserRequestPendingSelector);
 
   const {
@@ -51,9 +51,7 @@ export const ProfilePage: FC = () => {
     <div className={`uk-padding-small uk-flex-center`} uk-grid={``}>
       <div className={`uk-width-medium uk-width-1-3@s uk-width-1-4@m`}>
         <div className={`uk-card uk-card-default uk-card-body`}>
-          <div className={`PhotoContainer uk-width-1-1`} style={{
-            backgroundImage: `url(${userPhotoUrl ?? noPhoto})`,
-          }} />
+          <UserPhoto className={`uk-width-1-1`} />
         </div>
         <div className={`uk-margin-top`} uk-margin={``}>
           <ProfilePhotoForm />

@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { User } from '#src/modules/user/entity/user.entity';
@@ -9,9 +10,10 @@ import { ItemEntity } from '#src/modules/items/entity/item.entity';
 import { Repository } from 'typeorm';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
-import { CategoryEntity } from '#src/modules/items/entity/category.entity';
+import { CategoryEntity } from '#src/categories/entity/category.entity';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
+import { UserRole } from '#server/common/enums/user-role.enum';
 
 @Injectable()
 export class ItemsService {
@@ -24,10 +26,15 @@ export class ItemsService {
     private categoryRepository: Repository<CategoryEntity>,
   ) {}
 
-  async getAllUserItems(user: User): Promise<Array<ItemEntity>> {
+  async getItemsList(user: User): Promise<Array<ItemEntity>> {
+    if (user.role === UserRole.ADMIN)
+      return await this.itemRepository.find({
+        relations: [`photos`, `item_category`, `trade_category`, `user`],
+      });
+
     return await this.itemRepository.find({
       where: { user },
-      relations: [`photos`, `item_category`, `trade_category`],
+      relations: [`photos`, `item_category`, `trade_category`, `user`],
     });
   }
 
@@ -58,21 +65,27 @@ export class ItemsService {
 
     await this.itemRepository.save(newItem);
 
-    return await this.getAllUserItems(user);
+    return await this.getItemsList(user);
   }
 
   async removeItem(user: User, id: number): Promise<Array<ItemEntity>> {
-    const targetItem = await this.itemRepository.find({ where: { user, id } });
+    const targetItem = await this.itemRepository.findOne(id, {
+      relations: [`user`],
+    });
 
-    if (targetItem) {
-      await this.itemRepository.delete(id);
+    if (!targetItem) {
+      throw new NotFoundException(ErrorMessagesEnum.NO_SUCH_ITEM);
     }
 
-    return await this.getAllUserItems(user);
-  }
+    if (user.role !== UserRole.ADMIN) {
+      if (user.id !== targetItem.user.id) {
+        throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_ITEM);
+      }
+    }
 
-  async getCategories(): Promise<Array<CategoryEntity>> {
-    return await this.categoryRepository.find();
+    await this.itemRepository.delete(id);
+
+    return await this.getItemsList(user);
   }
 
   async editItem(
@@ -107,7 +120,7 @@ export class ItemsService {
 
     await this.itemRepository.save(item);
 
-    return await this.getAllUserItems(user);
+    return await this.getItemsList(user);
   }
 
   async setItemPhotos(
@@ -136,6 +149,6 @@ export class ItemsService {
 
     await this.itemRepository.save(item);
 
-    return await this.getAllUserItems(user);
+    return await this.getItemsList(user);
   }
 }

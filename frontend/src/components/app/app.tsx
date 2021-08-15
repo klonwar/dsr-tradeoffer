@@ -14,17 +14,37 @@ import { ProfilePage } from '#domains/profile/pages/profile-page/profile-page';
 import RegistrationPage from '#domains/registration/pages/registration-page/registration-page';
 import { AddItemPage } from '#domains/items/pages/add-item-page/add-item-page';
 import { EditItemPage } from '#domains/items/pages/edit-item-page/edit-item-page';
+import { AdminPage } from '#domains/admin/pages/admin-page/admin-page';
+import { AccountsListPage } from '#domains/admin/pages/accounts-list-page/accounts-list-page';
+import { CategoriesListPage } from '#domains/admin/pages/categories-list-page/categories-list-page';
+import { AddCategoryPage } from '#domains/admin/pages/add-category-page/add-category-page';
 
 const App: FC = () => {
   return (
     <Switch>
       {/* AdminRoutes */}
 
+      <AdminRoute path={`/admin/categories/add`}>
+        <HeaderWrapper>
+          <AddCategoryPage />
+        </HeaderWrapper>
+      </AdminRoute>
+
+      <AdminRoute exact path={`/admin/categories`}>
+        <HeaderWrapper>
+          <CategoriesListPage />
+        </HeaderWrapper>
+      </AdminRoute>
+
+      <AdminRoute path={`/admin/users`}>
+        <HeaderWrapper>
+          <AccountsListPage />
+        </HeaderWrapper>
+      </AdminRoute>
+
       <AdminRoute exact path={`/admin`}>
         <HeaderWrapper>
-          <div className={`uk-flex uk-flex-center uk-flex-middle uk-height-1-1`}>
-            Вы админ, но вы ничего не можете :c
-          </div>
+          <AdminPage />
         </HeaderWrapper>
       </AdminRoute>
 
