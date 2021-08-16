@@ -23,7 +23,7 @@ export const setItemPhotosOperation: AsyncThunkPayloadCreator<SetItemPhotosOpera
         Array.from(photos).map((photo) => {
           formData.append(`photos`, photo);
         });
-      const res = await axiosInstance.put<SetItemPhotosOperationResult>(`items/set_photos`, formData);
+      const res = await axiosInstance.put<SetItemPhotosOperationResult>(`user_items/set_photos`, formData);
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

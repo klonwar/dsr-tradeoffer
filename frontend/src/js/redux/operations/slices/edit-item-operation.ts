@@ -12,7 +12,7 @@ export class EditItemOperationResult extends ItemsListDto {
 export const editItemOperation: AsyncThunkPayloadCreator<EditItemOperationResult, EditItemDto, { rejectValue: SerializedAxiosError }> =
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.put<EditItemOperationResult>(`items/edit`, payload);
+      const res = await axiosInstance.put<EditItemOperationResult>(`user_items/edit`, payload);
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

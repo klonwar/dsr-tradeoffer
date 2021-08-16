@@ -12,6 +12,7 @@ import { ItemsModule } from './modules/items/items.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { CategoriesModule } from './categories/categories.module';
 import { MockModule } from './mock/mock.module';
+import { CatalogueModule } from './catalogue/catalogue.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { MockModule } from './mock/mock.module';
     AccountsModule,
     CategoriesModule,
     MockModule,
+    CatalogueModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],

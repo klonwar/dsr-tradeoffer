@@ -24,7 +24,7 @@ export const createItemOperation: AsyncThunkPayloadCreator<CreateItemOperationRe
       Array.from(photos).map((photo) => {
         formData.append(`photos`, photo);
       });
-    const res = await axiosInstance.post<CreateItemOperationResult>(`items/create`, formData, {
+    const res = await axiosInstance.post<CreateItemOperationResult>(`user_items/create`, formData, {
       headers: {
         'Content-Type': `multipart/form-data`,
       },

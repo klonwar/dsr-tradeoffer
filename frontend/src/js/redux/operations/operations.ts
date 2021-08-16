@@ -4,8 +4,8 @@ import { registrationOperation } from '#redux/operations/slices/registration-ope
 import { editProfileOperation } from '#redux/operations/slices/edit-profile-operation';
 import { setPhotoOperation } from '#redux/operations/slices/set-photo-operation';
 import { changePasswordOperation } from '#redux/operations/slices/change-password-operation';
-import { getItemsListOperation } from '#redux/operations/slices/get-items-list-operation';
-import { deleteItemOperation } from '#redux/operations/slices/delete-item-operation';
+import { getUserItemsListOperation } from '#redux/operations/slices/get-user-items-list-operation';
+import { deleteUserItemOperation } from '#redux/operations/slices/delete-user-item-operation';
 import { getCategoriesListOperation } from '#redux/operations/slices/get-categories-list-operation';
 import { createItemOperation } from '#redux/operations/slices/create-item-operation';
 import { editItemOperation } from '#redux/operations/slices/edit-item-operation';
@@ -14,6 +14,8 @@ import { getAccountsListOperation } from '#redux/operations/slices/get-accounts-
 import { deleteAccountOperation } from '#redux/operations/slices/delete-account-operation';
 import { deleteCategoryOperation } from '#redux/operations/slices/delete-category-operation';
 import { createCategoryOperation } from '#redux/operations/slices/create-category-operation';
+import { loadCatalogueOperation } from '#redux/operations/slices/load-catalogue-operation';
+import { deleteCatalogueItemOperation } from '#redux/operations/slices/delete-catalogue-item-operation';
 
 export const Operations = {
   login: createAsyncThunk(
@@ -36,13 +38,13 @@ export const Operations = {
     `changePassword`,
     changePasswordOperation,
   ),
-  getItemsList: createAsyncThunk(
-    `getItemsList`,
-    getItemsListOperation,
+  getUserItemsList: createAsyncThunk(
+    `getUserItemsList`,
+    getUserItemsListOperation,
   ),
-  deleteItem: createAsyncThunk(
-    `deleteItem`,
-    deleteItemOperation,
+  deleteUserItem: createAsyncThunk(
+    `deleteUserItem`,
+    deleteUserItemOperation,
   ),
   getCategoriesList: createAsyncThunk(
     `getCategoriesList`,
@@ -76,4 +78,13 @@ export const Operations = {
     `createCategory`,
     createCategoryOperation,
   ),
+  loadCatalogue: createAsyncThunk(
+    `loadCatalogue`,
+    loadCatalogueOperation,
+  ),
+  deleteCatalogueItem: createAsyncThunk(
+    `deleteCatalogueItem`,
+    deleteCatalogueItemOperation,
+  ),
+
 };

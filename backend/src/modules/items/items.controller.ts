@@ -24,12 +24,12 @@ import { Roles } from '#src/modules/auth/decorators/roles.decorator';
 import { UserRole } from '#server/common/enums/user-role.enum';
 
 @UseGuards(RolesGuard)
-@Controller(`items`)
+@Controller(`user_items`)
 export class ItemsController {
   constructor(private itemsService: ItemsService) {}
 
   @Get()
-  @Roles(UserRole.USER, UserRole.ADMIN)
+  @Roles(UserRole.USER)
   @UseInterceptors(ClassSerializerInterceptor)
   async getItemsList(@Request() req): Promise<Array<ItemEntity>> {
     return await this.itemsService.getItemsList(req.user);
@@ -50,7 +50,7 @@ export class ItemsController {
   }
 
   @Delete(`/:id`)
-  @Roles(UserRole.USER, UserRole.ADMIN)
+  @Roles(UserRole.USER)
   @UseInterceptors(ClassSerializerInterceptor)
   async deleteItem(@Request() req, @Param(`id`, ParseIntPipe) id: number) {
     return await this.itemsService.removeItem(req.user, id);

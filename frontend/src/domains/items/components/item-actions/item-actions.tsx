@@ -20,7 +20,7 @@ export const ItemActions: FC<Props> = ({ id }) => {
       <button
         className={`uk-link`}
         uk-icon={`trash`}
-        onClick={() => dispatch(Operations.deleteItem(id))}
+        onClick={() => dispatch(Operations.deleteUserItem(id))}
       />
     </div>
   );

@@ -77,10 +77,8 @@ export class ItemsService {
       throw new NotFoundException(ErrorMessagesEnum.NO_SUCH_ITEM);
     }
 
-    if (user.role !== UserRole.ADMIN) {
-      if (user.id !== targetItem.user.id) {
-        throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_ITEM);
-      }
+    if (user.id !== targetItem.user.id) {
+      throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_ITEM);
     }
 
     await this.itemRepository.delete(id);

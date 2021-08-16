@@ -8,10 +8,10 @@ import { ItemsListDto } from '#server/common/dto/items-list.dto';
 export class DeleteItemOperationResult extends ItemsListDto {
 }
 
-export const deleteItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationResult, number, { rejectValue: SerializedAxiosError }> =
+export const deleteUserItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationResult, number, { rejectValue: SerializedAxiosError }> =
   async (id, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.delete<DeleteItemOperationResult>(`items/${id}`);
+      const res = await axiosInstance.delete<DeleteItemOperationResult>(`user_items/${id}`);
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

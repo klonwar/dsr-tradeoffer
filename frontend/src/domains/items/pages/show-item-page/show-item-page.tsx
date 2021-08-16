@@ -79,7 +79,7 @@ export const ShowItemPage: FC = () => {
             Редактировать
           </Link>
           <button className={`uk-button uk-button-danger`}
-                  onClick={() => dispatch(Operations.deleteItem(parseInt(itemId)))}>
+                  onClick={() => dispatch(Operations.deleteUserItem(parseInt(itemId)))}>
             Удалить
           </button>
         </div>

@@ -1,6 +1,6 @@
 import { PREState, resetPreState } from '#redux/reducers/util/pre-state';
 import { createSlice } from '@reduxjs/toolkit';
-import { GetItemsListOperationResult } from '#redux/operations/slices/get-items-list-operation';
+import { GetUserItemsListOperationResult } from '#redux/operations/slices/get-user-items-list-operation';
 import { Operations } from '#redux/operations/operations';
 import {
   onError,
@@ -10,7 +10,7 @@ import {
   onPendingSaveResult,
 } from '#redux/reducers/util/operation-callback';
 
-const initialState: PREState<GetItemsListOperationResult> = {
+const initialState: PREState<GetUserItemsListOperationResult> = {
   pending: false,
   result: null,
   error: null,
@@ -24,13 +24,13 @@ const itemsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(Operations.getItemsList.pending, onPending)
-      .addCase(Operations.getItemsList.rejected, onError)
-      .addCase(Operations.getItemsList.fulfilled, onFulfilled)
+      .addCase(Operations.getUserItemsList.pending, onPending)
+      .addCase(Operations.getUserItemsList.rejected, onError)
+      .addCase(Operations.getUserItemsList.fulfilled, onFulfilled)
 
-      .addCase(Operations.deleteItem.pending, onPendingSaveResult)
-      .addCase(Operations.deleteItem.rejected, onErrorSaveResult)
-      .addCase(Operations.deleteItem.fulfilled, onFulfilled)
+      .addCase(Operations.deleteUserItem.pending, onPendingSaveResult)
+      .addCase(Operations.deleteUserItem.rejected, onErrorSaveResult)
+      .addCase(Operations.deleteUserItem.fulfilled, onFulfilled)
 
       .addCase(Operations.createItem.pending, onPendingSaveResult)
       .addCase(Operations.createItem.rejected, onErrorSaveResult)
