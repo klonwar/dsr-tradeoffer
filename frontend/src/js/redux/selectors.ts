@@ -9,6 +9,7 @@ import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { UserRole } from '#server/common/enums/user-role.enum';
 import { AccountsListDto } from '#server/common/dto/accounts-list.dto';
 import { CatalogueResult } from '#redux/reducers/slices/catalogue-slice';
+import { ItemDto } from '#server/common/dto/item.dto';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -45,11 +46,11 @@ export const userPhotoUrlSelector = createSelector<RootState, UserDto, string>(
     : undefined,
 );
 
-export const isItemsRequestPendingSelector: AppSelector<boolean> = (state) => state.itemsReducer.pending;
+export const isItemsRequestPendingSelector: AppSelector<boolean> = (state) => state.userItemsReducer.pending;
 
-export const itemsListSelector: AppSelector<ItemsListDto> = (state) => state.itemsReducer.result;
+export const itemsListSelector: AppSelector<ItemsListDto> = (state) => state.userItemsReducer.result;
 
-export const itemsRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemsReducer.error;
+export const itemsRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userItemsReducer.error;
 
 export const isCategoriesRequestPendingSelector: AppSelector<boolean> = (state) => state.categoriesReducer.pending;
 
@@ -84,3 +85,7 @@ export const catalogueItemsSelector = createSelector<RootState, CatalogueResult,
 );
 
 export const catalogueRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.catalogueReducer.error;
+
+export const isCurrentItemRequestPendingSelector: AppSelector<boolean> = (state) => state.itemReducer.pending;
+export const currentItemSelector: AppSelector<ItemDto> = (state) => state.itemReducer.result;
+export const currentItemErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemReducer.error;

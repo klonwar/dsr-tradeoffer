@@ -16,6 +16,7 @@ import { deleteCategoryOperation } from '#redux/operations/slices/delete-categor
 import { createCategoryOperation } from '#redux/operations/slices/create-category-operation';
 import { loadCatalogueOperation } from '#redux/operations/slices/load-catalogue-operation';
 import { deleteCatalogueItemOperation } from '#redux/operations/slices/delete-catalogue-item-operation';
+import { getItemOperation } from '#redux/operations/slices/get-item-operation';
 
 export const Operations = {
   login: createAsyncThunk(
@@ -85,6 +86,10 @@ export const Operations = {
   deleteCatalogueItem: createAsyncThunk(
     `deleteCatalogueItem`,
     deleteCatalogueItemOperation,
+  ),
+  getItem: createAsyncThunk(
+    `getItem`,
+    getItemOperation,
   ),
 
 };

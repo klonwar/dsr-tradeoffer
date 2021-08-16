@@ -16,8 +16,8 @@ const initialState: PREState<GetUserItemsListOperationResult> = {
   error: null,
 };
 
-const itemsSlice = createSlice({
-  name: `items`,
+const userItemsSlice = createSlice({
+  name: `user-items`,
   initialState,
   reducers: {
     reset: resetPreState,
@@ -46,6 +46,6 @@ const itemsSlice = createSlice({
   },
 });
 
-export const ItemsActions = itemsSlice.actions;
+export const UserItemsActions = userItemsSlice.actions;
 
-export const itemsReducer = itemsSlice.reducer;
+export const userItemsReducer = userItemsSlice.reducer;

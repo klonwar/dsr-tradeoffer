@@ -1,22 +1,37 @@
-import React, { FC, useMemo } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useLoadItemsList } from '#src/js/hooks/use-load-items-list';
-import { isItemsRequestPendingSelector, itemsListSelector } from '#redux/selectors';
+import React, { FC, useEffect, useState } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import {
+  currentItemErrorSelector,
+  currentItemSelector,
+  isCurrentItemRequestPendingSelector,
+  userDataSelector,
+} from '#redux/selectors';
 import { useSelector } from 'react-redux';
-import { useLoadCategoriesList } from '#src/js/hooks/use-load-categories-list';
 import { PhotosSlideshow } from '#domains/items/components/photos-slideshow/photos-slideshow';
 import { Operations } from '#redux/operations/operations';
 import { useAppDispatch } from '#redux/store';
+import { ItemActions } from '#redux/reducers/slices/item-slice';
 
 export const ShowItemPage: FC = () => {
+  const history = useHistory();
   const { itemId } = useParams<{ itemId: string }>();
   const dispatch = useAppDispatch();
-  const isPending = useSelector(isItemsRequestPendingSelector);
-  const itemsList = useSelector(itemsListSelector);
-  const item = useMemo(() => itemsList?.find((item) => item.id === parseInt(itemId)), [itemId, itemsList]);
+  const isPending = useSelector(isCurrentItemRequestPendingSelector);
+  const item = useSelector(currentItemSelector);
+  const itemError = useSelector(currentItemErrorSelector);
+  const userData = useSelector(userDataSelector);
 
-  useLoadItemsList();
-  useLoadCategoriesList();
+  const [isUserItem, setIsUserItem] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (item?.user && userData?.username) {
+      setIsUserItem(userData.username === item.user);
+    }
+  }, [item, userData]);
+
+  useEffect(() => {
+    dispatch(Operations.getItem(parseInt(itemId)));
+  }, [itemId, dispatch]);
 
   if (isPending)
     return (
@@ -25,17 +40,17 @@ export const ShowItemPage: FC = () => {
       </h4>
     );
 
-  if (!itemsList)
+  if (itemError)
     return (
       <h4 className={`uk-position-center uk-margin-remove uk-text-muted`}>
-        Ошибка
+        {itemError.message}
       </h4>
     );
 
   if (!item) {
     return (
       <h4 className={`uk-position-center uk-margin-remove uk-text-muted`}>
-        Такой вещи нет
+        Загрузка...
       </h4>
     );
   }
@@ -66,23 +81,36 @@ export const ShowItemPage: FC = () => {
             </div>
           </div>
         </div>
-
         <div className={`ItemActions uk-flex uk-flex-wrap`} uk-margin={``}>
-          <Link
-            className={`uk-button uk-button-default`}
-            to={`/items`}>
+          <button type={`button`} className={`uk-button uk-button-default`}
+                  onClick={() => {
+                    if (history.length > 1) {
+                      history.goBack();
+                    } else {
+                      history.push(`/items/${item?.id}`);
+                    }
+                  }}>
             Назад
-          </Link>
-          <Link
-            className={`uk-button uk-button-default`}
-            to={`/items/${itemId}/edit`}>
-            Редактировать
-          </Link>
-          <button className={`uk-button uk-button-danger`}
-                  onClick={() => dispatch(Operations.deleteUserItem(parseInt(itemId)))}>
-            Удалить
           </button>
+          {(isUserItem) ? (
+            <>
+              <Link
+                className={`uk-button uk-button-default`}
+                to={`/items/${itemId}/edit`}>
+                Редактировать
+              </Link>
+              <button className={`uk-button uk-button-danger`}
+                      onClick={() => {
+                        dispatch(Operations.deleteUserItem(parseInt(itemId)));
+                        dispatch(ItemActions.reset());
+                        history.goBack();
+                      }}>
+                Удалить
+              </button>
+            </>
+          ) : null}
         </div>
+
       </div>
     </div>
   );
