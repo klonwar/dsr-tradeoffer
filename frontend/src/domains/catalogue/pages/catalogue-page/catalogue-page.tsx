@@ -38,17 +38,20 @@ export const CataloguePage: FC = () => {
 
   useShowCatalogueRequestError(isDispatched);
 
-  if (catalogueItems?.length === 0) {
+  if (!catalogueItems)
+    return null;
+
+  if (!isPending && isDispatched && catalogueItems?.length === 0) {
     return (
       <div className={`uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-text-center uk-padding-small`}>
-        <h2 className={`uk-text-muted`}>Здесь будет список ваших вещей</h2>
+        <h2 className={`uk-text-muted`}>Здесь будет список вещей</h2>
       </div>
     );
   }
 
   return (
     <div id={`scrollable-target`}
-         className={`WithScrollbar uk-overflow-auto`}>
+         className={`WithScrollbar uk-overflow-auto uk-child-width-1-1`}>
       <InfiniteScroll
         next={() => {
           dispatch(Operations.loadCatalogue({

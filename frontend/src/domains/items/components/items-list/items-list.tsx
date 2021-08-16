@@ -11,7 +11,11 @@ export const ItemsList: FC = () => {
   useLoadItemsList();
   useShowItemsRequestError(true);
 
+  if (!itemsList)
+    return null;
+
   if (itemsList?.length === 0) {
+    console.log(`here`);
     return (
       <div className={`uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-text-center uk-padding-small`}>
         <h2 className={`uk-text-muted`}>Здесь будет список ваших вещей</h2>

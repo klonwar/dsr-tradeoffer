@@ -47,7 +47,10 @@ export const AdminPage: FC = () => {
 
   useShowCatalogueRequestError(isDispatched);
 
-  if (!catalogueItems || catalogueItems.length === 0)
+  if (!catalogueItems)
+    return null;
+
+  if (!isPending && isDispatched && catalogueItems?.length === 0)
     return (
       <div
         className={`uk-width-1-1 uk-height-1-1 uk-flex uk-flex-center uk-flex-middle uk-text-center uk-padding-small`}>
@@ -58,7 +61,7 @@ export const AdminPage: FC = () => {
 
   return (
 
-    <div id={`scrollable-target`} className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small`}>
+    <div id={`scrollable-target`} className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small uk-child-width-1-1`}>
       <InfiniteScroll
         next={() => {
           dispatch(Operations.loadCatalogue({

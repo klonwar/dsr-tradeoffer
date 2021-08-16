@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '#redux/store';
 import { useSelector } from 'react-redux';
-import { accountsListSelector } from '#redux/selectors';
+import { accountsListSelector, isAccountsRequestPendingSelector } from '#redux/selectors';
 import { Operations } from '#redux/operations/operations';
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import { UserRole } from '#server/common/enums/user-role.enum';
@@ -12,6 +12,7 @@ export const AccountsListPage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const accountsList = useSelector(accountsListSelector);
+  const isPending = useSelector(isAccountsRequestPendingSelector);
 
   useEffect(() => {
     dispatch(Operations.getAccountsList());
@@ -21,7 +22,10 @@ export const AccountsListPage: FC = () => {
 
   useShowAccountsRequestError(isDispatched);
 
-  if (!accountsList || accountsList.length === 0)
+  if (!accountsList)
+    return null;
+
+  if (!isPending && isDispatched && accountsList?.length === 0)
     return (
       <div
         className={`uk-width-1-1 uk-height-1-1 uk-flex uk-flex-center uk-flex-middle uk-text-center uk-padding-small`}>
@@ -30,7 +34,7 @@ export const AccountsListPage: FC = () => {
     );
 
   return (
-    <div className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small`}>
+    <div className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small uk-child-width-1-1`}>
       <table className={`uk-table uk-table-divider uk-table-responsive`}>
         <thead>
         <tr>

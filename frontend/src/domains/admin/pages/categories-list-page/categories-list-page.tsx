@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '#redux/store';
 import { useSelector } from 'react-redux';
-import { categoriesListSelector } from '#redux/selectors';
+import { categoriesListSelector, isCategoriesRequestPendingSelector } from '#redux/selectors';
 import { Operations } from '#redux/operations/operations';
 import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import { useShowCategoriesRequestError } from '#src/js/hooks/use-show-categories-request-error';
@@ -12,6 +12,7 @@ export const CategoriesListPage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const categoriesList = useSelector(categoriesListSelector);
+  const isPending = useSelector(isCategoriesRequestPendingSelector);
 
   useEffect(() => {
     dispatch(Operations.getCategoriesList());
@@ -21,7 +22,10 @@ export const CategoriesListPage: FC = () => {
 
   useShowCategoriesRequestError(isDispatched);
 
-  if (!categoriesList || categoriesList.length === 0)
+  if (!categoriesList)
+    return null;
+
+  if (!isPending && isDispatched && categoriesList?.length === 0)
     return (
       <div
         className={`uk-width-1-1 uk-height-1-1 uk-flex uk-flex-center uk-flex-middle uk-text-center uk-padding-small`}>
@@ -30,7 +34,8 @@ export const CategoriesListPage: FC = () => {
     );
 
   return (
-    <div className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-center uk-flex-wrap uk-padding-small uk-padding-remove-top`}>
+    <div
+      className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-center uk-flex-wrap uk-padding-small uk-padding-remove-top`}>
       <div className={`uk-width-1-1 uk-width-1-2@m`}>
         <Actions>
           <Link to={`/admin/categories/add`} className={`uk-button uk-button-default uk-flex uk-flex-middle`}>
