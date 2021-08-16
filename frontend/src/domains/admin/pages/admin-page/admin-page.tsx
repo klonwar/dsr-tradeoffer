@@ -14,6 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { PAGE_SIZE } from '#server/common/constants/constants';
 import SpinnerWrapper from '#components/spinner-wrapper/spinner-wrapper';
 import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
+import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
 
 export const AdminPage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
@@ -37,6 +38,12 @@ export const AdminPage: FC = () => {
       setIsDispatched(true);
     }
   }, [catalogueItems, loadOptions, setIsDispatched, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(CatalogueActions.reset());
+    };
+  }, [dispatch]);
 
   useShowCatalogueRequestError(isDispatched);
 

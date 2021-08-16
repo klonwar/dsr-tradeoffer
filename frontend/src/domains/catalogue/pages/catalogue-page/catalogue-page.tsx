@@ -12,6 +12,7 @@ import { useShowCatalogueRequestError } from '#src/js/hooks/use-show-catalogue-r
 import { PAGE_SIZE } from '#server/common/constants/constants';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SpinnerWrapper from '#components/spinner-wrapper/spinner-wrapper';
+import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
 
 export const CataloguePage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
@@ -28,6 +29,12 @@ export const CataloguePage: FC = () => {
       setIsDispatched(true);
     }
   }, [catalogueItems, setIsDispatched, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(CatalogueActions.reset());
+    };
+  }, [dispatch]);
 
   useShowCatalogueRequestError(isDispatched);
 
