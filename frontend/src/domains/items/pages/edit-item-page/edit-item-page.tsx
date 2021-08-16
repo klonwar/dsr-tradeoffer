@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLoadItemsList } from '#src/js/hooks/use-load-items-list';
-import { isItemsRequestPendingSelector, itemsListSelector } from '#redux/selectors';
+import { itemsListSelector } from '#redux/selectors';
 import { useSelector } from 'react-redux';
 import { useLoadCategoriesList } from '#src/js/hooks/use-load-categories-list';
 import { PhotosSlideshow } from '#domains/items/components/photos-slideshow/photos-slideshow';

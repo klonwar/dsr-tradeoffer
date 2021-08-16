@@ -40,7 +40,7 @@ export const ItemEditForm: FC<Props> = ({ item }) => {
 
   useEffect(() => {
     if (isSubmitSuccessful && !isPending && !itemsRequestError) {
-      history.push(`/items/${item?.id}`);
+      history.goBack();
     }
   }, [isSubmitSuccessful, isPending, itemsRequestError, history, item]);
 
