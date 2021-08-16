@@ -9,7 +9,6 @@ import { ItemCard } from '#domains/items/components/item-card/item-card';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
 import { useShowCatalogueRequestError } from '#src/js/hooks/use-show-catalogue-request-error';
-import { PAGE_SIZE } from '#server/common/constants/constants';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SpinnerWrapper from '#components/spinner-wrapper/spinner-wrapper';
 import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
@@ -60,7 +59,7 @@ export const CataloguePage: FC = () => {
         }}
         hasMore={true}
         loader={null}
-        dataLength={PAGE_SIZE}
+        dataLength={catalogueItems.length}
         scrollableTarget={`scrollable-target`}
       >
         <div className={`uk-flex uk-flex-left uk-width-1-1 uk-flex-wrap`}>

@@ -11,7 +11,6 @@ import { keyToLabelText } from '#src/js/util/key-to-label-text';
 import { PhotosSlideshow } from '#domains/items/components/photos-slideshow/photos-slideshow';
 import { useShowCatalogueRequestError } from '#src/js/hooks/use-show-catalogue-request-error';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { PAGE_SIZE } from '#server/common/constants/constants';
 import SpinnerWrapper from '#components/spinner-wrapper/spinner-wrapper';
 import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
 import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
@@ -71,7 +70,7 @@ export const AdminPage: FC = () => {
         }}
         hasMore={true}
         loader={null}
-        dataLength={PAGE_SIZE}
+        dataLength={catalogueItems.length}
         scrollableTarget={`scrollable-target`}
       >
         <table className={`uk-table uk-table-striped uk-table-responsive`}>
