@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Exclude, Expose, Transform } from 'class-transformer';
 import { Profile } from '#src/modules/user/entity/profile.entity';
-import { ItemEntity } from '#src/modules/items/entity/item.entity';
+import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import * as fs from 'fs';
 
 @Entity({ name: `photo` })

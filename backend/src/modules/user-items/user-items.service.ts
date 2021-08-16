@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { User } from '#src/modules/user/entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ItemEntity } from '#src/modules/items/entity/item.entity';
+import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { Repository } from 'typeorm';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
@@ -16,7 +16,7 @@ import { EditItemDto } from '#server/common/dto/edit-item.dto';
 import { UserRole } from '#server/common/enums/user-role.enum';
 
 @Injectable()
-export class ItemsService {
+export class UserItemsService {
   constructor(
     @InjectRepository(ItemEntity)
     private itemRepository: Repository<ItemEntity>,

@@ -22,7 +22,7 @@ import * as chalk from 'chalk';
 import { JwtDto } from '#server/common/dto/jwt.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserRole } from '#server/common/enums/user-role.enum';
-import { ItemEntity } from '#src/modules/items/entity/item.entity';
+import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 
 @Entity()
 export class User {

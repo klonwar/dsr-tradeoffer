@@ -8,11 +8,12 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from '#src/modules/auth/guards/jwt-auth.guard';
 import { UploadsModule } from '#src/modules/uploads/uploads.module';
 import { JwtModule } from '@nestjs/jwt';
-import { ItemsModule } from './modules/items/items.module';
+import { UserItemsModule } from './modules/user-items/user-items.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { MockModule } from './mock/mock.module';
 import { CatalogueModule } from './modules/catalogue/catalogue.module';
+import { ItemModule } from '#src/modules/item/item.module';
 
 @Module({
   imports: [
@@ -26,11 +27,12 @@ import { CatalogueModule } from './modules/catalogue/catalogue.module';
       }),
       global: true,
     },
-    ItemsModule,
+    UserItemsModule,
     AccountsModule,
     CategoriesModule,
     MockModule,
     CatalogueModule,
+    ItemModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],

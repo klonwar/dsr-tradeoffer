@@ -13,8 +13,8 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ItemsService } from '#src/modules/items/items.service';
-import { ItemEntity } from '#src/modules/items/entity/item.entity';
+import { UserItemsService } from '#src/modules/user-items/user-items.service';
+import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotosInterceptor } from '#src/modules/auth/interceptors/photo-interceptor';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
@@ -25,8 +25,8 @@ import { UserRole } from '#server/common/enums/user-role.enum';
 
 @UseGuards(RolesGuard)
 @Controller(`user_items`)
-export class ItemsController {
-  constructor(private itemsService: ItemsService) {}
+export class UserItemsController {
+  constructor(private itemsService: UserItemsService) {}
 
   @Get()
   @Roles(UserRole.USER)

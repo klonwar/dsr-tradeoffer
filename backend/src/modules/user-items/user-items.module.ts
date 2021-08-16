@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ItemsService } from './items.service';
-import { ItemsController } from './items.controller';
+import { UserItemsService } from './user-items.service';
+import { UserItemsController } from './user-items.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ItemEntity } from '#src/modules/items/entity/item.entity';
+import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 
@@ -10,7 +10,7 @@ import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
   imports: [
     TypeOrmModule.forFeature([ItemEntity, PhotoEntity, CategoryEntity]),
   ],
-  providers: [ItemsService],
-  controllers: [ItemsController],
+  providers: [UserItemsService],
+  controllers: [UserItemsController],
 })
-export class ItemsModule {}
+export class UserItemsModule {}

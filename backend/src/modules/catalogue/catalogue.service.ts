@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ItemEntity } from '#src/modules/items/entity/item.entity';
+import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';

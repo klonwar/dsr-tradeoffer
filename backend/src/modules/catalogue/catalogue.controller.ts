@@ -12,7 +12,7 @@ import { CatalogueService } from '#src/modules/catalogue/catalogue.service';
 import { Roles } from '#src/modules/auth/decorators/roles.decorator';
 import { UserRole } from '#server/common/enums/user-role.enum';
 import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
-import { ItemEntity } from '#src/modules/items/entity/item.entity';
+import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 
 @Controller(`catalogue`)
 export class CatalogueController {
