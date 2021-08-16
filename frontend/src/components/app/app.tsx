@@ -19,6 +19,7 @@ import { AccountsListPage } from '#domains/admin/pages/accounts-list-page/accoun
 import { CategoriesListPage } from '#domains/admin/pages/categories-list-page/categories-list-page';
 import { AddCategoryPage } from '#domains/admin/pages/add-category-page/add-category-page';
 import { CataloguePage } from '#domains/catalogue/pages/catalogue-page/catalogue-page';
+import { ShowCatalogueItemPage } from '#domains/catalogue/pages/show-catalogue-item-page/show-catalogue-item-page';
 
 const App: FC = () => {
   return (
@@ -50,6 +51,12 @@ const App: FC = () => {
       </AdminRoute>
 
       {/* ItemsRoutes */}
+
+      <UserRoute path={`/catalogue/item/:itemId`}>
+        <HeaderWrapper>
+          <ShowCatalogueItemPage />
+        </HeaderWrapper>
+      </UserRoute>
 
       <UserRoute path={`/catalogue`}>
         <HeaderWrapper>

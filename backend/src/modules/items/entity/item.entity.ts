@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
-import { CategoryEntity } from '#src/categories/entity/category.entity';
+import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 import { Exclude, Transform, Type } from 'class-transformer';
 import { User } from '#src/modules/user/entity/user.entity';
 

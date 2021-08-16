@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '#src/modules/user/entity/user.entity';
 import { Profile } from '#src/modules/user/entity/profile.entity';
 import { ItemEntity } from '#src/modules/items/entity/item.entity';
-import { CategoryEntity } from '#src/categories/entity/category.entity';
+import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 import { MOCK_USERS_COUNT } from '#src/constants/backend-constants';
 import * as crypto from 'crypto';
 

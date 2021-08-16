@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { ItemActions } from '#domains/items/components/item-actions/item-actions';
 
-interface ItemProps extends Partial<ItemDto> {}
+interface ItemProps extends Partial<ItemDto> {
+  withActions?: boolean;
+  linkTo?: string
+}
 
 export const ItemCard: FC<ItemProps> = (props) => {
-  const { id, name, geo, item_category, trade_category, photos } = props;
+  const { id, name, geo, item_category, trade_category, photos, withActions = true, linkTo = `items` } = props;
 
   const photoPath = (photos?.[0]?.photoPath)
     ? srcFromPhotoPath(photos[0].photoPath)
@@ -18,10 +21,10 @@ export const ItemCard: FC<ItemProps> = (props) => {
     <div className={`uk-card uk-card-default uk-card-body uk-width-1-1`} data-id={id}>
       <div className={`ItemCard`}>
         <div className={`ItemCard-header`}>
-          <Link to={`/items/${id}`} className={`ItemCard-picture`} style={{ backgroundImage: `url(${photoPath})` }}>
+          <Link to={`/${linkTo}/${id}`} className={`ItemCard-picture`} style={{ backgroundImage: `url(${photoPath})` }}>
           </Link>
           <div className={`ItemCard-info`}>
-            <Link className={`ItemCard-title uk-h4 uk-link-heading`} to={`/items/${id}`}>{name}</Link>
+            <Link className={`ItemCard-title uk-h4 uk-link-heading`} to={`/${linkTo}/${id}`}>{name}</Link>
             <div className={`ItemCard-category`}>
               <span>
                 {item_category}
@@ -38,7 +41,7 @@ export const ItemCard: FC<ItemProps> = (props) => {
           </div>
         </div>
       </div>
-      <ItemActions id={id} />
+      {(withActions) ? <ItemActions id={id} /> : null}
     </div>
   );
 };

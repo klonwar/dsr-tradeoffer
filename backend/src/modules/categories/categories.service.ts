@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CategoryEntity } from '#src/categories/entity/category.entity';
+import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';

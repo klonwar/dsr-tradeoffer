@@ -8,7 +8,7 @@ import {
   Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { CatalogueService } from '#src/catalogue/catalogue.service';
+import { CatalogueService } from '#src/modules/catalogue/catalogue.service';
 import { Roles } from '#src/modules/auth/decorators/roles.decorator';
 import { UserRole } from '#server/common/enums/user-role.enum';
 import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';

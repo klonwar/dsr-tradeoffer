@@ -36,8 +36,7 @@ export const AdminPage: FC = () => {
       }));
       setIsDispatched(true);
     }
-    // eslint-disable-next-line
-  }, [catalogueItems]);
+  }, [catalogueItems, loadOptions, setIsDispatched, dispatch]);
 
   useShowCatalogueRequestError(isDispatched);
 

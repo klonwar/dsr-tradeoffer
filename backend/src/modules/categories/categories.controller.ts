@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { Roles } from '#src/modules/auth/decorators/roles.decorator';
 import { UserRole } from '#server/common/enums/user-role.enum';
-import { CategoriesService } from '#src/categories/categories.service';
-import { CategoryEntity } from '#src/categories/entity/category.entity';
+import { CategoriesService } from '#src/modules/categories/categories.service';
+import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 import { CreateCategoryDto } from '#server/common/dto/create-category.dto';
 
 @Controller(`categories`)

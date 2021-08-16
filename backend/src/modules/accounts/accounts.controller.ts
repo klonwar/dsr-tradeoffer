@@ -10,7 +10,7 @@ import { RolesGuard } from '#src/modules/auth/guards/roles.guard';
 import { Roles } from '#src/modules/auth/decorators/roles.decorator';
 import { UserRole } from '#server/common/enums/user-role.enum';
 import { UserDto } from '#server/common/dto/user.dto';
-import { AccountsService } from '#src/accounts/accounts.service';
+import { AccountsService } from '#src/modules/accounts/accounts.service';
 
 @UseGuards(RolesGuard)
 @Controller(`accounts`)

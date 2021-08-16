@@ -10,7 +10,7 @@ import { ItemEntity } from '#src/modules/items/entity/item.entity';
 import { Repository } from 'typeorm';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
-import { CategoryEntity } from '#src/categories/entity/category.entity';
+import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
 import { UserRole } from '#server/common/enums/user-role.enum';
