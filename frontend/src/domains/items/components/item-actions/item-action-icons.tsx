@@ -7,7 +7,7 @@ interface Props {
   id: number;
 }
 
-export const ItemActions: FC<Props> = ({ id }) => {
+export const ItemActionIcons: FC<Props> = ({ id }) => {
   const dispatch = useAppDispatch();
 
   return (

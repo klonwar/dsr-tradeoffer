@@ -3,7 +3,7 @@ import noPhoto from '#src/icons/no-photo.svg';
 import { ItemDto } from '#server/common/dto/item.dto';
 import { Link } from 'react-router-dom';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
-import { ItemActions } from '#domains/items/components/item-actions/item-actions';
+import { ItemActionIcons } from '#domains/items/components/item-actions/item-action-icons';
 
 interface ItemProps extends Partial<ItemDto> {
   withActions?: boolean;
@@ -41,7 +41,7 @@ export const ItemCard: FC<ItemProps> = (props) => {
           </div>
         </div>
       </div>
-      {(withActions) ? <ItemActions id={id} /> : null}
+      {(withActions) ? <ItemActionIcons id={id} /> : null}
     </div>
   );
 };
