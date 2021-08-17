@@ -38,8 +38,6 @@ export const ProfilePhotoForm: FC = () => {
     );
   }
 
-  console.log(errors);
-
   return (
     <form onSubmit={onSubmit}>
       <div className={`uk-inline uk-width-expand `}>
