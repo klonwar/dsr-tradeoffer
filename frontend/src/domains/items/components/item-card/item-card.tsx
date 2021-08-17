@@ -27,11 +27,11 @@ export const ItemCard: FC<ItemProps> = (props) => {
             <Link className={`ItemCard-title uk-h4 uk-link-heading`} to={`/${linkTo}/${id}`}>{name}</Link>
             <div className={`ItemCard-category`}>
               <span>
-                {item_category}
+                {item_category.name}
               </span>
               <span>-&gt;</span>
               <span>
-                {trade_category}
+                {trade_category.name}
               </span>
             </div>
             <div className={`ItemCard-location`}>

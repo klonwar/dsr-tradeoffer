@@ -98,8 +98,8 @@ export const AdminPage: FC = () => {
               <td>{item.name}</td>
               <td className={`uk-width-medium`}>{item.description}</td>
               <td>{item.geo}</td>
-              <td>{item.item_category}</td>
-              <td>{item.trade_category}</td>
+              <td>{item.item_category.name}</td>
+              <td>{item.trade_category.name}</td>
               <td className={`uk-table-shrink uk-text-right`}>
                 <button className={`uk-link`} onClick={() => dispatch(Operations.deleteCatalogueItem(item.id))}
                         uk-icon={`trash`} />

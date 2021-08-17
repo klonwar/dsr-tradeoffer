@@ -78,11 +78,11 @@ export const ShowItemPage: FC = () => {
               </div>
               <div className={`uk-flex uk-flex-middle`}>
                 <span>Категория: </span>
-                <span className={`uk-margin-small-left`}>{item.item_category}</span>
+                <span className={`uk-margin-small-left`}>{item.item_category.name}</span>
               </div>
               <div className={`uk-flex uk-flex-middle`}>
                 <span>Хочу: </span>
-                <span className={`uk-margin-small-left`}>{item.trade_category}</span>
+                <span className={`uk-margin-small-left`}>{item.trade_category.name}</span>
               </div>
             </div>
           </div>

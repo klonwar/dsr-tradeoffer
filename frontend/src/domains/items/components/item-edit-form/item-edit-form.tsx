@@ -32,9 +32,12 @@ export const ItemEditForm: FC<Props> = ({ item }) => {
 
   useEffect(() => {
     if (item) {
-      Object.entries(item).map(([key, value]) => {
-        setValue(key as FieldPath<EditItemDto>, value);
-      });
+      setValue(`id`, item.id);
+      setValue(`name`, item.name);
+      setValue(`description`, item.description);
+      setValue(`geo`, item.geo);
+      setValue(`item_category_id`, item.item_category.id);
+      setValue(`trade_category_id`, item.trade_category.id);
     }
   }, [item, setValue]);
 

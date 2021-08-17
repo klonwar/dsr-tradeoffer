@@ -49,7 +49,6 @@ export class ItemEntity {
   photos: PhotoEntity[];
 
   @Type(() => CategoryEntity)
-  @Transform(({ value }) => value.name)
   @ManyToOne(
     () => CategoryEntity,
     (category) => category.items_with_item_category,
@@ -59,7 +58,6 @@ export class ItemEntity {
   item_category: CategoryEntity;
 
   @Type(() => CategoryEntity)
-  @Transform(({ value }) => value.name)
   @ManyToOne(
     () => CategoryEntity,
     (category) => category.items_with_trade_category,
