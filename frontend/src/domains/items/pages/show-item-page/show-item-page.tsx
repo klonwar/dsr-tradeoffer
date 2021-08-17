@@ -33,6 +33,12 @@ export const ShowItemPage: FC = () => {
     dispatch(Operations.getItem(parseInt(itemId)));
   }, [itemId, dispatch]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(ItemActions.reset());
+    };
+  }, [dispatch]);
+  
   if (isPending)
     return (
       <h4 className={`uk-position-center uk-margin-remove uk-text-muted`}>
