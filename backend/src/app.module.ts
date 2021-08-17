@@ -11,7 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { UserItemsModule } from './modules/user-items/user-items.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { CategoriesModule } from './modules/categories/categories.module';
-import { MockModule } from './mock/mock.module';
+import { MockModule } from './modules/mock/mock.module';
 import { CatalogueModule } from './modules/catalogue/catalogue.module';
 import { ItemModule } from '#src/modules/item/item.module';
 

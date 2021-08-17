@@ -96,6 +96,8 @@ export class MockService {
       randomUsers.push(randomUser);
     }
 
+    randomUsers.push(testUserNew);
+
     await this.userRepository.save(randomUsers);
 
     // Создадим каждому несколько вещей
@@ -126,6 +128,5 @@ export class MockService {
       }
     }
     await this.itemsRepository.save(newItems);
-    await this.userRepository.save(testUserNew);
   }
 }
