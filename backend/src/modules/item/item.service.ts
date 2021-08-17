@@ -18,8 +18,6 @@ export class ItemService {
 
     if (!item) throw new NotFoundException(ErrorMessagesEnum.NO_SUCH_ITEM);
 
-    console.log(item);
-
     return item;
   }
 }

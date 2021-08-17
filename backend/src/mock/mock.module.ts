@@ -6,10 +6,17 @@ import { User } from '#src/modules/user/entity/user.entity';
 import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { Profile } from '#src/modules/user/entity/profile.entity';
+import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Profile, CategoryEntity, ItemEntity]),
+    TypeOrmModule.forFeature([
+      User,
+      Profile,
+      CategoryEntity,
+      ItemEntity,
+      PhotoEntity,
+    ]),
   ],
   controllers: [MockController],
   providers: [MockService],

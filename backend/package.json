@@ -39,6 +39,7 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
+    "generate-avatar": "^1.4.10",
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
@@ -47,6 +48,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "svg2img": "^0.9.3",
     "typeorm": "^0.2.34",
     "uuid": "^8.3.2"
   },

@@ -5,8 +5,34 @@ import { User } from '#src/modules/user/entity/user.entity';
 import { Profile } from '#src/modules/user/entity/profile.entity';
 import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
-import { MOCK_USERS_COUNT } from '#src/constants/backend-constants';
+import {
+  MOCK_USERS_COUNT,
+  UPLOAD_PATH,
+} from '#src/constants/backend-constants';
 import * as crypto from 'crypto';
+import { generateFromString } from 'generate-avatar';
+import { v4 as uuidv4 } from 'uuid';
+import * as fs from 'fs';
+import * as path from 'path';
+import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
+
+const svg2img = require(`svg2img`);
+
+const genImage = async (): Promise<string> => {
+  const filepath = path.join(UPLOAD_PATH, `${uuidv4()}.png`);
+  const svgImage = generateFromString(crypto.randomBytes(10).toString(`hex`));
+  await new Promise<void>((resolve, reject) => {
+    svg2img(svgImage, (err, buffer) => {
+      if (err) reject(err);
+
+      fs.writeFileSync(filepath, buffer);
+
+      resolve();
+    });
+  });
+
+  return filepath;
+};
 
 @Injectable()
 export class MockService {
@@ -19,6 +45,8 @@ export class MockService {
     private itemsRepository: Repository<ItemEntity>,
     @InjectRepository(CategoryEntity)
     private categoriesRepository: Repository<CategoryEntity>,
+    @InjectRepository(PhotoEntity)
+    private photosRepository: Repository<PhotoEntity>,
   ) {}
 
   async generate() {
@@ -75,7 +103,16 @@ export class MockService {
     const categories = await this.categoriesRepository.find();
     const newItems = [];
     for (const user of randomUsers) {
-      for (let i = 0; i < ~~(Math.random() * 4) + 1; i++) {
+      for (let i = 0; i < ~~(Math.random() * 10) + 1; i++) {
+        const photos: PhotoEntity[] = [];
+        for (let j = 0; j < ~~(Math.random() * 3) + 1; j++) {
+          photos.push(
+            this.photosRepository.create({
+              photo_path: await genImage(),
+            }),
+          );
+        }
+
         const newItem = this.itemsRepository.create({
           name: crypto.randomBytes(5).toString(`hex`),
           description: `${getRandom(10)}. ${getRandom(5)}, ${getRandom(5)}.`,
@@ -83,6 +120,7 @@ export class MockService {
           item_category: categories[~~(Math.random() * categories.length)],
           trade_category: categories[~~(Math.random() * categories.length)],
           user,
+          photos,
         });
         newItems.push(newItem);
       }
