@@ -5,7 +5,7 @@ import { editProfileOperation } from '#redux/operations/slices/edit-profile-oper
 import { setPhotoOperation } from '#redux/operations/slices/set-photo-operation';
 import { changePasswordOperation } from '#redux/operations/slices/change-password-operation';
 import { getUserItemsListOperation } from '#redux/operations/slices/get-user-items-list-operation';
-import { deleteUserItemOperation } from '#redux/operations/slices/delete-user-item-operation';
+import { deleteItemOperation } from '#redux/operations/slices/delete-item-operation';
 import { getCategoriesListOperation } from '#redux/operations/slices/get-categories-list-operation';
 import { createItemOperation } from '#redux/operations/slices/create-item-operation';
 import { editItemOperation } from '#redux/operations/slices/edit-item-operation';
@@ -43,9 +43,9 @@ export const Operations = {
     `getUserItemsList`,
     getUserItemsListOperation,
   ),
-  deleteUserItem: createAsyncThunk(
-    `deleteUserItem`,
-    deleteUserItemOperation,
+  deleteItem: createAsyncThunk(
+    `deleteItem`,
+    deleteItemOperation,
   ),
   getCategoriesList: createAsyncThunk(
     `getCategoriesList`,

@@ -5,6 +5,7 @@ import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
 import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
+import { Operations } from '#redux/operations/operations';
 
 export class SetItemPhotosOperationPayload extends EditItemDto {
   photos: FileList;
@@ -14,7 +15,7 @@ export class SetItemPhotosOperationResult extends ItemsListDto {
 }
 
 export const setItemPhotosOperation: AsyncThunkPayloadCreator<SetItemPhotosOperationResult, SetItemPhotosOperationPayload, { rejectValue: SerializedAxiosError }> =
-  async (data, { rejectWithValue }) => {
+  async (data, { rejectWithValue, dispatch }) => {
     try {
       const { id, photos } = data;
       const formData = new FormData();
@@ -23,7 +24,11 @@ export const setItemPhotosOperation: AsyncThunkPayloadCreator<SetItemPhotosOpera
         Array.from(photos).map((photo) => {
           formData.append(`photos`, photo);
         });
-      const res = await axiosInstance.put<SetItemPhotosOperationResult>(`user_items/set_photos`, formData);
+      const res = await axiosInstance.put<SetItemPhotosOperationResult>(`item/${data.id}/photos`, formData);
+
+      // Обновим информацию и в списке предметов
+      dispatch(Operations.getUserItemsList());
+
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

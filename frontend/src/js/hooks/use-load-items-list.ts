@@ -12,6 +12,5 @@ export const useLoadItemsList = (): void => {
   useEffect(() => {
     if (!isPending && !itemsList)
       dispatch(Operations.getUserItemsList());
-    // eslint-disable-next-line
-  }, []);
+  }, [isPending, itemsList, dispatch]);
 };

@@ -8,7 +8,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { ItemDto } from '#server/common/dto/item.dto';
 import { Operations } from '#redux/operations/operations';
 import { useSelector } from 'react-redux';
-import { isItemsRequestPendingSelector, itemsRequestErrorSelector } from '#redux/selectors';
+import { currentItemErrorSelector, isCurrentItemRequestPendingSelector } from '#redux/selectors';
 import { useAppDispatch } from '#redux/store';
 import { useHistory } from 'react-router-dom';
 import { useShowItemsRequestError } from '#src/js/hooks/use-show-items-request-error';
@@ -18,10 +18,10 @@ interface Props {
 }
 
 export const ItemEditForm: FC<Props> = ({ item }) => {
-  const itemsRequestError = useSelector(itemsRequestErrorSelector);
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const isPending = useSelector(isItemsRequestPendingSelector);
+  const isPending = useSelector(isCurrentItemRequestPendingSelector);
+  const itemRequestError = useSelector(currentItemErrorSelector);
 
   const { register, handleSubmit, formState: { errors, isSubmitSuccessful }, setValue } = useForm<EditItemDto>({
     resolver: classValidatorResolver(EditItemDto),
@@ -39,10 +39,10 @@ export const ItemEditForm: FC<Props> = ({ item }) => {
   }, [item, setValue]);
 
   useEffect(() => {
-    if (isSubmitSuccessful && !isPending && !itemsRequestError) {
+    if (isSubmitSuccessful && !isPending && !itemRequestError) {
       history.goBack();
     }
-  }, [isSubmitSuccessful, isPending, itemsRequestError, history, item]);
+  }, [isSubmitSuccessful, isPending, itemRequestError, history, item]);
 
   const onSubmit = handleSubmit((data) => {
     dispatch(Operations.editItem(data));

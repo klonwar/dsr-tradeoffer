@@ -20,7 +20,7 @@ export const ItemActionIcons: FC<Props> = ({ id }) => {
       <button
         className={`uk-link`}
         uk-icon={`trash`}
-        onClick={() => dispatch(Operations.deleteUserItem(id))}
+        onClick={() => dispatch(Operations.deleteItem(id))}
       />
     </div>
   );

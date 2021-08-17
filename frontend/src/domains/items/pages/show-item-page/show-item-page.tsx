@@ -38,7 +38,7 @@ export const ShowItemPage: FC = () => {
       dispatch(ItemActions.reset());
     };
   }, [dispatch]);
-  
+
   if (isPending)
     return (
       <h4 className={`uk-position-center uk-margin-remove uk-text-muted`}>
@@ -107,7 +107,7 @@ export const ShowItemPage: FC = () => {
               </Link>
               <button className={`uk-button uk-button-danger`}
                       onClick={() => {
-                        dispatch(Operations.deleteUserItem(parseInt(itemId)));
+                        dispatch(Operations.deleteItem(parseInt(itemId)));
                         dispatch(ItemActions.reset());
                         history.goBack();
                       }}>

@@ -38,6 +38,7 @@ export const ItemEditPhotoForm: FC<Props> = ({ item }) => {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(Operations.setItemPhotos(data));
+    dispatch(Operations.getItem(item.id));
   });
 
   const watchPhotos = watch(`photos`);
