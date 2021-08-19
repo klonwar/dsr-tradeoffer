@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
 import {
-  catalogueCurrentPageSelector,
+  catalogueCurrentMetaSelector,
   catalogueItemsSelector,
   isCatalogueRequestPendingSelector,
 } from '#redux/selectors';
@@ -19,7 +19,7 @@ export const AdminPage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const catalogueItems = useSelector(catalogueItemsSelector);
-  const currentPage = useSelector(catalogueCurrentPageSelector);
+  const currentMeta = useSelector(catalogueCurrentMetaSelector);
   const isPending = useSelector(isCatalogueRequestPendingSelector);
 
   // Можем в любой момент поменять настройки загрузки
@@ -59,16 +59,15 @@ export const AdminPage: FC = () => {
 
 
   return (
-
-    <div id={`scrollable-target`} className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small uk-child-width-1-1`}>
+    <div id={`scrollable-target`}
+         className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small uk-child-width-1-1`}>
       <InfiniteScroll
         next={() => {
           dispatch(Operations.loadCatalogue({
-            ...loadOptions,
-            page: currentPage + 1,
+            page: currentMeta?.currentPage + 1,
           }));
         }}
-        hasMore={true}
+        hasMore={currentMeta?.currentPage < currentMeta?.totalPages}
         loader={null}
         dataLength={catalogueItems.length}
         scrollableTarget={`scrollable-target`}

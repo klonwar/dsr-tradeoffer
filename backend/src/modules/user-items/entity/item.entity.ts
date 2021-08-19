@@ -9,8 +9,18 @@ import {
 } from 'typeorm';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
-import { Exclude, Transform, Type } from 'class-transformer';
+import {
+  classToPlain,
+  Exclude,
+  plainToClass,
+  Transform,
+  Type,
+} from 'class-transformer';
 import { User } from '#src/modules/user/entity/user.entity';
+import { validateSync } from 'class-validator';
+import * as chalk from 'chalk';
+import { InternalServerErrorException } from '@nestjs/common';
+import { ItemDto } from '#server/common/dto/item.dto';
 
 @Entity({ name: `item` })
 export class ItemEntity {
@@ -37,6 +47,22 @@ export class ItemEntity {
   @Exclude()
   @Column()
   user_id: number;
+
+  toDto(): ItemDto {
+    // Transform
+    const plainThis = classToPlain(this);
+
+    // Validate
+    const itemDto = plainToClass(ItemDto, plainThis);
+    const errors = validateSync(itemDto, {});
+
+    if (errors.length) {
+      console.error(chalk.red(errors.toString()));
+      throw new InternalServerErrorException();
+    }
+
+    return plainThis as ItemDto;
+  }
 
   // Relations
   @Type(() => PhotoEntity)

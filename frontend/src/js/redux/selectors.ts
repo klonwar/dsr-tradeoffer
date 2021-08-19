@@ -10,6 +10,7 @@ import { UserRole } from '#server/common/enums/user-role.enum';
 import { AccountsListDto } from '#server/common/dto/accounts-list.dto';
 import { CatalogueResult } from '#redux/reducers/slices/catalogue-slice';
 import { ItemDto } from '#server/common/dto/item.dto';
+import { AppPaginationMeta } from '#server/common/classes/pagination';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -68,9 +69,14 @@ export const isCatalogueRequestPendingSelector: AppSelector<boolean> = (state) =
 
 export const catalogueResultSelector: AppSelector<CatalogueResult> = (state) => state.catalogueReducer.result;
 
-export const catalogueCurrentPageSelector = createSelector<RootState, CatalogueResult, number>(
+export const catalogueCurrentMetaSelector = createSelector<RootState, CatalogueResult, AppPaginationMeta>(
   catalogueResultSelector,
-  (catalogueResult) => catalogueResult.currentPage,
+  (catalogueResult) => catalogueResult.currentMeta,
+);
+
+export const catalogueCurrentPageSelector = createSelector<RootState, AppPaginationMeta, number>(
+  catalogueCurrentMetaSelector,
+  (meta) => meta?.currentPage,
 );
 
 export const catalogueItemsSelector = createSelector<RootState, CatalogueResult, ItemsListDto>(
@@ -78,7 +84,7 @@ export const catalogueItemsSelector = createSelector<RootState, CatalogueResult,
   (catalogueResult) => {
     const items = [];
     for (const page of Object.values(catalogueResult.pages)) {
-      items.push(...page);
+      items.push(...page.items);
     }
     return items;
   },

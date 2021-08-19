@@ -5,6 +5,9 @@ import { Like, Repository } from 'typeorm';
 import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
 import { PAGE_SIZE } from '#server/common/constants/constants';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
+import { paginate, Pagination } from 'nestjs-typeorm-paginate';
+import { CatalogueDto } from '#server/common/dto/catalogue.dto';
+import { ItemDto } from '#server/common/dto/item.dto';
 
 @Injectable()
 export class CatalogueService {
@@ -13,7 +16,7 @@ export class CatalogueService {
     private itemRepository: Repository<ItemEntity>,
   ) {}
 
-  async getItemsList(props: LoadCatalogueDto): Promise<Array<ItemEntity>> {
+  async getItemsList(props: LoadCatalogueDto): Promise<CatalogueDto> {
     const {
       page = 1,
       order = `id`,
@@ -21,18 +24,27 @@ export class CatalogueService {
       query = ``,
     } = props;
 
-    // В доках прочитал, что якобы от sql инъекций Like защищен
-    return await this.itemRepository.find({
-      where: {
-        name: Like(`%${query}%`),
+    const paginatedItems = await paginate<ItemEntity>(
+      this.itemRepository,
+      {
+        page,
+        limit: PAGE_SIZE,
       },
-      relations: [`photos`, `item_category`, `trade_category`, `user`],
-      order: {
-        [order]: orderDirection.toUpperCase(),
+      {
+        where: {
+          name: Like(`%${query}%`),
+        },
+        relations: [`photos`, `item_category`, `trade_category`, `user`],
+        order: {
+          [order]: orderDirection.toUpperCase(),
+        },
       },
-      skip: (page - 1) * PAGE_SIZE,
-      take: PAGE_SIZE,
-    });
+    );
+
+    return new Pagination<ItemDto>(
+      paginatedItems.items.map((item) => item.toDto()),
+      paginatedItems.meta,
+    );
   }
 
   async deleteCatalogueItem(id: number): Promise<boolean> {

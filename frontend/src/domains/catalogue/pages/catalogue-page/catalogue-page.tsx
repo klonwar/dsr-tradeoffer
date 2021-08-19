@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  catalogueCurrentPageSelector,
+  catalogueCurrentMetaSelector,
   catalogueItemsSelector,
   isCatalogueRequestPendingSelector,
 } from '#redux/selectors';
@@ -17,7 +17,7 @@ export const CataloguePage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const catalogueItems = useSelector(catalogueItemsSelector);
-  const currentPage = useSelector(catalogueCurrentPageSelector);
+  const currentMeta = useSelector(catalogueCurrentMetaSelector);
   const isPending = useSelector(isCatalogueRequestPendingSelector);
 
   useEffect(() => {
@@ -54,10 +54,10 @@ export const CataloguePage: FC = () => {
       <InfiniteScroll
         next={() => {
           dispatch(Operations.loadCatalogue({
-            page: currentPage + 1,
+            page: currentMeta?.currentPage + 1,
           }));
         }}
-        hasMore={true}
+        hasMore={currentMeta?.currentPage < currentMeta?.totalPages}
         loader={null}
         dataLength={catalogueItems.length}
         scrollableTarget={`scrollable-target`}

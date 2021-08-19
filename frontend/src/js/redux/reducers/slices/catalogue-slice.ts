@@ -3,9 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { LoadCatalogueOperationResult } from '#redux/operations/slices/load-catalogue-operation';
 import { Operations } from '#redux/operations/operations';
 import { onErrorSaveResult, onPendingSaveResult } from '#redux/reducers/util/operation-callback';
+import { AppPaginationMeta } from '#server/common/classes/pagination';
 
 export interface CatalogueResult {
-  currentPage: number,
+  currentMeta: AppPaginationMeta;
   pages: {
     [page: number]: LoadCatalogueOperationResult
   };
@@ -14,8 +15,8 @@ export interface CatalogueResult {
 const initialState: PREState<CatalogueResult> = {
   pending: false,
   result: {
-    currentPage: 0,
-    pages: {}
+    currentMeta: null,
+    pages: {},
   },
   error: null,
 };
@@ -37,9 +38,9 @@ const catalogueSlice = createSlice({
       .addCase(Operations.loadCatalogue.fulfilled, (state, action) => {
         state.pending = false;
         state.error = null;
-        if (action.payload.length > 0) {
+        if (action.payload.items.length > 0) {
           state.result.pages[action.meta.page] = action.payload;
-          state.result.currentPage = action.meta.page;
+          state.result.currentMeta = action.payload.meta;
         }
       })
 
@@ -51,9 +52,9 @@ const catalogueSlice = createSlice({
         if (action.payload) {
           // Очищаем целиком хранилище
           state.result.pages = {};
+          state.result.currentMeta = null;
         }
       });
-    
   },
 });
 
