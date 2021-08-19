@@ -6,6 +6,7 @@ import { Profile } from '#src/modules/user/entity/profile.entity';
 import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 import {
+  MOCK_USER_MAX_ITEMS,
   MOCK_USERS_COUNT,
   UPLOAD_PATH,
 } from '#src/constants/backend-constants';
@@ -76,8 +77,8 @@ export class MockService {
 
     const randomUsers = [];
     for (let i = 0; i < MOCK_USERS_COUNT; i++) {
-      const name1 = getRandom(5);
-      const name2 = getRandom(5);
+      const name1 = getRandom(4);
+      const name2 = getRandom(4);
       const login = `${name1}_${name2}`;
 
       const randomProfile = this.profileRepository.create({
@@ -105,7 +106,12 @@ export class MockService {
     const categories = await this.categoriesRepository.find();
     const newItems = [];
     for (const user of randomUsers) {
-      for (let i = 0; i < ~~(Math.random() * 10) + 1; i++) {
+      const minItems = user.login === `test_user` ? 11 : 1;
+      for (
+        let i = 0;
+        i < ~~(Math.random() * MOCK_USER_MAX_ITEMS) + minItems;
+        i++
+      ) {
         const photos: PhotoEntity[] = [];
         for (let j = 0; j < ~~(Math.random() * 3) + 1; j++) {
           photos.push(
