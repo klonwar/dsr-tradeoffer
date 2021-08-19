@@ -12,7 +12,7 @@ import {
 import { CatalogueService } from '#src/modules/catalogue/catalogue.service';
 import { Roles } from '#src/modules/auth/decorators/roles.decorator';
 import { UserRole } from '#server/common/enums/user-role.enum';
-import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
+import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
 import { CatalogueDto } from '#server/common/dto/catalogue.dto';
 
 @Controller(`catalogue`)
@@ -22,16 +22,17 @@ export class CatalogueController {
   @Get()
   @Roles(UserRole.USER, UserRole.ADMIN)
   @UseInterceptors(ClassSerializerInterceptor)
-  async getItemsList(@Query() query: LoadCatalogueDto): Promise<CatalogueDto> {
+  async getItemsList(
+    @Query() query: PaginationRequestDto,
+  ): Promise<CatalogueDto> {
     return await this.catalogueService.getItemsList(query);
   }
 
   @Get(`recommendations`)
   @Roles(UserRole.USER, UserRole.ADMIN)
-  @UseInterceptors(ClassSerializerInterceptor)
   async getRecommendationsList(
     @Request() req,
-    @Query() query: LoadCatalogueDto,
+    @Query() query: PaginationRequestDto,
   ): Promise<CatalogueDto> {
     return await this.catalogueService.getRecommendationsList(req.user, query);
   }

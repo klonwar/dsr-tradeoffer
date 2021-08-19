@@ -19,8 +19,13 @@ import { deleteCatalogueItemOperation } from '#redux/operations/slices/delete-ca
 import { getItemOperation } from '#redux/operations/slices/get-item-operation';
 import { checkUserExistenceOperation } from '#redux/operations/slices/check-user-existence-operation';
 import { loadRecommendationsOperation } from '#redux/operations/slices/load-recommendations-operation';
+import { resetUserItemsOperation } from '#redux/operations/slices/reset-user-items-operation';
 
 export const Operations = {
+  resetUserItems: createAsyncThunk(
+    `resetUserItems`,
+    resetUserItemsOperation,
+  ),
   login: createAsyncThunk(
     `login`,
     loginOperation,

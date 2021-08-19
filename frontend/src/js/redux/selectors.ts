@@ -3,7 +3,6 @@ import { RootState } from '#redux/reducers/root-reducer';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { UserDto } from '#server/common/dto/user.dto';
 import jwtDecode from 'jwt-decode';
-import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { UserRole } from '#server/common/enums/user-role.enum';
@@ -11,6 +10,7 @@ import { AccountsListDto } from '#server/common/dto/accounts-list.dto';
 import { CatalogueResult } from '#redux/reducers/slices/catalogue-slice';
 import { ItemDto } from '#server/common/dto/item.dto';
 import { AppPaginationMeta } from '#server/common/classes/pagination';
+import { ItemsResult } from '#redux/reducers/slices/user-items-slice';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -49,7 +49,24 @@ export const userPhotoUrlSelector = createSelector<RootState, UserDto, string>(
 
 export const isItemsRequestPendingSelector: AppSelector<boolean> = (state) => state.userItemsReducer.pending;
 
-export const itemsListSelector: AppSelector<ItemsListDto> = (state) => state.userItemsReducer.result;
+export const itemsResultSelector: AppSelector<ItemsResult> = (state) => state.userItemsReducer.result;
+
+export const itemsCurrentMetaSelector = createSelector<RootState, ItemsResult, AppPaginationMeta>(
+  itemsResultSelector,
+  (catalogueResult) => catalogueResult.currentMeta,
+);
+
+export const itemsListSelector = createSelector<RootState, ItemsResult, Array<ItemDto>>(
+  itemsResultSelector,
+  (itemsResult) => {
+    const items: Array<ItemDto> = [];
+    for (const page of Object.values(itemsResult.pages)) {
+      items.push(...page.items);
+    }
+    return items;
+  },
+);
+
 
 export const itemsRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userItemsReducer.error;
 
@@ -74,15 +91,10 @@ export const catalogueCurrentMetaSelector = createSelector<RootState, CatalogueR
   (catalogueResult) => catalogueResult.currentMeta,
 );
 
-export const catalogueCurrentPageSelector = createSelector<RootState, AppPaginationMeta, number>(
-  catalogueCurrentMetaSelector,
-  (meta) => meta?.currentPage,
-);
-
-export const catalogueItemsSelector = createSelector<RootState, CatalogueResult, ItemsListDto>(
+export const catalogueItemsSelector = createSelector<RootState, CatalogueResult, Array<ItemDto>>(
   catalogueResultSelector,
   (catalogueResult) => {
-    const items = [];
+    const items: Array<ItemDto> = [];
     for (const page of Object.values(catalogueResult.pages)) {
       items.push(...page.items);
     }

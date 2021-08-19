@@ -16,7 +16,7 @@ export const editItemOperation: AsyncThunkPayloadCreator<EditItemOperationResult
       const res = await axiosInstance.patch<EditItemOperationResult>(`item/${payload.id}`, payload);
 
       // Обновим информацию и в списке предметов
-      dispatch(Operations.getUserItemsList());
+      dispatch(Operations.resetUserItems());
 
       return res.data;
     } catch (e) {

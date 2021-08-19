@@ -12,7 +12,7 @@ import { useShowCatalogueRequestError } from '#src/js/hooks/use-show-catalogue-r
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SpinnerWrapper from '#components/spinner-wrapper/spinner-wrapper';
 import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
-import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
+import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
 
 export const CataloguePage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
@@ -21,7 +21,7 @@ export const CataloguePage: FC = () => {
   const currentMeta = useSelector(catalogueCurrentMetaSelector);
   const isPending = useSelector(isCatalogueRequestPendingSelector);
 
-  const catalogueOptions = useMemo<Partial<LoadCatalogueDto>>(() => ({
+  const catalogueOptions = useMemo<Partial<PaginationRequestDto>>(() => ({
     page: 1,
   }), []);
 

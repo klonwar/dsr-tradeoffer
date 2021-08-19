@@ -4,7 +4,7 @@ import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
 import { CatalogueDto } from '#server/common/dto/catalogue.dto';
-import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
+import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
 
 export class LoadCatalogueOperationResult extends CatalogueDto {
 }
@@ -13,7 +13,7 @@ interface Meta {
   page: number;
 }
 
-export const loadCatalogueOperation: AsyncThunkPayloadCreator<LoadCatalogueOperationResult, LoadCatalogueDto, {
+export const loadCatalogueOperation: AsyncThunkPayloadCreator<LoadCatalogueOperationResult, PaginationRequestDto, {
   rejectValue: SerializedAxiosError,
   fulfilledMeta: Meta,
 }> =

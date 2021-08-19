@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as fs from 'fs';
 import * as path from 'path';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
+import { PAGE_SIZE } from '#server/common/constants/constants';
 
 const svg2img = require(`svg2img`);
 
@@ -106,7 +107,7 @@ export class MockService {
     const categories = await this.categoriesRepository.find();
     const newItems = [];
     for (const user of randomUsers) {
-      const minItems = user.login === `test_user` ? 11 : 1;
+      const minItems = user.login === `test_user` ? PAGE_SIZE + 1 : 1;
       for (
         let i = 0;
         i < ~~(Math.random() * MOCK_USER_MAX_ITEMS) + minItems;

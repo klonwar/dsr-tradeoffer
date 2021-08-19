@@ -15,7 +15,7 @@ export const deleteItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationRe
       const res = await axiosInstance.delete<DeleteItemOperationResult>(`item/${id}`);
 
       // Обновим информацию и в списке предметов
-      dispatch(Operations.getUserItemsList());
+      dispatch(Operations.resetUserItems());
 
       return res.data;
     } catch (e) {

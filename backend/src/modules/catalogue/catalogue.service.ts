@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Brackets, Like, Repository } from 'typeorm';
-import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
+import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
 import { PAGE_SIZE } from '#server/common/constants/constants';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 import { paginate, paginateRaw, Pagination } from 'nestjs-typeorm-paginate';
@@ -17,7 +17,7 @@ export class CatalogueService {
     private itemRepository: Repository<ItemEntity>,
   ) {}
 
-  async getItemsList(props: LoadCatalogueDto): Promise<CatalogueDto> {
+  async getItemsList(props: PaginationRequestDto): Promise<CatalogueDto> {
     const {
       page = 1,
       order = `id`,
@@ -50,7 +50,7 @@ export class CatalogueService {
 
   async getRecommendationsList(
     user: User,
-    props: LoadCatalogueDto,
+    props: PaginationRequestDto,
   ): Promise<CatalogueDto> {
     const {
       page = 1,

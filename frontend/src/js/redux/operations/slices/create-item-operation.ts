@@ -32,7 +32,7 @@ export const createItemOperation: AsyncThunkPayloadCreator<CreateItemOperationRe
     });
 
     // Обновим информацию и в списке предметов
-    dispatch(Operations.getUserItemsList());
+    dispatch(Operations.resetUserItems());
 
     return res.data;
   } catch (e) {

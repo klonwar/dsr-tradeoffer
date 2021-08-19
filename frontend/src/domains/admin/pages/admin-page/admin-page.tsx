@@ -12,7 +12,7 @@ import { PhotosSlideshow } from '#domains/items/components/photos-slideshow/phot
 import { useShowCatalogueRequestError } from '#src/js/hooks/use-show-catalogue-request-error';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SpinnerWrapper from '#components/spinner-wrapper/spinner-wrapper';
-import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
+import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
 import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
 
 export const AdminPage: FC = () => {
@@ -24,7 +24,7 @@ export const AdminPage: FC = () => {
 
   // Можем в любой момент поменять настройки загрузки
   // Отсортировать результаты, отфильтровать по фразе и т.д.
-  const [loadOptions, setLoadOptions] = useState<Partial<LoadCatalogueDto>>({
+  const [loadOptions, setLoadOptions] = useState<Partial<PaginationRequestDto>>({
     order: `id`,
   });
 

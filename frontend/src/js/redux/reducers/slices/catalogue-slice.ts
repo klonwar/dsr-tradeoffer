@@ -1,4 +1,4 @@
-import { PREState } from '#redux/reducers/util/pre-state';
+import { PaginationResult, PREState, resetPaginationState } from '#redux/reducers/util/pre-state';
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadCatalogueOperationResult } from '#redux/operations/slices/load-catalogue-operation';
 import { Operations } from '#redux/operations/operations';
@@ -7,14 +7,8 @@ import {
   onPaginatedOpFulfilled,
   onPendingSaveResult,
 } from '#redux/reducers/util/operation-callback';
-import { AppPaginationMeta } from '#server/common/classes/pagination';
 
-export interface CatalogueResult {
-  currentMeta: AppPaginationMeta;
-  pages: {
-    [page: number]: LoadCatalogueOperationResult
-  };
-}
+export interface CatalogueResult extends PaginationResult<LoadCatalogueOperationResult> {}
 
 const initialState: PREState<CatalogueResult> = {
   pending: false,
@@ -29,11 +23,7 @@ const catalogueSlice = createSlice({
   name: `catalogue`,
   initialState,
   reducers: {
-    reset: (state) => {
-      state.pending = false;
-      state.error = null;
-      state.result = initialState.result;
-    },
+    reset: resetPaginationState,
   },
   extraReducers: (builder) => {
     builder
@@ -52,8 +42,7 @@ const catalogueSlice = createSlice({
         state.error = null;
         if (action.payload) {
           // Очищаем целиком хранилище
-          state.result.pages = {};
-          state.result.currentMeta = null;
+          resetPaginationState(state);
         }
       });
   },

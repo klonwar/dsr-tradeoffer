@@ -27,7 +27,7 @@ export const setItemPhotosOperation: AsyncThunkPayloadCreator<SetItemPhotosOpera
       const res = await axiosInstance.put<SetItemPhotosOperationResult>(`item/${data.id}/photos`, formData);
 
       // Обновим информацию и в списке предметов
-      dispatch(Operations.getUserItemsList());
+      dispatch(Operations.resetUserItems());
 
       return res.data;
     } catch (e) {
