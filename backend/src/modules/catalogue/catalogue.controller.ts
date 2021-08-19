@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Request,
   Param,
   ParseIntPipe,
   Query,
@@ -23,6 +24,16 @@ export class CatalogueController {
   @UseInterceptors(ClassSerializerInterceptor)
   async getItemsList(@Query() query: LoadCatalogueDto): Promise<CatalogueDto> {
     return await this.catalogueService.getItemsList(query);
+  }
+
+  @Get(`recommendations`)
+  @Roles(UserRole.USER, UserRole.ADMIN)
+  @UseInterceptors(ClassSerializerInterceptor)
+  async getRecommendationsList(
+    @Request() req,
+    @Query() query: LoadCatalogueDto,
+  ): Promise<CatalogueDto> {
+    return await this.catalogueService.getRecommendationsList(req.user, query);
   }
 
   @Delete(`/item/:id`)

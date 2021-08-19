@@ -2,7 +2,11 @@ import { PREState } from '#redux/reducers/util/pre-state';
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadCatalogueOperationResult } from '#redux/operations/slices/load-catalogue-operation';
 import { Operations } from '#redux/operations/operations';
-import { onErrorSaveResult, onPendingSaveResult } from '#redux/reducers/util/operation-callback';
+import {
+  onErrorSaveResult,
+  onPaginatedOpFulfilled,
+  onPendingSaveResult,
+} from '#redux/reducers/util/operation-callback';
 import { AppPaginationMeta } from '#server/common/classes/pagination';
 
 export interface CatalogueResult {
@@ -35,14 +39,11 @@ const catalogueSlice = createSlice({
     builder
       .addCase(Operations.loadCatalogue.pending, onPendingSaveResult)
       .addCase(Operations.loadCatalogue.rejected, onErrorSaveResult)
-      .addCase(Operations.loadCatalogue.fulfilled, (state, action) => {
-        state.pending = false;
-        state.error = null;
-        if (action.payload.items.length > 0) {
-          state.result.pages[action.meta.page] = action.payload;
-          state.result.currentMeta = action.payload.meta;
-        }
-      })
+      .addCase(Operations.loadCatalogue.fulfilled, onPaginatedOpFulfilled)
+
+      .addCase(Operations.loadRecommendations.pending, onPendingSaveResult)
+      .addCase(Operations.loadRecommendations.rejected, onErrorSaveResult)
+      .addCase(Operations.loadRecommendations.fulfilled, onPaginatedOpFulfilled)
 
       .addCase(Operations.deleteCatalogueItem.pending, onPendingSaveResult)
       .addCase(Operations.deleteCatalogueItem.rejected, onErrorSaveResult)

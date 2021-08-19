@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   catalogueCurrentMetaSelector,
@@ -12,6 +12,7 @@ import { useShowCatalogueRequestError } from '#src/js/hooks/use-show-catalogue-r
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SpinnerWrapper from '#components/spinner-wrapper/spinner-wrapper';
 import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
+import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
 
 export const CataloguePage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
@@ -20,14 +21,16 @@ export const CataloguePage: FC = () => {
   const currentMeta = useSelector(catalogueCurrentMetaSelector);
   const isPending = useSelector(isCatalogueRequestPendingSelector);
 
+  const catalogueOptions = useMemo<Partial<LoadCatalogueDto>>(() => ({
+    page: 1,
+  }), []);
+
   useEffect(() => {
     if (catalogueItems.length === 0) {
-      dispatch(Operations.loadCatalogue({
-        page: 1,
-      }));
+      dispatch(Operations.loadRecommendations(catalogueOptions));
       setIsDispatched(true);
     }
-  }, [catalogueItems, setIsDispatched, dispatch]);
+  }, [catalogueItems, setIsDispatched, dispatch, catalogueOptions]);
 
   useEffect(() => {
     return () => {
@@ -49,30 +52,33 @@ export const CataloguePage: FC = () => {
   }
 
   return (
-    <div id={`scrollable-target`}
-         className={`WithScrollbar uk-overflow-auto uk-child-width-1-1`}>
-      <InfiniteScroll
-        next={() => {
-          dispatch(Operations.loadCatalogue({
-            page: currentMeta?.currentPage + 1,
-          }));
-        }}
-        hasMore={currentMeta?.currentPage < currentMeta?.totalPages}
-        loader={null}
-        dataLength={catalogueItems.length}
-        scrollableTarget={`scrollable-target`}
-      >
-        <div className={`uk-flex uk-flex-left uk-width-1-1 uk-flex-wrap`}>
-          {catalogueItems?.map((item) => (
-            <div key={item.id} className={`uk-width-1-1 uk-width-1-2@m uk-width-1-3@l uk-padding-small`}>
-              <ItemCard {...item} linkTo={`catalogue/item`} withActions={false} />
+    <>
+      <div id={`scrollable-target`}
+           className={`WithScrollbar uk-overflow-auto uk-child-width-1-1`}>
+        <InfiniteScroll
+          next={() => {
+            dispatch(Operations.loadRecommendations({
+              ...catalogueOptions,
+              page: currentMeta?.currentPage + 1,
+            }));
+          }}
+          hasMore={currentMeta?.currentPage < currentMeta?.totalPages}
+          loader={null}
+          dataLength={catalogueItems.length}
+          scrollableTarget={`scrollable-target`}
+        >
+          <div className={`uk-flex uk-flex-left uk-width-1-1 uk-flex-wrap`}>
+            {catalogueItems?.map((item) => (
+              <div key={item.id} className={`uk-width-1-1 uk-width-1-2@m uk-width-1-3@l uk-padding-small`}>
+                <ItemCard {...item} linkTo={`catalogue/item`} withActions={false} />
+              </div>
+            )) ?? null}
+            <div className={`uk-position-relative uk-height-small uk-width-1-1 ${(!isPending) ? `uk-hidden` : ``}`}>
+              <SpinnerWrapper loading={true} />
             </div>
-          )) ?? null}
-          <div className={`uk-position-relative uk-height-small uk-width-1-1 ${(!isPending) ? `uk-hidden` : ``}`}>
-            <SpinnerWrapper loading={true} />
           </div>
-        </div>
-      </InfiniteScroll>
-    </div>
+        </InfiniteScroll>
+      </div>
+    </>
   );
 };

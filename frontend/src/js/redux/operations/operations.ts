@@ -18,6 +18,7 @@ import { loadCatalogueOperation } from '#redux/operations/slices/load-catalogue-
 import { deleteCatalogueItemOperation } from '#redux/operations/slices/delete-catalogue-item-operation';
 import { getItemOperation } from '#redux/operations/slices/get-item-operation';
 import { checkUserExistenceOperation } from '#redux/operations/slices/check-user-existence-operation';
+import { loadRecommendationsOperation } from '#redux/operations/slices/load-recommendations-operation';
 
 export const Operations = {
   login: createAsyncThunk(
@@ -96,5 +97,8 @@ export const Operations = {
     `checkUserExistence`,
     checkUserExistenceOperation,
   ),
-
+  loadRecommendations: createAsyncThunk(
+    `loadRecommendations`,
+    loadRecommendationsOperation,
+  ),
 };
