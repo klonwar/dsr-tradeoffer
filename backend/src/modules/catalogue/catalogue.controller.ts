@@ -21,7 +21,6 @@ export class CatalogueController {
 
   @Get()
   @Roles(UserRole.USER, UserRole.ADMIN)
-  @UseInterceptors(ClassSerializerInterceptor)
   async getItemsList(
     @Query() query: PaginationRequestDto,
   ): Promise<CatalogueDto> {

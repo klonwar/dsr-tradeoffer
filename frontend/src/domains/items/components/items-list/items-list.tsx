@@ -21,8 +21,6 @@ export const ItemsList: FC = () => {
     orderDirection: `DESC`
   }), []);
 
-  // todo dispatch on delete/edit/create
-
   useEffect(() => {
     if (itemsList.length === 0) {
       dispatch(Operations.getUserItemsList(itemsOptions));

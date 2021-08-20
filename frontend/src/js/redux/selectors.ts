@@ -6,11 +6,11 @@ import jwtDecode from 'jwt-decode';
 import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { UserRole } from '#server/common/enums/user-role.enum';
-import { AccountsListDto } from '#server/common/dto/accounts-list.dto';
 import { CatalogueResult } from '#redux/reducers/slices/catalogue-slice';
 import { ItemDto } from '#server/common/dto/item.dto';
 import { AppPaginationMeta } from '#server/common/classes/pagination';
 import { ItemsResult } from '#redux/reducers/slices/user-items-slice';
+import { AccountsResult } from '#redux/reducers/slices/accounts-slice';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -78,7 +78,23 @@ export const categoriesRequestErrorSelector: AppSelector<SerializedAxiosError> =
 
 export const isAccountsRequestPendingSelector: AppSelector<boolean> = (state) => state.accountsReducer.pending;
 
-export const accountsListSelector: AppSelector<AccountsListDto> = (state) => state.accountsReducer.result;
+export const accountsResultSelector: AppSelector<AccountsResult> = (state) => state.accountsReducer.result;
+
+export const accountsCurrentMetaSelector = createSelector<RootState, AccountsResult, AppPaginationMeta>(
+  accountsResultSelector,
+  (catalogueResult) => catalogueResult.currentMeta,
+);
+
+export const accountsListSelector = createSelector<RootState, AccountsResult, Array<UserDto>>(
+  accountsResultSelector,
+  (accountsResult) => {
+    const accounts: Array<UserDto> = [];
+    for (const page of Object.values(accountsResult.pages)) {
+      accounts.push(...page.items);
+    }
+    return accounts;
+  },
+);
 
 export const accountsRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.accountsReducer.error;
 
