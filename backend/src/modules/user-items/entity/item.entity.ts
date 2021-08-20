@@ -5,6 +5,8 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
@@ -21,6 +23,7 @@ import { validateSync } from 'class-validator';
 import * as chalk from 'chalk';
 import { InternalServerErrorException } from '@nestjs/common';
 import { ItemDto } from '#server/common/dto/item.dto';
+import { TradeOfferEntity } from '#src/modules/trade/entity/trade-offer.entity';
 
 @Entity({ name: `item` })
 export class ItemEntity {
@@ -100,4 +103,10 @@ export class ItemEntity {
   })
   @JoinColumn({ name: `user_id` })
   user: User;
+
+  @OneToOne(() => TradeOfferEntity, (to) => to.offered_item)
+  to_where_offered: TradeOfferEntity;
+
+  @OneToMany(() => TradeOfferEntity, (to) => to.desired_item)
+  tos_where_desired: TradeOfferEntity[];
 }
