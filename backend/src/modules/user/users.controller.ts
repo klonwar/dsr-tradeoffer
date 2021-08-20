@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Put,
@@ -12,7 +11,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from '#src/modules/user/users.service';
-import { UserDto } from '#server/common/dto/user.dto';
 import { Public } from '#src/modules/auth/decorators/public.decorator';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';

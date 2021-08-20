@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserDto } from '#server/common/dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '#src/modules/user/entity/user.entity';
 import { Repository } from 'typeorm';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
+import { UserRole } from '#server/common/enums/user-role.enum';
 
 @Injectable()
 export class AccountsService {
@@ -27,6 +32,9 @@ export class AccountsService {
       throw new NotFoundException(ErrorMessagesEnum.NO_SUCH_USER);
     }
 
+    if (targetUser.role === UserRole.ADMIN) {
+      throw new UnauthorizedException(ErrorMessagesEnum.CANT_DELETE_ADMIN);
+    }
     await this.userRepository.remove(targetUser);
 
     return await this.findAll();

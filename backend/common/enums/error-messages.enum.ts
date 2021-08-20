@@ -12,4 +12,5 @@ export enum ErrorMessagesEnum {
   NO_SUCH_USER = `Такого пользователя нет`,
   NOT_YOUR_ITEM = `Это не ваша вещь`,
   CATEGORY_CONFLICT = `Такая категория уже существует`,
+  CANT_DELETE_ADMIN = `Вы не можете удалять администраторов`,
 }
