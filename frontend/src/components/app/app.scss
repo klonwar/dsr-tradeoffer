@@ -16,3 +16,16 @@ html, body, #root {
 * {
   font-family: "Fira Code", monospace !important;
 }
+
+.NoSelect {
+  user-select: none;
+}
+
+.TextEllipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.WithScrollbar {
+  @extend %custom-scrollbar;
+}

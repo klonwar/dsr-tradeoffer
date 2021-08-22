@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 import { MaxDateString } from '#server/common/validators/validator-extend-max-date-string-decorator';
 import { get18yoDate } from '#server/common/dto/create-user.dto';
+import { PHONE_REGEX } from '#server/common/constants/constants';
 
 export class EditProfileDto {
   @IsOptional()
@@ -18,7 +19,7 @@ export class EditProfileDto {
   email: string;
 
   @IsMobilePhone(`ru-RU`, { strictMode: false }, { message: `Неверный формат` })
-  @Matches(/^[0-9]{10}$/, { message: `Введите 10 символов без кода страны` })
+  @Matches(PHONE_REGEX, { message: `Введите 10 символов без кода страны` })
   @IsOptional()
   phone: string;
 

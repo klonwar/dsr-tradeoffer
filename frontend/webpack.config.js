@@ -91,11 +91,11 @@ module.exports = {
       `.tsx`,
     ],
     alias: {
-      "#components": path.resolve(__dirname, `src`, `components`),
+      "#domains": path.resolve(__dirname, `src`, `domains`),
       "#src": path.resolve(__dirname, `src`),
       "#client": path.resolve(__dirname),
       "#server": path.resolve(__dirname, `..`, `backend`),
-      "#reusable": path.resolve(__dirname, `src`, `components`, `_reusable`),
+      "#components": path.resolve(__dirname, `src`, `components`),
       "#redux": path.resolve(__dirname, `src`, `js`, `redux`),
     },
   },

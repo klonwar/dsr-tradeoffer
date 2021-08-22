@@ -4,15 +4,19 @@ import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
 import { ItemsListDto } from '#server/common/dto/items-list.dto';
-import { DeleteItemDto } from '#server/common/dto/delete-item.dto';
+import { Operations } from '#redux/operations/operations';
 
 export class DeleteItemOperationResult extends ItemsListDto {
 }
 
-export const deleteItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationResult, DeleteItemDto, { rejectValue: SerializedAxiosError }> =
-  async (payload, { rejectWithValue }) => {
+export const deleteItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationResult, number, { rejectValue: SerializedAxiosError }> =
+  async (id, { rejectWithValue, dispatch }) => {
     try {
-      const res = await axiosInstance.post<DeleteItemOperationResult>(`items/delete`, payload);
+      const res = await axiosInstance.delete<DeleteItemOperationResult>(`item/${id}`);
+
+      // Обновим информацию и в списке предметов
+      dispatch(Operations.getUserItemsList());
+
       return res.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

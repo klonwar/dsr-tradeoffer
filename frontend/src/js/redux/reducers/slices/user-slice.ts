@@ -55,7 +55,16 @@ const userSlice = createSlice({
 
       .addCase(Operations.changePassword.pending, onPendingSaveResult)
       .addCase(Operations.changePassword.rejected, onErrorSaveResult)
-      .addCase(Operations.changePassword.fulfilled, onFulfilled);
+      .addCase(Operations.changePassword.fulfilled, onFulfilled)
+
+      .addCase(Operations.checkUserExistence.pending, onPendingSaveResult)
+      .addCase(Operations.checkUserExistence.rejected, onErrorSaveResult)
+      .addCase(Operations.checkUserExistence.fulfilled, (state, action) => {
+        // Профиль юзера был удален, выйдем из профиля
+        if (action.payload === false) {
+          resetPreState(state);
+        }
+      });
   },
 });
 

@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { IsPhotoPath } from '#server/common/validators/validator-extend-is-photo-path';
 import { MaxDateString } from '#server/common/validators/validator-extend-max-date-string-decorator';
+import { PHONE_REGEX } from '#server/common/constants/constants';
 
 export const get18yoDate = () => {
   const targetDate = new Date();
@@ -31,7 +32,7 @@ export class CreateUserDto {
   email: string;
 
   @IsMobilePhone(`ru-RU`, { strictMode: false }, { message: `Неверный формат` })
-  @Matches(/^[0-9]{10}$/, { message: `Введите 10 символов без кода страны` })
+  @Matches(PHONE_REGEX, { message: `Введите 10 символов без кода страны` })
   @IsNotEmpty({ message: `Нужно указать номер` })
   phone: string;
 

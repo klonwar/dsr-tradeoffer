@@ -10,12 +10,16 @@ import { Provider } from 'react-redux';
 import store from '#redux/store';
 import { USER_SLICE_NAME, UserActions } from '#redux/reducers/slices/user-slice';
 import axiosInstance from '#src/js/axios/axios-instance';
+import { Operations } from '#redux/operations/operations';
+import { userDataSelector } from '#redux/selectors';
 
 (() => {
   // @ts-ignore
   UIkit.use(Icons);
 
   store.dispatch(UserActions.stateFromStorage());
+  if (userDataSelector(store.getState()))
+    store.dispatch(Operations.checkUserExistence(userDataSelector(store.getState()).username));
 
   // Сохранение состояния в localStorage
   store.subscribe(() => {

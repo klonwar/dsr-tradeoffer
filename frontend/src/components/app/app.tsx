@@ -1,47 +1,128 @@
 import React, { FC } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Main from '#components/main/main';
-import HeaderWrapper from '#reusable/ui/header/header-wrapper';
-import Login from '#components/login/login';
-import Logout from '#components/login/logout/logout';
-import Registration from '#components/registration/registration';
-import { Profile } from '#components/profile/profile';
-import { ItemPage } from '#components/item-page/item-page';
+import HeaderWrapper from '#components/header-wrapper/header-wrapper';
+import { AdminRoute } from '#components/app/components/role-routes/admin-route';
+import { UserRoute } from '#components/app/components/role-routes/user-route';
+import { ShowItemPage } from '#domains/items/pages/show-item-page/show-item-page';
+import { ItemsPage } from '#domains/items/pages/items-page/items-page';
+import Login from '#domains/login/pages/login/login';
+import { UnauthorizedRoute } from '#components/app/components/role-routes/unauthorized-route';
+import Logout from '#domains/logout/pages/logout/logout';
+import { AuthorizedRoute } from '#components/app/components/role-routes/authorized-route';
+import MainPage from '#domains/main/pages/main-page/main-page';
+import { ProfilePage } from '#domains/profile/pages/profile-page/profile-page';
+import RegistrationPage from '#domains/registration/pages/registration-page/registration-page';
+import { AddItemPage } from '#domains/items/pages/add-item-page/add-item-page';
+import { EditItemPage } from '#domains/items/pages/edit-item-page/edit-item-page';
+import { AdminPage } from '#domains/admin/pages/admin-page/admin-page';
+import { AccountsListPage } from '#domains/admin/pages/accounts-list-page/accounts-list-page';
+import { CategoriesListPage } from '#domains/admin/pages/categories-list-page/categories-list-page';
+import { AddCategoryPage } from '#domains/admin/pages/add-category-page/add-category-page';
+import { CataloguePage } from '#domains/catalogue/pages/catalogue-page/catalogue-page';
 
 const App: FC = () => {
   return (
     <Switch>
-      <Route path={`/item/:itemId`}>
-        <HeaderWrapper>
-          <ItemPage />
-        </HeaderWrapper>
-      </Route>
+      {/* AdminRoutes */}
 
-      <Route path={`/profile`}>
+      <AdminRoute path={`/admin/categories/add`}>
         <HeaderWrapper>
-          <Profile />
+          <AddCategoryPage />
         </HeaderWrapper>
-      </Route>
+      </AdminRoute>
 
-      <Route path={`/registration`}>
+      <AdminRoute exact path={`/admin/categories`}>
         <HeaderWrapper>
-          <Registration />
+          <CategoriesListPage />
         </HeaderWrapper>
-      </Route>
+      </AdminRoute>
 
-      <Route path={`/login`}>
+      <AdminRoute path={`/admin/users`}>
+        <HeaderWrapper>
+          <AccountsListPage />
+        </HeaderWrapper>
+      </AdminRoute>
+
+      <AdminRoute exact path={`/admin`}>
+        <HeaderWrapper>
+          <AdminPage />
+        </HeaderWrapper>
+      </AdminRoute>
+
+      {/* ItemsRoutes */}
+
+      <UserRoute path={`/catalogue/item/:itemId`}>
+        <HeaderWrapper>
+          <ShowItemPage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      <UserRoute exact path={`/catalogue`}>
+        <HeaderWrapper>
+          <CataloguePage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      <UserRoute path={`/items/add`}>
+        <HeaderWrapper>
+          <AddItemPage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      <UserRoute path={`/items/:itemId/edit`}>
+        <HeaderWrapper>
+          <EditItemPage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      <UserRoute exact path={`/items/:itemId`}>
+        <HeaderWrapper>
+          {/* itemId будет получен через хук */}
+          <ShowItemPage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      <UserRoute path={`/items`}>
+        <HeaderWrapper>
+          <ItemsPage />
+        </HeaderWrapper>
+      </UserRoute>
+
+      {/* ProfileRoutes */}
+
+      <AuthorizedRoute path={`/profile`}>
+        <HeaderWrapper>
+          <ProfilePage />
+        </HeaderWrapper>
+      </AuthorizedRoute>
+
+      {/* RegistrationRoutes */}
+
+      <UnauthorizedRoute path={`/registration`}>
+        <HeaderWrapper>
+          <RegistrationPage />
+        </HeaderWrapper>
+      </UnauthorizedRoute>
+
+      {/* LogoutRoutes */}
+
+      <AuthorizedRoute path={`/logout`}>
+        <Logout />
+      </AuthorizedRoute>
+
+      {/* LoginRoutes */}
+
+      <UnauthorizedRoute path={`/login`}>
         <HeaderWrapper>
           <Login />
         </HeaderWrapper>
-      </Route>
+      </UnauthorizedRoute>
 
-      <Route path={`/logout`}>
-        <Logout />
-      </Route>
+      {/* MainRoutes */}
 
       <Route exact path={`/`}>
         <HeaderWrapper>
-          <Main />
+          <MainPage />
         </HeaderWrapper>
       </Route>
 
