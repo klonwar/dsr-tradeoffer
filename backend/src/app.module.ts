@@ -14,6 +14,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { MockModule } from './modules/mock/mock.module';
 import { CatalogueModule } from './modules/catalogue/catalogue.module';
 import { ItemModule } from '#src/modules/item/item.module';
+import { TradeModule } from '#src/modules/trade/trade.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ItemModule } from '#src/modules/item/item.module';
     MockModule,
     CatalogueModule,
     ItemModule,
+    TradeModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],

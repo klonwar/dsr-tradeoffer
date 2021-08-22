@@ -13,4 +13,9 @@ export enum ErrorMessagesEnum {
   NOT_YOUR_ITEM = `Это не ваша вещь`,
   CATEGORY_CONFLICT = `Такая категория уже существует`,
   CANT_DELETE_ADMIN = `Вы не можете удалять администраторов`,
+  CANT_DESIRE_YOUR_ITEM = `Вы не можете выбрать желаемой свою вещь`,
+  ITEM_ALREADY_OFFERED = `Для этой вещи уже было создано предложение об обмене`,
+  MISMATCHED_CATEGORIES = `Соответствующие категории не совпадают`,
+  NO_SUCH_TRADEOFFER = `Такого трейдоффера нет`,
+  NOT_YOUR_TRADEOFFER = `Это не ваш трейдоффер`,
 }

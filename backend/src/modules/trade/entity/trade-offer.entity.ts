@@ -7,7 +7,11 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
-import { Type } from 'class-transformer';
+import { classToPlain, plainToClass, Type } from 'class-transformer';
+import { validateSync } from 'class-validator';
+import * as chalk from 'chalk';
+import { InternalServerErrorException } from '@nestjs/common';
+import { TradeofferDto } from '#server/common/dto/tradeoffer.dto';
 
 @Entity({ name: `trade-offer` })
 export class TradeOfferEntity {
@@ -19,6 +23,22 @@ export class TradeOfferEntity {
 
   @Column()
   desired_item_id: number;
+
+  toDto() {
+    // Transform
+    const plainThis = classToPlain(this);
+
+    // Validate
+    const toDto = plainToClass(TradeofferDto, plainThis);
+    const errors = validateSync(toDto, {});
+
+    if (errors.length) {
+      console.error(chalk.red(errors.toString()));
+      throw new InternalServerErrorException();
+    }
+
+    return plainThis as TradeofferDto;
+  }
 
   // Relations
 

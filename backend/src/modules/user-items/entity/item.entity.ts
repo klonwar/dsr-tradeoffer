@@ -104,7 +104,9 @@ export class ItemEntity {
   @JoinColumn({ name: `user_id` })
   user: User;
 
-  @OneToOne(() => TradeOfferEntity, (to) => to.offered_item)
+  @OneToOne(() => TradeOfferEntity, (to) => to.offered_item, {
+    cascade: true,
+  })
   to_where_offered: TradeOfferEntity;
 
   @OneToMany(() => TradeOfferEntity, (to) => to.desired_item)
