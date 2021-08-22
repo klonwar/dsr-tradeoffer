@@ -12,7 +12,8 @@ import {
 } from '#redux/selectors';
 import userBox from '#src/icons/user-box.svg';
 import boxList from '#src/icons/box-list.svg';
-import cart from "#src/icons/shopping-cart.svg";
+import cart from '#src/icons/shopping-cart.svg';
+import trades from '#src/icons/trades.svg';
 
 const Header: React.FC = () => {
   const activeClassName = `active uk-card-default`;
@@ -44,6 +45,10 @@ const Header: React.FC = () => {
                      className={`Header-link uk-icon`}>
               <img className={`uk-icon-image`} src={boxList} alt={``} uk-svg={``} />
             </NavLink>
+            <NavLink activeClassName={activeClassName} to={`/trades`}
+                     className={`Header-link uk-icon`}>
+              <img className={`uk-icon-image`} src={trades} alt={``} uk-svg={``} />
+            </NavLink>
           </>
         ) : null}
 
@@ -64,7 +69,7 @@ const Header: React.FC = () => {
                    className={`Header-link uk-icon uk-position-relative`}>
             <div
               className={`Header-linkIcon Header-linkIcon--paddingFreeHorizontal uk-position-absolute uk-flex uk-flex-column uk-flex-middle uk-flex-center`}>
-              <img  className={`uk-icon uk-icon-image`} src={cart} uk-svg={``}/>
+              <img alt={`basket`} className={`uk-icon uk-icon-image`} src={cart} uk-svg={``} />
               <div className={`Header-linkIconLabel uk-width-1-1 uk-flex uk-child-width-expand`}>
                 <div className={`uk-text-right`}>
                   {offeredLength}

@@ -13,6 +13,7 @@ import { ItemsResult } from '#redux/reducers/slices/user-items-slice';
 import { AccountsResult } from '#redux/reducers/slices/accounts-slice';
 import { BasketContent } from '#redux/reducers/slices/basket-slice';
 import { TradeofferDto } from '#server/common/dto/tradeoffer.dto';
+import { TradeofferListResult } from '#redux/reducers/slices/user-trades-slice';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -151,3 +152,25 @@ export const isTradeRequestPendingSelector: AppSelector<boolean> = (state) => st
 export const tradeRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.tradeReducer.error;
 
 export const tradeRequestResultSelector: AppSelector<TradeofferDto> = (state) => state.tradeReducer.result;
+
+export const isUserOwnedTradesRequestPendingSelector: AppSelector<boolean> = (state) => state.userTradesReducer.owned.pending;
+
+export const userOwnedTradesResultSelector: AppSelector<TradeofferListResult> = (state) => state.userTradesReducer.owned.result;
+
+export const userOwnedTradesCurrentMetaSelector = createSelector<RootState, TradeofferListResult, AppPaginationMeta>(
+  userOwnedTradesResultSelector,
+  (tradeofferResult) => tradeofferResult.currentMeta,
+);
+
+export const userOwnedTradesListSelector = createSelector<RootState, TradeofferListResult, Array<TradeofferDto>>(
+  userOwnedTradesResultSelector,
+  (tradeofferResult) => {
+    const items: Array<TradeofferDto> = [];
+    for (const page of Object.values(tradeofferResult.pages)) {
+      items.push(...page.items);
+    }
+    return items;
+  },
+);
+
+export const userOwnedTradesRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userTradesReducer.owned.error;

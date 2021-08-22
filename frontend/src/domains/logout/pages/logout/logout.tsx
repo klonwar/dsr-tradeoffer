@@ -9,6 +9,7 @@ import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
 import { BasketActions } from '#redux/reducers/slices/basket-slice';
 import { ItemActions } from '#redux/reducers/slices/item-slice';
 import { TradeActions } from '#redux/reducers/slices/trade-slice';
+import { UserTradesActions } from '#redux/reducers/slices/user-trades-slice';
 
 const Logout: FC = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ const Logout: FC = () => {
     dispatch(TradeActions.reset());
     dispatch(UserItemsActions.reset());
     dispatch(UserActions.logout());
+    dispatch(UserTradesActions.reset());
     // eslint-disable-next-line
   }, []);
 

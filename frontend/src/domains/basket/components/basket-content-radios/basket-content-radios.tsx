@@ -15,7 +15,7 @@ interface Props {
 export const BasketContentRadios: FC<Props> = (props) => {
   const { basketContent, name, useForm: { register, errors } } = props;
   return (
-    <div className={`uk-flex uk-flex-column uk-flex-center uk-width-1-1 uk-width-2-3@s uk-height-1-1`}>
+    <div className={`uk-flex uk-flex-column uk-width-1-1 uk-width-2-3@s uk-height-1-1`}>
       <h3 className={`uk-text-muted uk-text-center uk-margin-top`}>{keyToLabelText.get(name)}</h3>
       <div className={`WithScrollbar uk-overflow-auto`}>
         {Object.values(basketContent).map((item) => (

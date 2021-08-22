@@ -20,6 +20,7 @@ import { CategoriesListPage } from '#domains/admin/pages/categories-list-page/ca
 import { AddCategoryPage } from '#domains/admin/pages/add-category-page/add-category-page';
 import { CataloguePage } from '#domains/catalogue/pages/catalogue-page/catalogue-page';
 import { BasketPage } from '#domains/basket/pages/basket-page';
+import { TradesPage } from '#domains/trade/pages/trades-page';
 
 const App: FC = () => {
   return (
@@ -49,6 +50,14 @@ const App: FC = () => {
           <AdminPage />
         </HeaderWrapper>
       </AdminRoute>
+
+      {/* TradeRoutes */}
+
+      <UserRoute path={`/trades`}>
+        <HeaderWrapper>
+          <TradesPage />
+        </HeaderWrapper>
+      </UserRoute>
 
       {/* BasketRoutes */}
 

@@ -37,8 +37,6 @@ export class TradeService {
       query = ``,
     } = props;
 
-    // todo прокинуть фотографии
-
     const paginatedTradeoffers = await paginate<TradeOfferEntity>(
       this.tradeoffersRepository,
       {
@@ -46,12 +44,24 @@ export class TradeService {
         limit: PAGE_SIZE,
       },
       {
-        where: {
-          offered_item: {
-            user: {
-              id: user.id,
-            },
+        join: {
+          alias: `to`,
+          leftJoin: {
+            offered_item: `to.offered_item`,
+            desired_item: `to.desired_item`,
+            offered_item_user: `offered_item.user`,
           },
+        },
+        where: (qb) => {
+          qb.where(`offered_item.user.id = :ownerId`, {
+            ownerId: user.id,
+          })
+            .orWhere(`offered_item.name LIKE :offeredLike`, {
+              offeredLike: `%${query}%`,
+            })
+            .orWhere(`desired_item.name LIKE :desiredLike`, {
+              desiredLike: `%${query}%`,
+            });
         },
         relations: [
           `offered_item`,

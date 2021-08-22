@@ -9,7 +9,7 @@ import {
   tradeRequestResultSelector,
 } from '#redux/selectors';
 import { useSelector } from 'react-redux';
-import { BasketContentRadios } from '#domains/basket/components/basket-content-radios';
+import { BasketContentRadios } from '#domains/basket/components/basket-content-radios/basket-content-radios';
 import { useForm } from 'react-hook-form';
 import { CreateTradeofferDto } from '#server/common/dto/create-tradeoffer.dto';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
@@ -48,26 +48,27 @@ export const BasketPage: FC = () => {
 
   // Все успешно
   useEffect(() => {
-    if (tradeResult) {
+    if (isSubmitSuccessful && tradeResult) {
       dispatch(BasketActions.reset());
+      dispatch(TradeActions.reset());
       history.replace(`/trades`);
     }
-  }, [tradeResult, dispatch]);
+  }, [isSubmitSuccessful, tradeResult, dispatch, history]);
 
   if (!offered || !desired)
     return null;
 
   return (
-    <div className={`WithScrollbar uk-overflow-auto`}>
+    <div className={`WithScrollbar uk-overflow-auto uk-height-1-1`}>
       <form className={`uk-padding-small uk-flex uk-flex-column uk-height-1-1`} onSubmit={onSubmit}>
-        <div className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-around uk-width-1-1 uk-flex-wrap`}>
-          <div className={`BasketList uk-width-1-1 uk-width-1-2@m uk-flex uk-flex-column uk-flex-middle`}>
+        <div className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-around uk-width-1-1 uk-flex-wrap uk-height-1-1`}>
+          <div className={`BasketList uk-width-1-1 uk-width-1-2@m uk-flex uk-flex-column uk-flex-middle uk-flex-left uk-height-1-1`}>
             <BasketContentRadios
               name={`offered_item_id`}
               basketContent={offered}
               useForm={{ register, errors }} />
           </div>
-          <div className={`BasketList uk-width-1-1 uk-width-1-2@m uk-flex uk-flex-column uk-flex-middle`}>
+          <div className={`BasketList uk-width-1-1 uk-width-1-2@m uk-flex uk-flex-column uk-flex-middle uk-flex-left uk-height-1-1`}>
             <BasketContentRadios
               name={`desired_item_id`}
               basketContent={desired}
