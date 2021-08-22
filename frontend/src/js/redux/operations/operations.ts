@@ -20,11 +20,18 @@ import { getItemOperation } from '#redux/operations/slices/get-item-operation';
 import { checkUserExistenceOperation } from '#redux/operations/slices/check-user-existence-operation';
 import { loadRecommendationsOperation } from '#redux/operations/slices/load-recommendations-operation';
 import { resetUserItemsOperation } from '#redux/operations/slices/reset-user-items-operation';
+import { createTradeOperation } from '#redux/operations/slices/create-trade-operation';
+import { resetUserTradesOperation } from '#redux/operations/slices/reset-user-trades-operation';
+import { cancelTradeOperation } from '#redux/operations/slices/cancel-trade-operation';
 
 export const Operations = {
   resetUserItems: createAsyncThunk(
     `resetUserItems`,
     resetUserItemsOperation,
+  ),
+  resetUserTrades: createAsyncThunk(
+    `resetUserTrades`,
+    resetUserTradesOperation,
   ),
   login: createAsyncThunk(
     `login`,
@@ -105,5 +112,13 @@ export const Operations = {
   loadRecommendations: createAsyncThunk(
     `loadRecommendations`,
     loadRecommendationsOperation,
+  ),
+  createTrade: createAsyncThunk(
+    `createTrade`,
+    createTradeOperation,
+  ),
+  cancelTrade: createAsyncThunk(
+    `cancelTrade`,
+    cancelTradeOperation,
   ),
 };

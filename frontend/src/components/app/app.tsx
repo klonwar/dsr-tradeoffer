@@ -19,6 +19,7 @@ import { AccountsListPage } from '#domains/admin/pages/accounts-list-page/accoun
 import { CategoriesListPage } from '#domains/admin/pages/categories-list-page/categories-list-page';
 import { AddCategoryPage } from '#domains/admin/pages/add-category-page/add-category-page';
 import { CataloguePage } from '#domains/catalogue/pages/catalogue-page/catalogue-page';
+import { BasketPage } from '#domains/basket/pages/basket-page';
 
 const App: FC = () => {
   return (
@@ -48,6 +49,14 @@ const App: FC = () => {
           <AdminPage />
         </HeaderWrapper>
       </AdminRoute>
+
+      {/* BasketRoutes */}
+
+      <UserRoute path={`/basket`}>
+        <HeaderWrapper>
+          <BasketPage />
+        </HeaderWrapper>
+      </UserRoute>
 
       {/* ItemsRoutes */}
 

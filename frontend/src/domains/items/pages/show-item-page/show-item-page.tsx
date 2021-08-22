@@ -114,7 +114,12 @@ export const ShowItemPage: FC = () => {
                 Удалить
               </button>
             </>
-          ) : null}
+          ) : (
+            <Link to={`/trade/create/${itemId}`} className={`uk-button uk-button-primary uk-flex uk-flex-middle`}>
+              <span className={`Actions-icon`} uk-icon={`icon: plus`} />
+              <span className={`uk-margin-small-left uk-visible@s`}>Обмен</span>
+            </Link>
+          )}
         </div>
 
       </div>

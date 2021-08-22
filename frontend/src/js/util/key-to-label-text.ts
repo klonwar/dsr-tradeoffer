@@ -4,6 +4,7 @@ import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { ChangePasswordDto } from '#server/common/dto/change-password.dto';
 import { UserDto } from '#server/common/dto/user.dto';
+import { CreateTradeofferDto } from '#server/common/dto/create-tradeoffer.dto';
 
 export type AvailableTranslations =
   FieldPath<CreateUserDto> |
@@ -11,6 +12,7 @@ export type AvailableTranslations =
   FieldPath<ChangePasswordDto> |
   FieldPath<CreateItemDto> |
   FieldPath<UserDto> |
+  FieldPath<CreateTradeofferDto> |
   `passwordConfirmation`;
 
 export const keyToLabelText = new Map<AvailableTranslations, string>();
@@ -37,3 +39,6 @@ keyToLabelText.set(`geo`, `Местоположение`);
 keyToLabelText.set(`item_category_id`, `Категория вещи`);
 keyToLabelText.set(`trade_category_id`, `Категория для обмена`);
 keyToLabelText.set(`photosPaths`, `Фотографии`);
+
+keyToLabelText.set(`offered_item_id`, `Предлагаемая вещь`);
+keyToLabelText.set(`desired_item_id`, `Желаемая вещь`);

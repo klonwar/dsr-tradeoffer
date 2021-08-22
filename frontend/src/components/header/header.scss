@@ -13,4 +13,17 @@
       background-blend-mode: color;
     }
   }
+
+  &-linkIcon {
+    &--paddingFreeHorizontal {
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  &-linkIconLabel {
+    font-size: $text-small-font-size;
+    margin-top: 0.5em;
+  }
 }

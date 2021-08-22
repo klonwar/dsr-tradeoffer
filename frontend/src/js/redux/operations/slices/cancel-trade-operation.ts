@@ -4,19 +4,16 @@ import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
 import { Operations } from '#redux/operations/operations';
-import { BasketActions } from '#redux/reducers/slices/basket-slice';
 
-export type DeleteItemOperationResult = boolean;
+export type CancelTradeOperationResult = boolean;
 
-export const deleteItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationResult, number, { rejectValue: SerializedAxiosError }> =
+export const cancelTradeOperation: AsyncThunkPayloadCreator<CancelTradeOperationResult, number, { rejectValue: SerializedAxiosError }> =
   async (id, { rejectWithValue, dispatch }) => {
     try {
-      const res = await axiosInstance.delete<DeleteItemOperationResult>(`item/${id}`);
+      const res = await axiosInstance.delete<CancelTradeOperationResult>(`trade/${id}`);
 
-      // Обновим информацию и в списке предметов
-      dispatch(Operations.resetUserItems());
-      // И удалим из корзины
-      dispatch(BasketActions.delete(id));
+      // Обновим информацию и в списке трейдофферов
+      dispatch(Operations.resetUserTrades());
 
       return res.data;
     } catch (e) {

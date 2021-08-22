@@ -12,21 +12,28 @@ import { USER_SLICE_NAME, UserActions } from '#redux/reducers/slices/user-slice'
 import axiosInstance from '#src/js/axios/axios-instance';
 import { Operations } from '#redux/operations/operations';
 import { userDataSelector } from '#redux/selectors';
+import { BASKET_SLICE_NAME, BasketActions } from '#redux/reducers/slices/basket-slice';
 
 (() => {
   // @ts-ignore
   UIkit.use(Icons);
 
   store.dispatch(UserActions.stateFromStorage());
+  store.dispatch(BasketActions.stateFromStorage());
+
   if (userDataSelector(store.getState()))
     store.dispatch(Operations.checkUserExistence(userDataSelector(store.getState()).username));
 
   // Сохранение состояния в localStorage
   store.subscribe(() => {
-    const userReducer = store.getState().userReducer;
+    const state = store.getState();
     localStorage.setItem(
       USER_SLICE_NAME,
-      JSON.stringify(userReducer),
+      JSON.stringify(state.userReducer),
+    );
+    localStorage.setItem(
+      BASKET_SLICE_NAME,
+      JSON.stringify(state.basketReducer),
     );
   });
 

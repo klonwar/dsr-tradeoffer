@@ -70,7 +70,7 @@ export const CataloguePage: FC = () => {
           <div className={`uk-flex uk-flex-left uk-width-1-1 uk-flex-wrap`}>
             {catalogueItems?.map((item) => (
               <div key={item.id} className={`uk-width-1-1 uk-width-1-2@m uk-width-1-3@l uk-padding-small`}>
-                <ItemCard {...item} linkTo={`catalogue/item`} withActions={false} />
+                <ItemCard item={item} linkTo={`catalogue/item`} isUserItem={false} />
               </div>
             )) ?? null}
             <div className={`uk-position-relative uk-height-small uk-width-1-1 ${(!isPending) ? `uk-hidden` : ``}`}>

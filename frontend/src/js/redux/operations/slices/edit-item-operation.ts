@@ -3,11 +3,12 @@ import axios from 'axios';
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
-import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { EditItemDto } from '#server/common/dto/edit-item.dto';
 import { Operations } from '#redux/operations/operations';
+import { BasketActions } from '#redux/reducers/slices/basket-slice';
+import { ItemDto } from '#server/common/dto/item.dto';
 
-export class EditItemOperationResult extends ItemsListDto {
+export class EditItemOperationResult extends ItemDto {
 }
 
 export const editItemOperation: AsyncThunkPayloadCreator<EditItemOperationResult, EditItemDto, { rejectValue: SerializedAxiosError }> =
@@ -17,6 +18,8 @@ export const editItemOperation: AsyncThunkPayloadCreator<EditItemOperationResult
 
       // Обновим информацию и в списке предметов
       dispatch(Operations.resetUserItems());
+      // А так же в корзине
+      dispatch(BasketActions.update(res.data));
 
       return res.data;
     } catch (e) {

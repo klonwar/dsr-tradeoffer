@@ -65,7 +65,7 @@ export const ItemsList: FC = () => {
         <div className={`uk-flex uk-flex-center uk-width-1-1 uk-flex-wrap`}>
           {itemsList?.map((item) => (
             <div key={item.id} className={`uk-width-1-1 uk-width-1-2@m uk-padding-small`}>
-              <ItemCard {...item} />
+              <ItemCard item={item} isUserItem={true} />
             </div>
           )) ?? null}
         </div>

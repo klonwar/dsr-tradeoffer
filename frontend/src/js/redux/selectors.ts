@@ -11,6 +11,8 @@ import { ItemDto } from '#server/common/dto/item.dto';
 import { AppPaginationMeta } from '#server/common/classes/pagination';
 import { ItemsResult } from '#redux/reducers/slices/user-items-slice';
 import { AccountsResult } from '#redux/reducers/slices/accounts-slice';
+import { BasketContent } from '#redux/reducers/slices/basket-slice';
+import { TradeofferDto } from '#server/common/dto/tradeoffer.dto';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -123,3 +125,29 @@ export const catalogueRequestErrorSelector: AppSelector<SerializedAxiosError> = 
 export const isCurrentItemRequestPendingSelector: AppSelector<boolean> = (state) => state.itemReducer.pending;
 export const currentItemSelector: AppSelector<ItemDto> = (state) => state.itemReducer.result;
 export const currentItemErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemReducer.error;
+
+export const basketOfferedSelector: AppSelector<BasketContent> = (state) => state.basketReducer.offered;
+export const basketDesiredSelector: AppSelector<BasketContent> = (state) => state.basketReducer.desired;
+export const basketOfferedLengthSelector = createSelector<RootState, BasketContent, number>(
+  basketOfferedSelector,
+  (offered) => Object.keys(offered).length,
+);
+export const basketDesiredLengthSelector = createSelector<RootState, BasketContent, number>(
+  basketDesiredSelector,
+  (desired) => Object.keys(desired).length,
+);
+
+export const sumBasketContentSelector = createSelector<RootState, BasketContent, BasketContent, BasketContent>(
+  basketOfferedSelector,
+  basketDesiredSelector,
+  (offered, desired) => ({
+    ...offered,
+    ...desired,
+  }),
+);
+
+export const isTradeRequestPendingSelector: AppSelector<boolean> = (state) => state.tradeReducer.pending;
+
+export const tradeRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.tradeReducer.error;
+
+export const tradeRequestResultSelector: AppSelector<TradeofferDto> = (state) => state.tradeReducer.result;
