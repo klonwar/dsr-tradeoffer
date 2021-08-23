@@ -7,6 +7,7 @@ import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
 import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { Profile } from '#src/modules/user/entity/profile.entity';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
+import { TradeOfferEntity } from '#src/modules/trade/entity/trade-offer.entity';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
       CategoryEntity,
       ItemEntity,
       PhotoEntity,
+      TradeOfferEntity,
     ]),
   ],
   controllers: [MockController],
