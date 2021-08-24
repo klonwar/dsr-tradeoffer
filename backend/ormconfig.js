@@ -6,6 +6,7 @@ module.exports = {
   password: `root`,
   database: `tradeoffer_db`,
   entities: [`dist/**/*.entity{.ts,.js}`],
+  subscribers: [`dist/**/*.subscriber{.ts,.js}`],
   synchronize: false,
   migrationsRun: true,
   logging: true,
