@@ -16,7 +16,9 @@ export const MainUser: FC = () => {
             <li>Добавить <Link to={`/items/add`}>новую вещь</Link> для обмена</li>
             <li>Посмотреть на свои <Link to={`/items/`}>выложенные вещи</Link></li>
             <li>Найти интересующее предложение в <Link to={`/catalogue/`}>каталоге предложений</Link></li>
-            <li>Обменяться с другим пользователем <span className={`uk-text-muted`}>(Пока в разработке)</span></li>
+            <li>Добавить в <Link to={`/basket/`}>корзину</Link> свои и чужие вещи</li>
+            <li>Выбрать из них две и создать обмен</li>
+            <li>Посмотреть на ваши и предложенные вам <Link to={`/trades/`}>обмены</Link></li>
           </ul>
         </div>
       </div>
