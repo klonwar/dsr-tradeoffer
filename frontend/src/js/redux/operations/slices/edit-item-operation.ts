@@ -18,6 +18,8 @@ export const editItemOperation: AsyncThunkPayloadCreator<EditItemOperationResult
 
       // Обновим информацию и в списке предметов
       dispatch(Operations.resetUserItems());
+      // В списке трейдофферов
+      dispatch(Operations.resetUserTrades());
       // А так же в корзине
       dispatch(BasketActions.update(res.data));
 

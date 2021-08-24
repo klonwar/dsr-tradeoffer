@@ -23,7 +23,8 @@ import { resetUserItemsOperation } from '#redux/operations/slices/reset-user-ite
 import { createTradeOperation } from '#redux/operations/slices/create-trade-operation';
 import { resetUserTradesOperation } from '#redux/operations/slices/reset-user-trades-operation';
 import { cancelTradeOperation } from '#redux/operations/slices/cancel-trade-operation';
-import { getUserOwnedTradesOperation } from '#redux/operations/slices/get-user-trades-list-operation';
+import { getUserOwnedTradesOperation } from '#redux/operations/slices/get-user-owned-trades-list-operation';
+import { getUserIncomingTradesOperation } from '#redux/operations/slices/get-user-incoming-trades-list-operation';
 
 export const Operations = {
   resetUserItems: createAsyncThunk(
@@ -125,5 +126,9 @@ export const Operations = {
   getUserOwnedTrades: createAsyncThunk(
     `getUserOwnedTrades`,
     getUserOwnedTradesOperation,
+  ),
+  getUserIncomingTrades: createAsyncThunk(
+    `getUserIncomingTrades`,
+    getUserIncomingTradesOperation,
   ),
 };

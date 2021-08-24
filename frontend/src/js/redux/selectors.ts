@@ -174,3 +174,25 @@ export const userOwnedTradesListSelector = createSelector<RootState, TradeofferL
 );
 
 export const userOwnedTradesRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userTradesReducer.owned.error;
+
+export const isUserIncomingTradesRequestPendingSelector: AppSelector<boolean> = (state) => state.userTradesReducer.incoming.pending;
+
+export const userIncomingTradesResultSelector: AppSelector<TradeofferListResult> = (state) => state.userTradesReducer.incoming.result;
+
+export const userIncomingTradesCurrentMetaSelector = createSelector<RootState, TradeofferListResult, AppPaginationMeta>(
+  userIncomingTradesResultSelector,
+  (tradeofferResult) => tradeofferResult.currentMeta,
+);
+
+export const userIncomingTradesListSelector = createSelector<RootState, TradeofferListResult, Array<TradeofferDto>>(
+  userIncomingTradesResultSelector,
+  (tradeofferResult) => {
+    const items: Array<TradeofferDto> = [];
+    for (const page of Object.values(tradeofferResult.pages)) {
+      items.push(...page.items);
+    }
+    return items;
+  },
+);
+
+export const userIncomingTradesRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userTradesReducer.incoming.error;
