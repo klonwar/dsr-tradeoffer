@@ -31,8 +31,9 @@ export const BasketPage: FC = () => {
   const tradeError = useSelector(tradeRequestErrorSelector);
   const tradeResult = useSelector(tradeRequestResultSelector);
 
-  const { register, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm<CreateTradeofferDto>({
+  const { register, handleSubmit, formState: { errors, isSubmitSuccessful, isValid } } = useForm<CreateTradeofferDto>({
     resolver: classValidatorResolver(CreateTradeofferDto),
+    mode: `onChange`,
   });
 
   const onSubmit = handleSubmit((data) => {
@@ -40,8 +41,8 @@ export const BasketPage: FC = () => {
   });
 
   useEffect(() => {
-      dispatch(TradeActions.reset());
-      // eslint-disable-next-line
+    dispatch(TradeActions.reset());
+    // eslint-disable-next-line
   }, []);
 
   useShowTradeRequestError(isSubmitSuccessful);
@@ -61,14 +62,17 @@ export const BasketPage: FC = () => {
   return (
     <div className={`WithScrollbar uk-overflow-auto uk-height-1-1`}>
       <form className={`uk-padding-small uk-flex uk-flex-column uk-height-1-1`} onSubmit={onSubmit}>
-        <div className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-around uk-width-1-1 uk-flex-wrap uk-height-1-1`}>
-          <div className={`BasketList uk-width-1-1 uk-width-1-2@m uk-flex uk-flex-column uk-flex-middle uk-flex-left uk-height-1-1`}>
+        <div
+          className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-around uk-width-1-1 uk-flex-wrap uk-height-1-1`}>
+          <div
+            className={`BasketList uk-width-1-1 uk-width-1-2@m uk-flex uk-flex-column uk-flex-middle uk-flex-left uk-height-1-1`}>
             <BasketContentRadios
               name={`offered_item_id`}
               basketContent={offered}
               useForm={{ register, errors }} />
           </div>
-          <div className={`BasketList uk-width-1-1 uk-width-1-2@m uk-flex uk-flex-column uk-flex-middle uk-flex-left uk-height-1-1`}>
+          <div
+            className={`BasketList uk-width-1-1 uk-width-1-2@m uk-flex uk-flex-column uk-flex-middle uk-flex-left uk-height-1-1`}>
             <BasketContentRadios
               name={`desired_item_id`}
               basketContent={desired}
@@ -76,7 +80,8 @@ export const BasketPage: FC = () => {
           </div>
         </div>
         <div className={`uk-width-1-1 uk-flex uk-flex-center uk-padding-small uk-padding-remove-bottom`}>
-          <button disabled={isPending} type={`submit`} className={`uk-button uk-button-primary`}>Предложить обмен
+          <button disabled={isPending || !isValid} type={`submit`} className={`uk-button uk-button-primary`}>Предложить
+            обмен
           </button>
         </div>
       </form>

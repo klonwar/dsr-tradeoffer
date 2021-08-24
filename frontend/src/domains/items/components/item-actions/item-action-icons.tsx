@@ -1,13 +1,9 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Operations } from '#redux/operations/operations';
 import { useAppDispatch } from '#redux/store';
-import { BasketActions } from '#redux/reducers/slices/basket-slice';
 import { ItemDto } from '#server/common/dto/item.dto';
-import { sumBasketContentSelector } from '#redux/selectors';
-import { useSelector } from 'react-redux';
-import addToCart from '#src/icons/add-to-cart.svg';
-import deleteFromCart from '#src/icons/delete-from-cart.svg';
+import { AddToCart } from '#domains/items/components/add-to-cart/add-to-cart';
 
 interface Props {
   item: ItemDto;
@@ -18,26 +14,11 @@ interface Props {
 export const ItemActionIcons: FC<Props> = ({ item, isUserItem, withItemActions }) => {
   const dispatch = useAppDispatch();
   const { id } = item;
-  const basketContent = useSelector(sumBasketContentSelector);
-  const isInBasket = useMemo(() => basketContent[item.id], [basketContent, item]);
 
   return (
     <div className={`ItemActions`}>
       <div className={`uk-width-expand`}>
-        <button className={`uk-button ${(isInBasket) ? `uk-button-primary` : `uk-button-default`}`} onClick={() => {
-          if (isInBasket) {
-            dispatch(BasketActions.delete(item.id));
-          } else {
-            if (isUserItem) {
-              dispatch(BasketActions.setOffered(item));
-            } else {
-              dispatch(BasketActions.setDesired(item));
-            }
-          }
-        }}>
-          <img className={`uk-icon uk-icon-image`} alt={`basket action`} src={(isInBasket) ? deleteFromCart : addToCart}
-               uk-svg={``} />
-        </button>
+        <AddToCart item={item} />
       </div>
       {(isUserItem && withItemActions) ? (
         <>

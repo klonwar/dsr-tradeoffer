@@ -11,6 +11,7 @@ import { PhotosSlideshow } from '#domains/items/components/photos-slideshow/phot
 import { Operations } from '#redux/operations/operations';
 import { useAppDispatch } from '#redux/store';
 import { ItemActions } from '#redux/reducers/slices/item-slice';
+import { AddToCart } from '#domains/items/components/add-to-cart/add-to-cart';
 
 export const ShowItemPage: FC = () => {
   const history = useHistory();
@@ -88,6 +89,7 @@ export const ShowItemPage: FC = () => {
           </div>
         </div>
         <div className={`ItemActions uk-flex uk-flex-wrap`} uk-margin={``}>
+          <AddToCart item={item} />
           <button type={`button`} className={`uk-button uk-button-default`}
                   onClick={() => {
                     if (history.length > 1) {
@@ -114,12 +116,7 @@ export const ShowItemPage: FC = () => {
                 Удалить
               </button>
             </>
-          ) : (
-            <Link to={`/trade/create/${itemId}`} className={`uk-button uk-button-primary uk-flex uk-flex-middle`}>
-              <span className={`Actions-icon`} uk-icon={`icon: plus`} />
-              <span className={`uk-margin-small-left uk-visible@s`}>Обмен</span>
-            </Link>
-          )}
+          ) : null}
         </div>
 
       </div>
