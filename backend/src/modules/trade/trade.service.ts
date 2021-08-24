@@ -9,13 +9,13 @@ import { TradeOfferEntity } from '#src/modules/trade/entity/trade-offer.entity';
 import { Not, Repository } from 'typeorm';
 import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
 import { User } from '#src/modules/user/entity/user.entity';
-import { paginate, Pagination } from 'nestjs-typeorm-paginate';
-import { PAGE_SIZE } from '#server/common/constants/constants';
+import { Pagination } from 'nestjs-typeorm-paginate';
 import { TradeoffersListDto } from '#server/common/dto/tradeoffers-list.dto';
 import { CreateTradeofferDto } from '#server/common/dto/create-tradeoffer.dto';
 import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 import { TradeofferDto } from '#server/common/dto/tradeoffer.dto';
+import { appPaginate } from '#src/util/app-paginate';
 
 @Injectable()
 export class TradeService {
@@ -26,63 +26,70 @@ export class TradeService {
     private itemsRepository: Repository<ItemEntity>,
   ) {}
 
-  async getUserOwnedTradeoffers(
+  private async getPaginatedTradeoffers(
     user: User,
     props: PaginationRequestDto,
+    associatedItem: `offered_item` | `desired_item`,
   ): Promise<TradeoffersListDto> {
-    const {
-      page = 1,
-      order = `id`,
-      orderDirection = `ASC`,
-      query = ``,
-    } = props;
+    const { query = `` } = props;
 
-    const paginatedTradeoffers = await paginate<TradeOfferEntity>(
+    const paginatedTO = await appPaginate(
       this.tradeoffersRepository,
+      props,
       {
-        page,
-        limit: PAGE_SIZE,
-      },
-      {
-        join: {
-          alias: `to`,
-          leftJoin: {
-            offered_item: `to.offered_item`,
-            desired_item: `to.desired_item`,
-            offered_item_user: `offered_item.user`,
+        [associatedItem]: {
+          user: {
+            id: user.id,
           },
         },
-        where: (qb) => {
-          qb.where(`offered_item.user.id = :ownerId`, {
-            ownerId: user.id,
-          })
-            .orWhere(`offered_item.name LIKE :offeredLike`, {
+        [Symbol(`AND (.. OR .. OR ..)`)]: [
+          {
+            sql: `$currentName_offered_item.name LIKE :offeredLike`,
+            params: {
               offeredLike: `%${query}%`,
-            })
-            .orWhere(`desired_item.name LIKE :desiredLike`, {
+            },
+          },
+          {
+            sql: `$currentName_desired_item.name LIKE :desiredLike`,
+            params: {
               desiredLike: `%${query}%`,
-            });
-        },
+            },
+          },
+        ],
+      },
+      {
+        autoJoin: true,
         relations: [
-          `offered_item`,
-          `offered_item.user`,
-          `offered_item.item_category`,
-          `offered_item.trade_category`,
           `desired_item`,
-          `desired_item.user`,
           `desired_item.item_category`,
           `desired_item.trade_category`,
+          `desired_item.user`,
+          `offered_item`,
+          `offered_item.item_category`,
+          `offered_item.trade_category`,
+          `offered_item.user`,
         ],
-        order: {
-          [order]: orderDirection.toUpperCase(),
-        },
       },
     );
 
     return new Pagination<TradeofferDto>(
-      paginatedTradeoffers.items.map((to) => to.toDto()),
-      paginatedTradeoffers.meta,
+      paginatedTO.items.map((item: TradeOfferEntity) => item.toDto()),
+      paginatedTO.meta,
     );
+  }
+
+  async getUserOwnedTradeoffers(
+    user: User,
+    props: PaginationRequestDto,
+  ): Promise<TradeoffersListDto> {
+    return await this.getPaginatedTradeoffers(user, props, `offered_item`);
+  }
+
+  async getUserIncomingTradeoffers(
+    user: User,
+    props: PaginationRequestDto,
+  ): Promise<TradeoffersListDto> {
+    return await this.getPaginatedTradeoffers(user, props, `desired_item`);
   }
 
   async getTradeoffer(user: User, id: number): Promise<TradeOfferEntity> {
@@ -171,7 +178,7 @@ export class TradeService {
     });
   }
 
-  async cancelTradeoffer(user: User, id: number) {
+  async cancelTradeoffer(user: User, id: number): Promise<boolean> {
     const tradeoffer = await this.tradeoffersRepository.findOne(id, {
       relations: [`offered_item`, `desired_item`],
     });
@@ -186,6 +193,23 @@ export class TradeService {
       throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_TRADEOFFER);
 
     await this.tradeoffersRepository.remove(tradeoffer);
+
+    return true;
+  }
+
+  async acceptTradeoffer(user: User, id: number): Promise<boolean> {
+    const tradeoffer = await this.tradeoffersRepository.findOne(id, {
+      relations: [`offered_item`, `desired_item`],
+    });
+
+    if (!tradeoffer)
+      throw new NotFoundException(ErrorMessagesEnum.NO_SUCH_TRADEOFFER);
+
+    if (tradeoffer.desired_item.user_id !== user.id)
+      throw new UnauthorizedException(ErrorMessagesEnum.NOT_YOUR_TRADEOFFER);
+
+    await this.itemsRepository.remove(tradeoffer.desired_item);
+    await this.itemsRepository.remove(tradeoffer.offered_item);
 
     return true;
   }

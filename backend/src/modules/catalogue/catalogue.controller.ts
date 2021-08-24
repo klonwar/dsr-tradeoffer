@@ -22,9 +22,10 @@ export class CatalogueController {
   @Get()
   @Roles(UserRole.USER, UserRole.ADMIN)
   async getItemsList(
+    @Request() req,
     @Query() query: PaginationRequestDto,
   ): Promise<CatalogueDto> {
-    return await this.catalogueService.getItemsList(query);
+    return await this.catalogueService.getItemsList(req.user, query);
   }
 
   @Get(`recommendations`)

@@ -104,6 +104,8 @@ export class ItemEntity {
   @JoinColumn({ name: `user_id` })
   user: User;
 
+  @Type(() => TradeOfferEntity)
+  @Transform(({ value }) => value?.id ?? null)
   @OneToOne(() => TradeOfferEntity, (to) => to.offered_item, {
     cascade: true,
   })

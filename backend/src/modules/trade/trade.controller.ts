@@ -8,7 +8,6 @@ import {
   ParseIntPipe,
   Post,
   Query,
-  Req,
   Request,
   UseGuards,
   UseInterceptors,
@@ -46,6 +45,15 @@ export class TradeController {
     return this.tradeService.getUserOwnedTradeoffers(req.user, query);
   }
 
+  @Get(`incoming`)
+  @Roles(UserRole.USER)
+  async getUserIncomingTradeoffers(
+    @Request() req,
+    @Query() query,
+  ): Promise<TradeoffersListDto> {
+    return this.tradeService.getUserIncomingTradeoffers(req.user, query);
+  }
+
   @Post(`create`)
   @Roles(UserRole.USER)
   @UseInterceptors(ClassSerializerInterceptor)
@@ -63,5 +71,14 @@ export class TradeController {
     @Param(`itemId`, ParseIntPipe) id: number,
   ): Promise<boolean> {
     return await this.tradeService.cancelTradeoffer(req.user, id);
+  }
+
+  @Post(`:itemId`)
+  @Roles(UserRole.USER)
+  async acceptTradeoffer(
+    @Request() req,
+    @Param(`itemId`, ParseIntPipe) id: number,
+  ): Promise<boolean> {
+    return await this.tradeService.acceptTradeoffer(req.user, id);
   }
 }

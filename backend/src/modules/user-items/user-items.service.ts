@@ -5,9 +5,9 @@ import { ItemEntity } from '#src/modules/user-items/entity/item.entity';
 import { Like, Repository } from 'typeorm';
 import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { paginate, Pagination } from 'nestjs-typeorm-paginate';
-import { PAGE_SIZE } from '#server/common/constants/constants';
 import { ItemDto } from '#server/common/dto/item.dto';
 import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
+import { PAGE_SIZE } from '#server/common/constants/constants';
 
 @Injectable()
 export class UserItemsService {
@@ -27,6 +27,7 @@ export class UserItemsService {
       query = ``,
     } = props;
 
+    // Нужно получить множественную связь с фотографиями, поэтому не можем использовать твикер
     const paginatedItems = await paginate<ItemEntity>(
       this.itemRepository,
       {
@@ -38,7 +39,13 @@ export class UserItemsService {
           user,
           name: Like(`%${query}%`),
         },
-        relations: [`photos`, `item_category`, `trade_category`, `user`],
+        relations: [
+          `photos`,
+          `item_category`,
+          `trade_category`,
+          `user`,
+          `to_where_offered`,
+        ],
         order: {
           [order]: orderDirection.toUpperCase(),
         },

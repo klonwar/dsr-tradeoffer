@@ -6,13 +6,13 @@ import {
 import { UserDto } from '#server/common/dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '#src/modules/user/entity/user.entity';
-import { Like, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { ErrorMessagesEnum } from '#server/common/enums/error-messages.enum';
 import { UserRole } from '#server/common/enums/user-role.enum';
 import { AccountsListDto } from '#server/common/dto/accounts-list.dto';
-import { paginate, Pagination } from 'nestjs-typeorm-paginate';
-import { PAGE_SIZE } from '#server/common/constants/constants';
+import { Pagination } from 'nestjs-typeorm-paginate';
 import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
+import { appPaginate } from '#src/util/app-paginate';
 
 @Injectable()
 export class AccountsService {
@@ -23,32 +23,29 @@ export class AccountsService {
 
   // Выгрузка информации о всех пользователях с добавлением данных из Profile
   async findAll(props: PaginationRequestDto): Promise<AccountsListDto> {
-    const {
-      page = 1,
-      order = `id`,
-      orderDirection = `ASC`,
-      query = ``,
-    } = props;
+    const { query = `` } = props;
 
-    const paginatedUsers = await paginate<User>(
+    const paginatedUsers = await appPaginate(
       this.userRepository,
+      props,
       {
-        page,
-        limit: PAGE_SIZE,
+        [Symbol(`AND (.. OR .. OR .. OR)`)]: [
+          {
+            sql: `$currentName.login LIKE :loginLike`,
+            params: {
+              loginLike: `%${query}%`,
+            },
+          },
+          {
+            sql: `$currentName_profile.firstName LIKE :fnLike`,
+            params: {
+              fnLike: `%${query}%`,
+            },
+          },
+        ],
       },
       {
-        join: { alias: `user`, leftJoin: { profile: `user.profile` } },
-        where: (qb) => {
-          qb.where({
-            login: Like(`%${query}%`),
-          }).orWhere(`profile.firstName LIKE :firstName`, {
-            firstName: `%${query}%`,
-          });
-        },
-        relations: [`profile`, `profile.photo`],
-        order: {
-          [order]: orderDirection.toUpperCase(),
-        },
+        relations: [`profile`],
       },
     );
 
