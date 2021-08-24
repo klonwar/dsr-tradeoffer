@@ -9,7 +9,6 @@ export class PaginationRequestDto {
   page?: number;
 
   @IsOptional()
-  @IsIn([`id`, `name`])
   order?: string;
 
   @Transform(({ value }) => value.toLowerCase())

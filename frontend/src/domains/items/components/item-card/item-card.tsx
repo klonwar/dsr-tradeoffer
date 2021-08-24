@@ -36,10 +36,16 @@ export const ItemCard: FC<ItemProps> = (props) => {
                 {trade_category.name}
               </span>
             </div>
-            <div className={`ItemCard-location`}>
+            <div className={`ItemCard-meta`}>
               <span uk-icon={`icon: location; ratio: 0.75`} />
               <span>{geo}</span>
             </div>
+            {(!isUserItem) ? (
+              <div className={`ItemCard-meta`}>
+                <span uk-icon={`icon: user; ratio: 0.75`} />
+                <span>{item.user}</span>
+              </div>
+            ) : null }
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ export const CataloguePage: FC = () => {
   if (!isPending && isDispatched && catalogueItems?.length === 0) {
     return (
       <div className={`uk-width-1-1 uk-flex uk-flex-center uk-flex-middle uk-text-center uk-padding-small`}>
-        <h2 className={`uk-text-muted`}>Здесь будет список вещей</h2>
+        <h2 className={`uk-text-muted`}>Здесь будут предложенные вещи</h2>
       </div>
     );
   }

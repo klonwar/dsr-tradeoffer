@@ -37,7 +37,7 @@ keyToLabelText.set(`name`, `Название`);
 keyToLabelText.set(`description`, `Описание`);
 keyToLabelText.set(`geo`, `Местоположение`);
 keyToLabelText.set(`item_category_id`, `Категория вещи`);
-keyToLabelText.set(`trade_category_id`, `Категория для обмена`);
+keyToLabelText.set(`trade_category_id`, `Хочу поменять на`);
 keyToLabelText.set(`photosPaths`, `Фотографии`);
 
 keyToLabelText.set(`offered_item_id`, `Предлагаемая вещь`);

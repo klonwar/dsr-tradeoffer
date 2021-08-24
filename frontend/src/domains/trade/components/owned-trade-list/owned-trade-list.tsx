@@ -11,8 +11,8 @@ import {
 } from '#redux/selectors';
 import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
 import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
-import { useShowCatalogueRequestError } from '#src/js/hooks/use-show-catalogue-request-error';
 import { TradeCard } from '#domains/trade/components/trade-card/trade-card';
+import { useShowTradeRequestError } from '#src/js/hooks/use-show-trade-request-error';
 
 export const OwnedTradeList: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
@@ -42,7 +42,7 @@ export const OwnedTradeList: FC = () => {
     setIsEmpty(!isPending && isDispatched && tradesList?.length === 0);
   }, [isPending, isDispatched, tradesList]);
 
-  useShowCatalogueRequestError(isDispatched);
+  useShowTradeRequestError(isDispatched);
 
   if (!tradesList)
     return null;
@@ -50,7 +50,7 @@ export const OwnedTradeList: FC = () => {
   return (
     <div className={`uk-flex uk-flex-column uk-width-1-1 uk-height-1-1`}>
       <h3 className={`uk-text-muted uk-text-center uk-margin-top`}>Вы предложили</h3>
-      <div id={`scrollable-target`}
+      <div id={`scrollable-target_owned`}
            className={`WithScrollbar uk-overflow-auto uk-child-width-1-1`}>
         <InfiniteScroll
           next={() => {
@@ -62,7 +62,7 @@ export const OwnedTradeList: FC = () => {
           hasMore={currentMeta?.currentPage < currentMeta?.totalPages}
           loader={null}
           dataLength={tradesList.length}
-          scrollableTarget={`scrollable-target`}
+          scrollableTarget={`scrollable-target_owned`}
         >
           <div className={`uk-flex uk-flex-left uk-width-1-1 uk-flex-wrap`}>
             {(isEmpty) ? (
