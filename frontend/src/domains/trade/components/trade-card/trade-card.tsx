@@ -41,13 +41,24 @@ export const TradeCard: FC<TradeProps> = (props) => {
           </div>
         </div>
       </div>
-      {(isUserTrade) ? (
-        <div className={`uk-flex uk-flex-right`}>
+      <div className={`uk-flex uk-flex-right`}>
+        {(isUserTrade) ? (
+
           <button className={`uk-link`} type={`button`} onClick={() => {
             dispatch(Operations.cancelTrade(id));
           }} uk-icon={`trash`} />
-        </div>
-      ) : null}
+
+        ) : (
+          <>
+            <button className={`uk-link uk-padding-small uk-padding-remove-vertical`} type={`button`} onClick={() => {
+              dispatch(Operations.cancelTrade(id));
+            }} uk-icon={`close`} />
+            <button className={`uk-link uk-padding-small uk-padding-remove-vertical`} type={`button`} onClick={() => {
+              dispatch(Operations.acceptTrade(id));
+            }} uk-icon={`check`} />
+          </>
+        )}
+      </div>
     </div>
   );
 };

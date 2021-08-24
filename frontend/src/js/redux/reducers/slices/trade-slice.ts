@@ -22,6 +22,10 @@ const tradeSlice = createSlice({
       .addCase(Operations.cancelTrade.rejected, onErrorSaveResult)
       .addCase(Operations.cancelTrade.fulfilled, resetPreState)
 
+      .addCase(Operations.acceptTrade.pending, onPendingSaveResult)
+      .addCase(Operations.acceptTrade.rejected, onErrorSaveResult)
+      .addCase(Operations.acceptTrade.fulfilled, resetPreState)
+
       .addCase(Operations.createTrade.pending, onPendingSaveResult)
       .addCase(Operations.createTrade.rejected, onErrorSaveResult)
       .addCase(Operations.createTrade.fulfilled, onFulfilled);
