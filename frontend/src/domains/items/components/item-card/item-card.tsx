@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { ItemActionIcons } from '#domains/items/components/item-actions/item-action-icons';
 
-interface ItemProps extends Partial<ItemDto> {
-  withActions?: boolean;
-  linkTo?: string
+interface ItemProps {
+  item: ItemDto;
+  isUserItem: boolean;
+  withItemActions?: boolean;
+  linkTo?: string;
 }
 
 export const ItemCard: FC<ItemProps> = (props) => {
-  const { id, name, geo, item_category, trade_category, photos, withActions = true, linkTo = `items` } = props;
-
+  const { item, isUserItem = true, linkTo = `items`, withItemActions = true } = props;
+  const { id, name, geo, item_category, trade_category, photos } = item;
   const photoPath = (photos?.[0]?.photoPath)
     ? srcFromPhotoPath(photos[0].photoPath)
     : noPhoto;
@@ -34,14 +36,20 @@ export const ItemCard: FC<ItemProps> = (props) => {
                 {trade_category.name}
               </span>
             </div>
-            <div className={`ItemCard-location`}>
+            <div className={`ItemCard-meta`}>
               <span uk-icon={`icon: location; ratio: 0.75`} />
               <span>{geo}</span>
             </div>
+            {(!isUserItem) ? (
+              <div className={`ItemCard-meta`}>
+                <span uk-icon={`icon: user; ratio: 0.75`} />
+                <span>{item.user}</span>
+              </div>
+            ) : null }
           </div>
         </div>
       </div>
-      {(withActions) ? <ItemActionIcons id={id} /> : null}
+      <ItemActionIcons item={item} isUserItem={isUserItem} withItemActions={withItemActions} />
     </div>
   );
 };

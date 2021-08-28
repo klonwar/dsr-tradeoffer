@@ -1,7 +1,7 @@
 import { IsIn, IsOptional, IsPositive } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 
-export class LoadCatalogueDto {
+export class PaginationRequestDto {
   @Type(() => String)
   @Transform(({ value }) => parseInt(value))
   @IsPositive({ message: `Введите корректную страницу` })
@@ -9,7 +9,6 @@ export class LoadCatalogueDto {
   page?: number;
 
   @IsOptional()
-  @IsIn([`id`, `name`])
   order?: string;
 
   @Transform(({ value }) => value.toLowerCase())

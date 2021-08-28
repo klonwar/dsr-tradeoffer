@@ -3,11 +3,11 @@ import axios from 'axios';
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
-import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { CreateItemDto } from '#server/common/dto/create-item.dto';
 import { Operations } from '#redux/operations/operations';
+import { ItemDto } from '#server/common/dto/item.dto';
 
-export class CreateItemOperationResult extends ItemsListDto {}
+export class CreateItemOperationResult extends ItemDto {}
 
 export const createItemOperation: AsyncThunkPayloadCreator<CreateItemOperationResult, {
   data: CreateItemDto,
@@ -32,7 +32,7 @@ export const createItemOperation: AsyncThunkPayloadCreator<CreateItemOperationRe
     });
 
     // Обновим информацию и в списке предметов
-    dispatch(Operations.getUserItemsList());
+    dispatch(Operations.resetUserItems());
 
     return res.data;
   } catch (e) {

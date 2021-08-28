@@ -25,10 +25,20 @@ export class ItemService {
     private categoryRepository: Repository<CategoryEntity>,
   ) {}
 
-  async getItem(id: number): Promise<ItemEntity> {
+  async getItem(user: User, id: number): Promise<ItemEntity> {
     const item = await this.itemRepository.findOne(id, {
-      relations: [`photos`, `user`, `item_category`, `trade_category`],
+      relations: [
+        `photos`,
+        `user`,
+        `item_category`,
+        `trade_category`,
+        `to_where_offered`,
+      ],
     });
+
+    if (user.id !== item.user_id) {
+      item.to_where_offered = null;
+    }
 
     if (!item) throw new NotFoundException(ErrorMessagesEnum.NO_SUCH_ITEM);
 
@@ -59,7 +69,7 @@ export class ItemService {
 
     await this.itemRepository.save(newItem);
 
-    return await this.getItem(newItem.id);
+    return await this.getItem(user, newItem.id);
   }
 
   async removeItem(user: User, id: number): Promise<boolean> {
@@ -113,7 +123,7 @@ export class ItemService {
 
     await this.itemRepository.save(item);
 
-    return await this.getItem(item.id);
+    return await this.getItem(user, item.id);
   }
 
   async setItemPhotos(
@@ -142,6 +152,6 @@ export class ItemService {
 
     await this.itemRepository.save(item);
 
-    return await this.getItem(id);
+    return await this.getItem(user, id);
   }
 }

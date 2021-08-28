@@ -26,3 +26,12 @@ export const onFulfilled = (state, action) => {
   state.result = action.payload;
   state.error = null;
 };
+
+export const onPaginatedOpFulfilled = (state, action) => {
+  state.pending = false;
+  state.error = null;
+  if (action.payload.items.length > 0) {
+    state.result.pages[action.payload.meta.currentPage] = action.payload;
+    state.result.currentMeta = action.payload.meta;
+  }
+};

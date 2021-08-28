@@ -45,8 +45,8 @@ export class ItemController {
   @Get(`:itemId`)
   @Roles(UserRole.ADMIN, UserRole.USER)
   @UseInterceptors(ClassSerializerInterceptor)
-  async getItem(@Param(`itemId`, ParseIntPipe) id: number) {
-    return await this.itemService.getItem(id);
+  async getItem(@Request() req, @Param(`itemId`, ParseIntPipe) id: number) {
+    return await this.itemService.getItem(req.user, id);
   }
 
   @Delete(`:itemId`)

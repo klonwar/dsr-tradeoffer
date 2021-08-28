@@ -60,6 +60,8 @@ const userSlice = createSlice({
       .addCase(Operations.checkUserExistence.pending, onPendingSaveResult)
       .addCase(Operations.checkUserExistence.rejected, onErrorSaveResult)
       .addCase(Operations.checkUserExistence.fulfilled, (state, action) => {
+        state.error = null;
+        state.pending = false;
         // Профиль юзера был удален, выйдем из профиля
         if (action.payload === false) {
           resetPreState(state);

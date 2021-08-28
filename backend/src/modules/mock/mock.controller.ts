@@ -11,4 +11,16 @@ export class MockController {
   async generate() {
     await this.mockService.generate();
   }
+
+  @Public()
+  @Post(`generate/items`)
+  async generateItems() {
+    await this.mockService.generateItems();
+  }
+
+  @Public()
+  @Post(`generate/tradeoffers`)
+  async generateTradeoffers() {
+    await this.mockService.generateTradeoffers();
+  }
 }

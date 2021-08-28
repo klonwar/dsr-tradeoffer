@@ -18,8 +18,24 @@ import { loadCatalogueOperation } from '#redux/operations/slices/load-catalogue-
 import { deleteCatalogueItemOperation } from '#redux/operations/slices/delete-catalogue-item-operation';
 import { getItemOperation } from '#redux/operations/slices/get-item-operation';
 import { checkUserExistenceOperation } from '#redux/operations/slices/check-user-existence-operation';
+import { loadRecommendationsOperation } from '#redux/operations/slices/load-recommendations-operation';
+import { resetUserItemsOperation } from '#redux/operations/slices/reset-user-items-operation';
+import { createTradeOperation } from '#redux/operations/slices/create-trade-operation';
+import { resetUserTradesOperation } from '#redux/operations/slices/reset-user-trades-operation';
+import { cancelTradeOperation } from '#redux/operations/slices/cancel-trade-operation';
+import { getUserOwnedTradesOperation } from '#redux/operations/slices/get-user-owned-trades-list-operation';
+import { getUserIncomingTradesOperation } from '#redux/operations/slices/get-user-incoming-trades-list-operation';
+import { acceptTradeOperation } from '#redux/operations/slices/accept-trade-operation';
 
 export const Operations = {
+  resetUserItems: createAsyncThunk(
+    `resetUserItems`,
+    resetUserItemsOperation,
+  ),
+  resetUserTrades: createAsyncThunk(
+    `resetUserTrades`,
+    resetUserTradesOperation,
+  ),
   login: createAsyncThunk(
     `login`,
     loginOperation,
@@ -95,6 +111,30 @@ export const Operations = {
   checkUserExistence: createAsyncThunk(
     `checkUserExistence`,
     checkUserExistenceOperation,
+  ),
+  loadRecommendations: createAsyncThunk(
+    `loadRecommendations`,
+    loadRecommendationsOperation,
+  ),
+  createTrade: createAsyncThunk(
+    `createTrade`,
+    createTradeOperation,
+  ),
+  cancelTrade: createAsyncThunk(
+    `cancelTrade`,
+    cancelTradeOperation,
+  ),
+  getUserOwnedTrades: createAsyncThunk(
+    `getUserOwnedTrades`,
+    getUserOwnedTradesOperation,
+  ),
+  getUserIncomingTrades: createAsyncThunk(
+    `getUserIncomingTrades`,
+    getUserIncomingTradesOperation,
+  ),
+  acceptTrade: createAsyncThunk(
+    `acceptTrade`,
+    acceptTradeOperation,
   ),
 
 };

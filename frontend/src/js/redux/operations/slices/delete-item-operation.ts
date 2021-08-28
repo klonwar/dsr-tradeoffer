@@ -3,11 +3,10 @@ import axios from 'axios';
 import { AsyncThunkPayloadCreator } from '@reduxjs/toolkit';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { classToPlain } from 'class-transformer';
-import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { Operations } from '#redux/operations/operations';
+import { BasketActions } from '#redux/reducers/slices/basket-slice';
 
-export class DeleteItemOperationResult extends ItemsListDto {
-}
+export type DeleteItemOperationResult = boolean;
 
 export const deleteItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationResult, number, { rejectValue: SerializedAxiosError }> =
   async (id, { rejectWithValue, dispatch }) => {
@@ -15,7 +14,9 @@ export const deleteItemOperation: AsyncThunkPayloadCreator<DeleteItemOperationRe
       const res = await axiosInstance.delete<DeleteItemOperationResult>(`item/${id}`);
 
       // Обновим информацию и в списке предметов
-      dispatch(Operations.getUserItemsList());
+      dispatch(Operations.resetUserItems());
+      // И удалим из корзины
+      dispatch(BasketActions.delete(id));
 
       return res.data;
     } catch (e) {

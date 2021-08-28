@@ -3,13 +3,17 @@ import { RootState } from '#redux/reducers/root-reducer';
 import { SerializedAxiosError } from '#src/js/axios/serialized-axios-error';
 import { UserDto } from '#server/common/dto/user.dto';
 import jwtDecode from 'jwt-decode';
-import { ItemsListDto } from '#server/common/dto/items-list.dto';
 import { CategoriesListDto } from '#server/common/dto/categories-list.dto';
 import { srcFromPhotoPath } from '#src/js/util/src-from-photo-path';
 import { UserRole } from '#server/common/enums/user-role.enum';
-import { AccountsListDto } from '#server/common/dto/accounts-list.dto';
 import { CatalogueResult } from '#redux/reducers/slices/catalogue-slice';
 import { ItemDto } from '#server/common/dto/item.dto';
+import { AppPaginationMeta } from '#server/common/classes/pagination';
+import { ItemsResult } from '#redux/reducers/slices/user-items-slice';
+import { AccountsResult } from '#redux/reducers/slices/accounts-slice';
+import { BasketContent } from '#redux/reducers/slices/basket-slice';
+import { TradeofferDto } from '#server/common/dto/tradeoffer.dto';
+import { TradeofferListResult } from '#redux/reducers/slices/user-trades-slice';
 
 interface AppSelector<T> extends Selector<RootState, T> {}
 
@@ -48,7 +52,24 @@ export const userPhotoUrlSelector = createSelector<RootState, UserDto, string>(
 
 export const isItemsRequestPendingSelector: AppSelector<boolean> = (state) => state.userItemsReducer.pending;
 
-export const itemsListSelector: AppSelector<ItemsListDto> = (state) => state.userItemsReducer.result;
+export const itemsResultSelector: AppSelector<ItemsResult> = (state) => state.userItemsReducer.result;
+
+export const itemsCurrentMetaSelector = createSelector<RootState, ItemsResult, AppPaginationMeta>(
+  itemsResultSelector,
+  (catalogueResult) => catalogueResult.currentMeta,
+);
+
+export const itemsListSelector = createSelector<RootState, ItemsResult, Array<ItemDto>>(
+  itemsResultSelector,
+  (itemsResult) => {
+    const items: Array<ItemDto> = [];
+    for (const page of Object.values(itemsResult.pages)) {
+      items.push(...page.items);
+    }
+    return items;
+  },
+);
+
 
 export const itemsRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userItemsReducer.error;
 
@@ -60,7 +81,23 @@ export const categoriesRequestErrorSelector: AppSelector<SerializedAxiosError> =
 
 export const isAccountsRequestPendingSelector: AppSelector<boolean> = (state) => state.accountsReducer.pending;
 
-export const accountsListSelector: AppSelector<AccountsListDto> = (state) => state.accountsReducer.result;
+export const accountsResultSelector: AppSelector<AccountsResult> = (state) => state.accountsReducer.result;
+
+export const accountsCurrentMetaSelector = createSelector<RootState, AccountsResult, AppPaginationMeta>(
+  accountsResultSelector,
+  (catalogueResult) => catalogueResult.currentMeta,
+);
+
+export const accountsListSelector = createSelector<RootState, AccountsResult, Array<UserDto>>(
+  accountsResultSelector,
+  (accountsResult) => {
+    const accounts: Array<UserDto> = [];
+    for (const page of Object.values(accountsResult.pages)) {
+      accounts.push(...page.items);
+    }
+    return accounts;
+  },
+);
 
 export const accountsRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.accountsReducer.error;
 
@@ -68,17 +105,17 @@ export const isCatalogueRequestPendingSelector: AppSelector<boolean> = (state) =
 
 export const catalogueResultSelector: AppSelector<CatalogueResult> = (state) => state.catalogueReducer.result;
 
-export const catalogueCurrentPageSelector = createSelector<RootState, CatalogueResult, number>(
+export const catalogueCurrentMetaSelector = createSelector<RootState, CatalogueResult, AppPaginationMeta>(
   catalogueResultSelector,
-  (catalogueResult) => catalogueResult.currentPage,
+  (catalogueResult) => catalogueResult.currentMeta,
 );
 
-export const catalogueItemsSelector = createSelector<RootState, CatalogueResult, ItemsListDto>(
+export const catalogueItemsSelector = createSelector<RootState, CatalogueResult, Array<ItemDto>>(
   catalogueResultSelector,
   (catalogueResult) => {
-    const items = [];
+    const items: Array<ItemDto> = [];
     for (const page of Object.values(catalogueResult.pages)) {
-      items.push(...page);
+      items.push(...page.items);
     }
     return items;
   },
@@ -89,3 +126,73 @@ export const catalogueRequestErrorSelector: AppSelector<SerializedAxiosError> = 
 export const isCurrentItemRequestPendingSelector: AppSelector<boolean> = (state) => state.itemReducer.pending;
 export const currentItemSelector: AppSelector<ItemDto> = (state) => state.itemReducer.result;
 export const currentItemErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.itemReducer.error;
+
+export const basketOfferedSelector: AppSelector<BasketContent> = (state) => state.basketReducer.offered;
+export const basketDesiredSelector: AppSelector<BasketContent> = (state) => state.basketReducer.desired;
+export const basketOfferedLengthSelector = createSelector<RootState, BasketContent, number>(
+  basketOfferedSelector,
+  (offered) => Object.keys(offered).length,
+);
+export const basketDesiredLengthSelector = createSelector<RootState, BasketContent, number>(
+  basketDesiredSelector,
+  (desired) => Object.keys(desired).length,
+);
+
+export const sumBasketContentSelector = createSelector<RootState, BasketContent, BasketContent, BasketContent>(
+  basketOfferedSelector,
+  basketDesiredSelector,
+  (offered, desired) => ({
+    ...offered,
+    ...desired,
+  }),
+);
+
+export const isTradeRequestPendingSelector: AppSelector<boolean> = (state) => state.tradeReducer.pending;
+
+export const tradeRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.tradeReducer.error;
+
+export const tradeRequestResultSelector: AppSelector<TradeofferDto> = (state) => state.tradeReducer.result;
+
+export const isUserOwnedTradesRequestPendingSelector: AppSelector<boolean> = (state) => state.userTradesReducer.owned.pending;
+
+export const userOwnedTradesResultSelector: AppSelector<TradeofferListResult> = (state) => state.userTradesReducer.owned.result;
+
+export const userOwnedTradesCurrentMetaSelector = createSelector<RootState, TradeofferListResult, AppPaginationMeta>(
+  userOwnedTradesResultSelector,
+  (tradeofferResult) => tradeofferResult.currentMeta,
+);
+
+export const userOwnedTradesListSelector = createSelector<RootState, TradeofferListResult, Array<TradeofferDto>>(
+  userOwnedTradesResultSelector,
+  (tradeofferResult) => {
+    const items: Array<TradeofferDto> = [];
+    for (const page of Object.values(tradeofferResult.pages)) {
+      items.push(...page.items);
+    }
+    return items;
+  },
+);
+
+export const userOwnedTradesRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userTradesReducer.owned.error;
+
+export const isUserIncomingTradesRequestPendingSelector: AppSelector<boolean> = (state) => state.userTradesReducer.incoming.pending;
+
+export const userIncomingTradesResultSelector: AppSelector<TradeofferListResult> = (state) => state.userTradesReducer.incoming.result;
+
+export const userIncomingTradesCurrentMetaSelector = createSelector<RootState, TradeofferListResult, AppPaginationMeta>(
+  userIncomingTradesResultSelector,
+  (tradeofferResult) => tradeofferResult.currentMeta,
+);
+
+export const userIncomingTradesListSelector = createSelector<RootState, TradeofferListResult, Array<TradeofferDto>>(
+  userIncomingTradesResultSelector,
+  (tradeofferResult) => {
+    const items: Array<TradeofferDto> = [];
+    for (const page of Object.values(tradeofferResult.pages)) {
+      items.push(...page.items);
+    }
+    return items;
+  },
+);
+
+export const userIncomingTradesRequestErrorSelector: AppSelector<SerializedAxiosError> = (state) => state.userTradesReducer.incoming.error;

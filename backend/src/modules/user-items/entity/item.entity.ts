@@ -5,12 +5,25 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PhotoEntity } from '#src/modules/photos/entity/photo.entity';
 import { CategoryEntity } from '#src/modules/categories/entity/category.entity';
-import { Exclude, Transform, Type } from 'class-transformer';
+import {
+  classToPlain,
+  Exclude,
+  plainToClass,
+  Transform,
+  Type,
+} from 'class-transformer';
 import { User } from '#src/modules/user/entity/user.entity';
+import { validateSync } from 'class-validator';
+import * as chalk from 'chalk';
+import { InternalServerErrorException } from '@nestjs/common';
+import { ItemDto } from '#server/common/dto/item.dto';
+import { TradeOfferEntity } from '#src/modules/trade/entity/trade-offer.entity';
 
 @Entity({ name: `item` })
 export class ItemEntity {
@@ -37,6 +50,22 @@ export class ItemEntity {
   @Exclude()
   @Column()
   user_id: number;
+
+  toDto(): ItemDto {
+    // Transform
+    const plainThis = classToPlain(this);
+
+    // Validate
+    const itemDto = plainToClass(ItemDto, plainThis);
+    const errors = validateSync(itemDto, {});
+
+    if (errors.length) {
+      console.error(chalk.red(errors.toString()));
+      throw new InternalServerErrorException();
+    }
+
+    return plainThis as ItemDto;
+  }
 
   // Relations
   @Type(() => PhotoEntity)
@@ -74,4 +103,14 @@ export class ItemEntity {
   })
   @JoinColumn({ name: `user_id` })
   user: User;
+
+  @Type(() => TradeOfferEntity)
+  @Transform(({ value }) => value?.id ?? null)
+  @OneToOne(() => TradeOfferEntity, (to) => to.offered_item, {
+    cascade: true,
+  })
+  to_where_offered: TradeOfferEntity;
+
+  @OneToMany(() => TradeOfferEntity, (to) => to.desired_item)
+  tos_where_desired: TradeOfferEntity[];
 }

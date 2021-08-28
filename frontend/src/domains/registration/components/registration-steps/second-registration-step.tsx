@@ -23,7 +23,7 @@ export const SecondRegistrationStep: FC<{ next: () => void, prev: () => void }> 
     <>
       <h1 className={`uk-card-title`}>Регистрация</h1>
       <div className={`uk-flex uk-flex-column uk-flex-middle`}>
-        <form id={`user-info-form`} onSubmit={onSubmit}>
+        <form className={`uk-width-1-1`} id={`user-info-form`} onSubmit={onSubmit}>
           <AppInput
             name={`firstName`}
             inputProps={{

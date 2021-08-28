@@ -7,7 +7,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '#src/modules/user/entity/user.entity';
 import { Repository } from 'typeorm';
 import { Profile } from '#src/modules/user/entity/profile.entity';
-import { UserDto } from '#server/common/dto/user.dto';
 import { CreateUserDto } from '#server/common/dto/create-user.dto';
 import { EditProfileDto } from '#server/common/dto/edit-profile.dto';
 import { JwtDto } from '#server/common/dto/jwt.dto';

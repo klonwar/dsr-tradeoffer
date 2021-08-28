@@ -9,4 +9,5 @@ export class ItemDto {
   item_category: CategoryDto;
   trade_category: CategoryDto;
   user: string;
+  to_where_offered: number;
 }

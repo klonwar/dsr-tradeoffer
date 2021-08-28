@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '#redux/store';
 import { Operations } from '#redux/operations/operations';
 import {
-  catalogueCurrentPageSelector,
+  catalogueCurrentMetaSelector,
   catalogueItemsSelector,
   isCatalogueRequestPendingSelector,
 } from '#redux/selectors';
@@ -12,19 +12,19 @@ import { PhotosSlideshow } from '#domains/items/components/photos-slideshow/phot
 import { useShowCatalogueRequestError } from '#src/js/hooks/use-show-catalogue-request-error';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SpinnerWrapper from '#components/spinner-wrapper/spinner-wrapper';
-import { LoadCatalogueDto } from '#server/common/dto/load-catalogue.dto';
+import { PaginationRequestDto } from '#server/common/dto/pagination-request.dto';
 import { CatalogueActions } from '#redux/reducers/slices/catalogue-slice';
 
 export const AdminPage: FC = () => {
   const [isDispatched, setIsDispatched] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const catalogueItems = useSelector(catalogueItemsSelector);
-  const currentPage = useSelector(catalogueCurrentPageSelector);
+  const currentMeta = useSelector(catalogueCurrentMetaSelector);
   const isPending = useSelector(isCatalogueRequestPendingSelector);
 
   // Можем в любой момент поменять настройки загрузки
   // Отсортировать результаты, отфильтровать по фразе и т.д.
-  const [loadOptions, setLoadOptions] = useState<Partial<LoadCatalogueDto>>({
+  const [loadOptions, setLoadOptions] = useState<Partial<PaginationRequestDto>>({
     order: `id`,
   });
 
@@ -59,16 +59,15 @@ export const AdminPage: FC = () => {
 
 
   return (
-
-    <div id={`scrollable-target`} className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small uk-child-width-1-1`}>
+    <div id={`scrollable-target`}
+         className={`WithScrollbar uk-overflow-auto uk-flex uk-flex-wrap uk-padding-small uk-child-width-1-1`}>
       <InfiniteScroll
         next={() => {
           dispatch(Operations.loadCatalogue({
-            ...loadOptions,
-            page: currentPage + 1,
+            page: currentMeta?.currentPage + 1,
           }));
         }}
-        hasMore={true}
+        hasMore={currentMeta?.currentPage < currentMeta?.totalPages}
         loader={null}
         dataLength={catalogueItems.length}
         scrollableTarget={`scrollable-target`}
